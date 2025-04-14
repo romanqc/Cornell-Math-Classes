@@ -1,0 +1,74 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{libertine}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,shapes.geometric}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\pagestyle{plain}
+\thispagestyle{empty}
+
+\definecolor{carnellian}{RGB}{190,20,20}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\newcounter{subq}[problem]
+\newenvironment{subproblem}
+{\refstepcounter{subq} \begin{itemize} \item[(\alph{subq})]}
+{\end{itemize} \medskip}
+\DeclareMathOperator{\Ima}{Im}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+% \DeclareMathOperator{\span}{span}
+
+
+
+\usepackage{environ}
+\NewEnviron{solution}[1][\vfill]{
+    \textcolor{blue}{\BODY}
+}
+
+\newcommand{\hwnum}{0}
+\newcommand{\duedate}{1/24/2025}
+\renewcommand{\title}{}
+
+\begin{document}
+
+\hspace{-10px}
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r}
+    \textbf{Honors Algebra} 
+        & \textbf{Spring 2025} \\
+    \textbf{HW \hwnum \title} &  \textbf{\duedate}
+\end{tabular*}
+
+\vspace{1cm}
+
+Roman Q. Chavez, rqc3
+
+\vspace{10px}
+
+List of math courses taken at Cornell:
+\begin{enumerate}[label=\roman*, leftmargin=10px]
+    \item[\phantom{o}] \textbf{1110} Calculus I
+    \item[\phantom{o}] \textbf{2210} Linear Algebra
+    \item[\phantom{o}] \textbf{2220} Multivariable Calculus
+    \item[\phantom{o}] \textbf{3040} Prove it!
+    \item[\phantom{o}] \textbf{3210} Manifolds \& Differential Forms
+    \item[\phantom{o}] \textbf{4130} Honors Analysis I
+    \item[\phantom{o}] \textbf{4210} Nonlinear Dynamics \& Chaos
+    \item[\phantom{o}] \textbf{4330} Honors Linear Algebra
+\end{enumerate}
+
+
+
+\end{document}

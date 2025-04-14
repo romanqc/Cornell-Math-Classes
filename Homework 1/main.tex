@@ -1,0 +1,503 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{libertine}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,shapes.geometric}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\pagestyle{plain}
+\thispagestyle{empty}
+
+\definecolor{carnellian}{RGB}{190,20,20}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\newcounter{subq}[problem]
+\newenvironment{subproblem}
+{\refstepcounter{subq} \begin{itemize} \item[(\alph{subq})]}
+{\end{itemize} \medskip}
+\DeclareMathOperator{\Ima}{Im}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+% \DeclareMathOperator{\span}{span}
+
+
+
+\usepackage{environ}
+\NewEnviron{solution}[1][\vfill]{
+    \textcolor{blue}{\BODY}
+}
+
+\newcommand{\hwnum}{1}
+\newcommand{\duedate}{1/28/2025}
+\renewcommand{\title}{Preliminary Topics}
+
+\begin{document}
+
+\hspace{-10px}
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r}
+    \textbf{Honors Algebra} & \textbf{Spring 2025} \\
+    \textbf{HW \hwnum : \title} &  \textbf{\duedate} \\
+\end{tabular*}
+
+\vspace{1cm}
+
+\textit{Abstract Algebra: An Integrated Approach by J.H. Silverman.}\\
+Page 26–34: 1.2, 1.5, 1.7, 1.11, 1.14, 1.16, 1.18
+
+\vspace{1cm}
+
+\begin{problem}[1.2]
+    Use truth tables to prove the following logical equivalences:
+    \begin{enumerate}[label=(\alph*)]
+        \item $P \iff \neg(\neg P)$
+        \begin{solution}
+            \begin{displaymath}
+                \begin{array}{c|c|c}
+                % |c c|c| means that there are three columns in the table and
+                % a vertical bar ’|’ will be printed on the left and right borders,
+                % and between the second and the third columns.
+                % The letter ’c’ means the value will be centered within the column,
+                % letter ’l’, left-aligned, and ’r’, right-aligned.
+                P & \neg P & \neg (\neg P)\\ % Use & to separate the columns
+                \hline % Put a horizontal line between the table header and the rest.
+                T & F & T\\
+                T & F & T\\
+                F & T & F\\
+                F & T & F\\
+                \end{array}
+            \end{displaymath}                
+        \end{solution}
+        \item $\neg(P \lor Q) \iff (\neg P) \land (\neg Q)$
+        \begin{solution}
+            \begin{displaymath}
+                \begin{array}{c|c|c|c|c|c}
+                P & Q & \neg (P \lor Q) & \neg P & \neg Q & (\neg P) \land (\neg Q)\\
+                \hline
+                T & T & F & F & F & F\\
+                T & F & F & F & T & F\\
+                F & T & F & T & F & F\\
+                F & F & T & T & T & T\\
+                \end{array}
+            \end{displaymath}                
+        \end{solution}
+        \item $(P \implies Q) \iff (\neg Q \implies \neg P)$
+        \begin{solution}
+            \begin{displaymath}
+                \begin{array}{c|c|c|c|c|c}
+                P & Q & P \implies Q & \neg P & \neg Q & \neg Q \implies \neg P\\
+                \hline
+                T & T & T & F & F & T\\
+                T & F & F & F & T & F\\
+                F & T & T & T & F & T\\
+                F & F & T & T & T & T\\
+                \end{array}
+            \end{displaymath}                
+        \end{solution}
+        \item $(P \implies Q) \iff (\neg P) \lor Q$
+        \begin{solution}
+            \begin{displaymath}
+                \begin{array}{c|c|c|c|c}
+                P & Q & P \implies Q & \neg P & (\neg P) \lor Q\\
+                \hline
+                T & T & T & F & T\\
+                T & F & F & F & F\\
+                F & T & T & T & T\\
+                F & F & T & T & T\\
+                \end{array}
+            \end{displaymath}                
+        \end{solution}
+        \item $(P \iff Q) \iff \neg (P \veebar Q)$
+        \begin{solution}
+            \begin{displaymath}
+                \begin{array}{c|c|c|c|c}
+                P & Q & P \iff Q & P \veebar Q & \neg (P \veebar Q)\\
+                \hline
+                T & T & T & F & T\\
+                T & F & F & T & F\\
+                F & T & F & T & F\\
+                F & F & T & F & T\\
+                \end{array}
+            \end{displaymath}                
+        \end{solution}
+        \item $P \veebar Q \iff (P \land \neg Q) \lor (\neg P \land Q)$
+        \begin{solution}
+            \begin{displaymath}
+                \begin{array}{c|c|c|c|c|c|c|c}
+                P & Q & P \veebar Q & \neg P & \neg Q & P \land \neg Q & \neg P \land Q & (P \land \neg Q) \lor (\neg P \land Q)\\
+                \hline
+                T & T & F & F & F & F & F & F\\
+                T & F & T & F & T & T & F & T\\
+                F & T & T & T & F & F & T & T\\
+                F & F & F & T & T & F & F & F\\
+                \end{array}
+            \end{displaymath}                
+        \end{solution}
+        \item $P \veebar Q \iff (P \lor Q) \land \neg (P \land Q)$
+        \begin{solution}
+            \begin{displaymath}
+                \begin{array}{c|c|c|c|c|c|c|c|c}
+                P & Q & P \lor Q & P \land Q & \neg (P \land Q) & (P \lor Q) \land \neg (P \land Q) & P \veebar Q\\
+                \hline
+                T & T & T & T & F & F & F\\
+                T & F & T & F & T & T & T\\
+                F & T & T & F & T & T & T\\
+                F & F & F & F & T & F & F\\
+                \end{array}
+            \end{displaymath}                
+        \end{solution}
+
+        \item $P \land (Q \lor R) \iff (P \land Q) \lor (P \land R)$
+        \begin{solution}
+            \begin{displaymath}
+                \begin{array}{c|c|c|c|c|c|c|c}
+                P & Q & R & Q \lor R & P \land (Q \lor R) & P \land Q & P \land R & (P \land Q) \lor (P \land R)\\
+                \hline
+                T & T & T & T & T & T & T & T\\
+                T & T & F & T & T & T & F & T\\
+                T & F & T & T & T & F & T & T\\
+                T & F & F & F & F & F & F & F\\
+                F & T & T & T & F & F & F & F\\
+                F & T & F & T & F & F & F & F\\
+                F & F & T & T & F & F & F & F\\
+                F & F & F & F & F & F & F & F\\
+                \end{array}
+            \end{displaymath}                
+        \end{solution}
+
+        \item $P \lor (Q \land R) \iff (P \lor Q) \land (P \lor R)$
+        \begin{solution}
+            \begin{displaymath}
+                \begin{array}{c|c|c|c|c|c|c|c|c}
+                P & Q & R & Q \land R & P \lor (Q \land R) & P \lor Q & P \lor R & (P \lor Q) \land (P \lor R)\\
+                \hline
+                T & T & T & T & T & T & T & T\\
+                T & T & F & F & T & T & T & T\\
+                T & F & T & F & T & T & T & T\\
+                T & F & F & F & T & T & T & T\\
+                F & T & T & T & T & T & T & T\\
+                F & T & F & F & T & T & F & F\\
+                F & F & T & F & T & F & T & F\\
+                F & F & F & F & F & F & F & F\\
+                \end{array}
+            \end{displaymath}                
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem} (1.5)
+
+    \begin{enumerate}[label=(\alph*)]
+    \item Let $\mathbb{E}$ denote the set of even natural numbers. Give a mathematical description of the set
+          $\mathbb{E}$, similar to our description of the set of primes $\mathbb{P}$. 
+
+        \begin{solution}
+            The set $\mathbb{E}$, which consists of even natural numbers, can be described as:
+            \[
+            \mathbb{E} = \{ n \in \mathbb{N} \mid n = 2k \text{ for some } k \in \mathbb{N} \}.
+            \]
+            In words, $\mathbb{E}$ is the set of all natural numbers that are divisible by 2.
+
+        \end{solution}
+    \item Goldbach's Conjecture says that every even natural number, except for 2, is equal to a sum of two prime numbers.
+          Give a methematical description of Goldbach's conjecture. You may use $\mathbb{P}$ to denote the set of primes
+          and $\mathbb{E}$ to denote the set of even numbers.
+
+        \begin{solution}
+            Goldbach's Conjecture states that every even natural number greater than 2 can be expressed as the sum of two prime numbers. Using the given notation, we can formally express this as:
+            \[
+            \forall n \in \mathbb{E}, \quad n > 2 \implies \exists p_1, p_2 \in \mathbb{P} \text{ such that } n = p_1 + p_2.
+            \]
+            Here, \(\mathbb{E} = \{ n \in \mathbb{N} \mid n \text{ is even} \}\) represents the set of even natural numbers, and \(\mathbb{P}\) denotes the set of prime numbers. The conjecture asserts that for every even \( n > 2 \), there exist two primes \( p_1 \) and \( p_2 \) whose sum equals \( n \).
+        \end{solution}
+    \end{enumerate}
+
+\end{problem}
+
+\begin{problem}[1.7]
+
+    Let $S, T$, and $U$ be sets. Prove each of the following formulas:
+
+    \begin{enumerate}[label=(\alph*)]
+        \item $S \cap (T \cup U) = (S \cap T) \cup (S \cap U)$
+        \begin{solution}
+
+            Let \( x \) be an arbitrary element.
+
+            \begin{itemize}
+                \item (\(\subseteq\)) Suppose \( x \in S \cap (T \cup U) \). Then, \( x \in S \) and \( x \in T \cup U \), meaning \( x \) is in at least one of \( T \) or \( U \). This implies \( x \in (S \cap T) \) or \( x \in (S \cap U) \), so \( x \in (S \cap T) \cup (S \cap U) \).
+                \item (\(\supseteq\)) Suppose \( x \in (S \cap T) \cup (S \cap U) \). Then, \( x \in S \cap T \) or \( x \in S \cap U \), meaning \( x \in S \) and either \( x \in T \) or \( x \in U \). This implies \( x \in S \cap (T \cup U) \).
+            \end{itemize}
+            Thus, the two sets are equal.
+        \end{solution}
+        \item $S \cup (T \cap U) = (S \cup T) \cap (S \cup U)$
+        
+        \begin{solution}
+            Let \( x \) be arbitrary.
+
+            \begin{itemize}
+                \item (\(\subseteq\)) If \( x \in S \cup (T \cap U) \), then either \( x \in S \) or \( x \in T \cap U \). If \( x \in S \), then \( x \in S \cup T \) and \( x \in S \cup U \), so \( x \in (S \cup T) \cap (S \cup U) \). If \( x \in T \cap U \), then \( x \in T \) and \( x \in U \), so \( x \in S \cup T \) and \( x \in S \cup U \). Thus, \( x \in (S \cup T) \cap (S \cup U) \).
+                \item (\(\supseteq\)) If \( x \in (S \cup T) \cap (S \cup U) \), then \( x \in S \cup T \) and \( x \in S \cup U \). If \( x \in S \), then \( x \in S \cup (T \cap U) \). Otherwise, \( x \in T \) and \( x \in U \), so \( x \in T \cap U \), implying \( x \in S \cup (T \cap U) \).
+            \end{itemize}
+            Thus, the two sets are equal.
+        \end{solution}
+        \item Suppose that $S$ and $T$ are subsets of $U$. Then
+              \[
+              (S \cup T)^c = S^c \cap T^c \hspace{10px}\text{and}\hspace{10px} (S \cap T)^c = S^c \cup T^c
+              \]
+        \begin{solution}
+            Using De Morgan’s Laws:
+            \begin{itemize}
+                \item \( (S \cup T)^c = S^c \cap T^c \) because \( x \notin S \cup T \) means \( x \notin S \) and \( x \notin T \), which is exactly \( x \in S^c \cap T^c \).
+                \item \( (S \cap T)^c = S^c \cup T^c \) because \( x \notin S \cap T \) means \( x \notin S \) or \( x \notin T \), which defines \( S^c \cup T^c \).
+            \end{itemize}
+        \end{solution}
+        \item The \textit{symmetric difference of $S$ and $T$}, denoted $S \Delta T$, is defined to be the set
+              of elements that are in one of $S$ and $T$, but not in both. Prove that
+              \[
+              S \Delta T = (S \cup T) \backslash (S \cap T) = (S \backslash T) \cup (T \backslash S)
+              \]
+        \begin{solution}
+            By definition, \( S \Delta T \) is the set of elements in \( S \) or \( T \), but not both.
+            \begin{itemize}
+                \item The set \( (S \cup T) \setminus (S \cap T) \) consists of elements in \( S \cup T \) that are not in \( S \cap T \), meaning they are in exactly one of \( S \) or \( T \), which matches \( S \Delta T \).
+                \item The set \( (S \setminus T) \cup (T \setminus S) \) consists of elements in \( S \) but not \( T \), or in \( T \) but not \( S \), which again matches \( S \Delta T \).
+            \end{itemize}
+            Thus, the given expressions for \( S \Delta T \) are equal.
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[1.11]
+
+    Which of the follwoing are equivalence relations on the set of integers $\mathbb{Z}$?
+    For the equivalence relations, describe the distinct equivalence classes, and for the
+    non-equivalence relations, explain which of the three properties of an equivalence
+    relation fail.
+
+    \begin{enumerate}[label=(\alph*)]
+        \item $a \sim b$ if $a - b$ is a multiple of 5
+        \begin{solution}
+            \begin{itemize}
+                \item \textit{Reflexive:} For any \( a \in \mathbb{Z} \), \( a - a = 0 \), which is a multiple of 5, so \( a \sim a \).
+                \item \textit{Symmetric:} If \( a \sim b \), then \( a - b \) is a multiple of 5, meaning \( b - a = -(a - b) \) is also a multiple of 5. Thus, \( b \sim a \).
+                \item \textit{Transitive:} If \( a \sim b \) and \( b \sim c \), then \( a - b \) and \( b - c \) are multiples of 5. Adding these, \( a - c = (a - b) + (b - c) \) is a multiple of 5, so \( a \sim c \).
+            \end{itemize}
+            The equivalence classes are the sets of integers that leave the same remainder when divided by 5. For example:
+            \[
+            [0] = \{ \dots, -10, -5, 0, 5, 10, \dots \}, \quad [1] = \{ \dots, -9, -4, 1, 6, 11, \dots \}, \quad \text{and so on.}
+            \]
+        \end{solution}
+
+        \item $a \sim b$ if $a + b$ is a multiple of 5
+
+        \begin{solution}
+            This is not an equivalence relation because it fails the transitive property. Let \( a = 0 \), \( b = 3 \), and \( c = 2 \):
+            \begin{itemize}
+                \item \( a \sim b \) because \( a + b = 0 + 3 = 3 \), which is a multiple of 5.
+                \item \( b \sim c \) because \( b + c = 3 + 2 = 5 \), which is a multiple of 5.
+                \item However, \( a + c = 0 + 2 = 2 \), which is not a multiple of 5, so \( a \not\sim c \).
+            \end{itemize}
+            Thus, the relation is not transitive.
+        \end{solution}
+
+        \item $a \sim b$ if $a^2 - b^2$ is a multiple of 5
+        \begin{solution}
+            \begin{itemize}
+                \item \textit{Reflexive:} For any \( a \in \mathbb{Z} \), \( a^2 - a^2 = 0 \), which is a multiple of 5, so \( a \sim a \).
+                \item \textit{Symmetric:} If \( a \sim b \), then \( a^2 - b^2 \) is a multiple of 5. Since \( a^2 - b^2 = -(b^2 - a^2) \), \( b \sim a \).
+                \item \textit{Transitive:} If \( a \sim b \) and \( b \sim c \), then \( a^2 - b^2 \) and \( b^2 - c^2 \) are multiples of 5. Adding these, \( a^2 - c^2 = (a^2 - b^2) + (b^2 - c^2) \), which is a multiple of 5, so \( a \sim c \).
+            \end{itemize}
+            The equivalence classes correspond to the remainders of \( a^2 \mod 5 \). Since the possible remainders of \( a^2 \mod 5 \) are 0, 1, and 4, there are three equivalence classes:
+            \[
+            [0], [1], [4].
+            \]
+        \end{solution}
+
+        \item $a \sim b$ if $a - b^2$ is a multiple of 5
+
+        \begin{solution}
+            This is not an equivalence relation because it fails the symmetric property. For example, let \( a = 6 \) and \( b = 1 \):
+            \begin{itemize}
+                \item \( a \sim b \) because \( a - b^2 = 6 - 1^2 = 5 \), which is a multiple of 5.
+                \item However, \( b \sim a \) would require \( b - a^2 \) to be a multiple of 5, but \( 1 - 6^2 = 1 - 36 = -35 \) is not a multiple of 5.
+            \end{itemize}
+            Thus, the relation is not symmetric.
+        \end{solution}
+
+        \item $a \sim b$ if $a - b$ is purple
+        
+        \begin{solution}
+            This is not an equivalence relation because the definition of the relation is not well-defined. The term "purple" has no mathematical meaning, so the relation cannot satisfy reflexivity, symmetry, or transitivity.
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[1.14]
+
+    Which of the following binary relations are reflexive, symmetric, antisymmetric, and/or transitive?
+    Which are equivalence relations? Which are partial orders?
+    
+    \begin{enumerate}[label=(\alph*)]
+        
+        \item $S = \mathbb{R}$, and $(a, b)_{\mathcal{B}}$ iff $a \geq b$
+        \begin{solution}
+            \begin{itemize}
+                \item \textit{Reflexive:} Yes, since for all $a \in \mathbb{R}$, we have $a \geq a$.
+                \item \textit{Symmetric:} No, because if $a \geq b$, it does not necessarily mean $b \geq a$ unless $a = b$.
+                \item \textit{Antisymmetric:} Yes, since if $a \geq b$ and $b \geq a$, then $a = b$.
+                \item \textit{Transitive:} Yes, because if $a \geq b$ and $b \geq c$, then $a \geq c$.
+            \end{itemize}
+            Since the relation is reflexive, antisymmetric, and transitive, it is a \textbf{partial order}. However, it is not an equivalence relation because it is not symmetric.
+        \end{solution}
+        
+        \item $S = \mathbb{N}$, and $(a, b)_\mathcal{B}$ iff $\gcd(a, b) = 1$
+        \begin{solution}
+            \begin{itemize}
+                \item \textit{Reflexive:} No, since $\gcd(a, a) = a$, which is not necessarily 1.
+                \item \textit{Symmetric:} Yes, because $\gcd(a, b) = \gcd(b, a)$.
+                \item \textit{Antisymmetric:} No, since there exist distinct $a$ and $b$ such that $\gcd(a, b) = 1$.
+                \item \textit{Transitive:} No, since $\gcd(a, b) = 1$ and $\gcd(b, c) = 1$ does not imply $\gcd(a, c) = 1$.
+            \end{itemize}
+            This relation is not an equivalence relation or a partial order.
+        \end{solution}
+        
+        \item $S = \mathbb{N}$, and $(a, b)_\mathcal{B}$ iff $a|b$
+        \begin{solution}
+            \begin{itemize}
+                \item \textit{Reflexive:} Yes, since $a | a$ for all $a \in \mathbb{N}$.
+                \item \textit{Symmetric:} No, since $a | b$ does not imply $b | a$ unless $a = b$.
+                \item \textit{Antisymmetric:} Yes, since if $a | b$ and $b | a$, then $a = b$.
+                \item \textit{Transitive:} Yes, since if $a | b$ and $b | c$, then $a | c$.
+            \end{itemize}
+            This relation is a partial order but not an equivalence relation.
+        \end{solution}
+        
+        \item $S$ is the set of students at your school, and $(a, b)_\mathcal{B}$ iff $a$ and $b$ have the same birthday.
+        \begin{solution}
+            \begin{itemize}
+                \item \textit{Reflexive:} Yes, since everyone shares their own birthday.
+                \item \textit{Symmetric:} Yes, since if $a$ has the same birthday as $b$, then $b$ has the same birthday as $a$.
+                \item \textit{Antisymmetric:} No, since two distinct students can have the same birthday.
+                \item \textit{Transitive:} Yes, since if $a$ shares a birthday with $b$ and $b$ shares a birthday with $c$, then $a$ shares a birthday with $c$.
+            \end{itemize}
+            This relation is an equivalence relation but not a partial order.
+        \end{solution}
+        
+        \item $S$ is a graph, and $(a, b)_\mathcal{B}$ iff $a = b$ or there is an edge connecting $a$ and $b$.
+        \begin{solution}
+            \begin{itemize}
+                \item \textit{Reflexive:} Yes, since $a = a$.
+                \item \textit{Symmetric:} Yes, since if there is an edge from $a$ to $b$, there is an edge from $b$ to $a$ in an undirected graph.
+                \item \textit{Antisymmetric:} No, unless the graph has no edges.
+                \item \textit{Transitive:} No, since $a$ connected to $b$ and $b$ connected to $c$ does not imply $a$ is connected to $c$.
+            \end{itemize}
+            This is neither an equivalence relation nor a partial order.
+        \end{solution}
+        
+        \item $S$ is a graph, and $(a, b)_\mathcal{B}$ iff $a = b$ or a sequence of edges connects $a$ to $b$.
+        \begin{solution}
+            \begin{itemize}
+                \item \textit{Reflexive:} Yes.
+                \item \textit{Symmetric:} Yes, if the graph is undirected.
+                \item \textit{Antisymmetric:} No, unless the graph is trivial.
+                \item \textit{Transitive:} Yes, since if $a$ is connected to $b$ and $b$ to $c$, then $a$ is connected to $c$.
+            \end{itemize}
+            This relation is an equivalence relation for connected components.
+        \end{solution}
+        
+        \item $S = \mathbb{R}$, and $f: S \rightarrow \mathbb{R}$ is a function, and $(a, b)_\mathcal{B}$ iff $f(a) = f(b)$.
+        \begin{solution}
+
+           Equivalence relation as it satisfies reflexivity, symmetry, and transitivity.
+        \end{solution}
+        
+        \item $S$ = (the collection of subsets of a set $\Sigma$), and $(A, B)_\mathcal{B}$ iff $A \subseteq B$.
+        \begin{solution}
+
+            Partial order
+        \end{solution}
+        
+        \item $S$ = (the collection of subsets of a set $\Sigma$), and $(A, B)_\mathcal{B}$ iff $A \cap B \neq \emptyset$.
+        \begin{solution}
+
+            This relation is symmetric but not transitive or reflexive.
+        \end{solution}
+        
+        \item $S$ = (the collection of subsets of a set $\Sigma$), and $(A, B)_\mathcal{B}$ iff $A \cap B = \emptyset$.
+        \begin{solution}
+
+            This relation is symmetric but neither reflexive nor transitive.
+        \end{solution}
+        
+    \end{enumerate}
+\end{problem}
+
+
+\begin{problem}[1.16]
+
+    Let $S$ and $T$ be finite sets containing the same number of elements, and let $f: S \rightarrow T$
+    be a function from $S$ to $T$. Prove that the following are equivalent:
+    \begin{enumerate}[label=(\alph*)]
+        \item $f$ is injective
+        
+        \begin{solution}
+            Since \( S \) and \( T \) have the same finite number of elements, say \( |S| = |T| = n \), an injective function \( f \) maps \( n \) distinct elements of \( S \) to \( n \) distinct elements of \( T \). Since \( T \) also contains exactly \( n \) elements, no element in \( T \) can be left out. Thus, \( f \) must also be surjective.
+        \end{solution}
+        \item $f$ is surjective
+        
+        \begin{solution}
+            If \( f \) is surjective, then every element of \( T \) has at least one preimage in \( S \). Since \( |S| = |T| = n \), the surjectivity ensures that there are exactly \( n \) preimages. If \( f \) were not injective, then at least one element of \( T \) would have more than one preimage in \( S \), contradicting the fact that \( S \) has only \( n \) elements. Hence, \( f \) must be injective.
+        \end{solution}
+        \item $f$ is bijective
+        
+        \begin{solution}
+            By definition, a function is bijective if and only if it is both injective and surjective. Since we have shown that injectivity implies surjectivity and vice versa, it follows that \( f \) is bijective.
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[1.18]
+
+    Let $S$ and $T$ be finite sets, and let $f: S \rightarrow T$ be a function from $S$ to $T$.\\
+    Prove that
+    \[
+    \#S = \sum_{t \in T}\#\{s \in S : f(s) = t\}
+    \]
+
+    \begin{solution}
+        Each element \( t \in T \) has a preimage set given by:
+        \[
+        S_t = \{ s \in S \mid f(s) = t \}.
+        \]
+        The cardinality of this set is \( \#S_t \), which represents the number of elements in \( S \) that map to \( t \) under \( f \).
+
+        Since \( f \) is a function, every element \( s \in S \) is mapped to exactly one element in \( T \), meaning that the sets \( S_t \) for different \( t \) are disjoint. Moreover, their union covers all of \( S \), i.e.,
+        \[
+        S = \bigcup_{t \in T} S_t.
+        \]
+
+        By the principle of counting for disjoint unions, we sum the sizes of these sets to obtain:
+        \[
+        \#S = \sum_{t \in T} \#S_t.
+        \]
+        Since \( \#S_t = \#\{ s \in S \mid f(s) = t \} \), we obtain the desired result:
+        \[
+        \#S = \sum_{t \in T} \#\{ s \in S \mid f(s) = t \}.
+        \]
+    \end{solution}
+\end{problem}
+
+
+\end{document}
