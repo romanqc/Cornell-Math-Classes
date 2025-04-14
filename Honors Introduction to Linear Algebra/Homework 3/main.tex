@@ -1,0 +1,586 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{libertine}
+\usepackage{parskip}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,shapes.geometric}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\pagestyle{plain}
+\thispagestyle{empty}
+
+\definecolor{carnellian}{RGB}{190,20,20}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\newcounter{subq}[problem]
+\newenvironment{subproblem}
+{\refstepcounter{subq} \begin{itemize} \item[(\alph{subq})]}
+{\end{itemize} \medskip}
+
+\usepackage{environ}
+\NewEnviron{solution}[1][\vfill]{
+    \textcolor{blue}{\BODY}
+}
+
+\newcommand{\hwnum}{3}
+\newcommand{\duedate}{9/22/2024}
+\renewcommand{\title}{Vector Spaces}
+
+\begin{document}
+
+\hspace{-10px}
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r}
+    \textbf{Honors Linear Algebra} 
+        & \textbf{Fall 2024} \\
+    \textbf{HW\hwnum: \title} &  \textbf{Due: \duedate}
+\end{tabular*}
+
+\vspace{1cm}
+
+\begin{problem}
+    Let $V$ be the set of real numbers. Regard $V$ as a vector space over the field of \textit{rational} numbers, with the usual operations.
+    Prove that this vector space is \textit{not} finite-dimensional.
+
+    \begin{solution}
+        Suppose, for the sake of contradiction, that \( V = \mathbb{R} \) is a finite-dimensional vector space over \( \mathbb{Q} \). Let the dimension of \( V \) over \( \mathbb{Q} \) be some positive integer \( n \). Then there must exist a basis \( \{v_1, v_2, \dots, v_n\} \) of \( V \) over \( \mathbb{Q} \). This means that every real number \( x \in \mathbb{R} \) can be written as a linear combination of these basis vectors:
+        \[
+        x = q_1 v_1 + q_2 v_2 + \dots + q_n v_n,
+        \]
+        where \( q_1, q_2, \dots, q_n \) are rational numbers.
+
+        In particular, since \( 1 \in \mathbb{R} \), we can write \( 1 \) as:
+        \[
+        1 = q_1 v_1 + q_2 v_2 + \dots + q_n v_n,
+        \]
+        where \( q_1, q_2, \dots, q_n \) are rational numbers. Similarly, for the irrational number \( \pi \in \mathbb{R} \), we must have:
+        \[
+        \pi = r_1 v_1 + r_2 v_2 + \dots + r_n v_n,
+        \]
+        where \( r_1, r_2, \dots, r_n \) are also rational numbers.
+
+        Subtracting these two equations, we get:
+        \[
+        \pi - 1 = (r_1 - q_1) v_1 + (r_2 - q_2) v_2 + \dots + (r_n - q_n) v_n,
+        \]
+        where each \( r_i - q_i \) is a rational number. Since \( \pi - 1 \) is irrational, this contradicts the assumption that it can be written as a linear combination of the \( v_i \)'s with rational coefficients.
+
+        Therefore, our assumption that \( V = \mathbb{R} \) is finite-dimensional over \( \mathbb{Q} \) must be false. Hence, \( V \) is not finite-dimensional over \( \mathbb{Q} \).
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    Let $\alpha = (x_1, x_2)$ and $\beta = (y_1, y_2)$ be vectors in $\mathbb{R}^2$ such that
+    \[x_1y_1 + x_2y_2 = 0\]
+    \[x_1^2 + x_2^2 = y_1^2 + y_2^2 = 1\]
+    Prove that $B = \{\alpha, \beta\}$ is a basis for $\mathbb{R}^2$. Find the coordinates of the vector
+    $(a, b)$ in the ordered basis $B = \{\alpha, \beta\}$. (The conditions on $\alpha$ and $\beta$ say, geometrically,
+    that $\alpha$ and $\beta$ are perpindicular and each has length 1).
+
+    \begin{solution}
+        First, we prove that \( B = \{\alpha, \beta\} \) is a basis for \( \mathbb{R}^2 \). To do this, we need to show that \( \alpha \) and \( \beta \) are linearly independent and span \( \mathbb{R}^2 \).
+
+        Linear Independence:\\
+        Two vectors are linearly independent if the only solution to the equation \( c_1 \alpha + c_2 \beta = 0 \) is \( c_1 = c_2 = 0 \). Suppose that
+        \[c_1 \alpha + c_2 \beta = (0, 0),\]
+        or equivalently,
+        \[c_1 (x_1, x_2) + c_2 (y_1, y_2) = (0, 0).\]
+        This gives the system of equations:
+        \[c_1 x_1 + c_2 y_1 = 0,\]
+        \[c_1 x_2 + c_2 y_2 = 0.\]
+        Since \( \alpha \) and \( \beta \) are perpendicular, we know that \( x_1 y_1 + x_2 y_2 = 0 \). This orthogonality, along with the fact that \( \alpha \) and \( \beta \) each have length 1, implies that the matrix formed by \( \alpha \) and \( \beta \) is an orthogonal matrix:
+        \[
+            \begin{pmatrix}
+            x_1 & y_1 \\
+            x_2 & y_2
+            \end{pmatrix}
+        \]
+        An orthogonal matrix is invertible, so the system \( c_1 \alpha + c_2 \beta = 0 \) has only the trivial solution \( c_1 = c_2 = 0 \). Therefore, \( \alpha \) and \( \beta \) are linearly independent.
+    
+        Spanning \( \mathbb{R}^2 \):\\
+        Since \( \alpha \) and \( \beta \) are linearly independent vectors in \( \mathbb{R}^2 \), and \( \mathbb{R}^2 \) is a 2-dimensional vector space, the set \( \{\alpha, \beta\} \) must span \( \mathbb{R}^2 \). Therefore, \( B = \{\alpha, \beta\} \) is a basis for \( \mathbb{R}^2 \).
+    
+        Finding the coordinates of \( (a, b) \) in the basis \( B \):\\
+        Let \( (a, b) \in \mathbb{R}^2 \). We need to express \( (a, b) \) as a linear combination of \( \alpha \) and \( \beta \):
+        \[(a, b) = c_1 \alpha + c_2 \beta = c_1 (x_1, x_2) + c_2 (y_1, y_2).\]
+        This gives the system of equations:
+        \[a = c_1 x_1 + c_2 y_1,\]
+        \[b = c_1 x_2 + c_2 y_2.\]
+        To solve for \( c_1 \) and \( c_2 \), we use the fact that \( \alpha \) and \( \beta \) form an orthonormal basis. The coordinates \( c_1 \) and \( c_2 \) can be found using the dot product:
+        \[c_1 = (a, b) \cdot \alpha = a x_1 + b x_2,\]
+        \[c_2 = (a, b) \cdot \beta = a y_1 + b y_2.\]
+        Thus, the coordinates of \( (a, b) \) in the basis \( B = \{\alpha, \beta\} \) are \( (c_1, c_2) \), where
+        \[    c_1 = a x_1 + b x_2,    \]
+        \[    c_2 = a y_1 + b y_2.    \]
+    \end{solution}
+
+\end{problem}
+
+\begin{problem}
+    Let $V$ be the vector space over the complex numbers of all functions from $\mathbb{R}$ into $\mathbb{C}$, i.e.,
+    the space of all complex-valued functions on the real line. Let $f_1(x) = 1, f_2(x) = e^{ix}, f_3(x) = e^{-ix}$.
+
+    \begin{subproblem}
+        Prove that $f_1, f_2$ and $f_3$ are linearly independent.
+
+        \begin{solution}
+            To prove that \( f_1, f_2 \), and \( f_3 \) are linearly independent, we must show that if
+            \[        c_1 f_1(x) + c_2 f_2(x) + c_3 f_3(x) = 0        \]
+            for all \( x \in \mathbb{R} \), then \( c_1 = c_2 = c_3 = 0 \).
+
+            Substituting the definitions of \( f_1(x), f_2(x), f_3(x) \), we have:
+            \[
+            c_1 \cdot 1 + c_2 \cdot e^{ix} + c_3 \cdot e^{-ix} = 0.
+            \]
+            This simplifies to:
+            \[
+            c_1 + c_2 e^{ix} + c_3 e^{-ix} = 0.
+            \]
+            Now, using the identity \( e^{-ix} = \frac{1}{e^{ix}} \), we can rewrite this as:
+            \[
+            c_1 + c_2 e^{ix} + c_3 e^{-ix} = 0 \quad \text{for all} \quad x \in \mathbb{R}.
+            \]
+
+            This equation must hold for all real numbers \( x \), which forces the coefficients \( c_1, c_2, c_3 \) to be zero, because the functions \( 1 \), \( e^{ix} \), and \( e^{-ix} \) are linearly independent over the complex numbers. This implies that \( c_1 = c_2 = c_3 = 0 \).
+
+            Therefore, \( f_1, f_2 \), and \( f_3 \) are linearly independent.
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Let $g_1(x) = 1, g_2(x) = \cos{x}, g_3(x) = \sin{x}$. Find an invertible $3 \times 3$ matrix $P$ such that
+        \[g_i = \sum_{i = 1}^{3}P_{ij}f_i\]
+
+        \begin{solution}
+            We want to express the functions \( g_1(x), g_2(x), g_3(x) \) as linear combinations of \( f_1(x), f_2(x), f_3(x) \). That is, we need to find constants \( P_{ij} \) such that:
+            \[
+            g_1(x) = P_{11} f_1(x) + P_{21} f_2(x) + P_{31} f_3(x),
+            \]
+            \[        g_2(x) = P_{12} f_1(x) + P_{22} f_2(x) + P_{32} f_3(x),        \]
+            \[        g_3(x) = P_{13} f_1(x) + P_{23} f_2(x) + P_{33} f_3(x).        \]
+
+            First, recall the Euler formulas:
+            \[
+            e^{ix} = \cos{x} + i \sin{x}, \quad e^{-ix} = \cos{x} - i \sin{x}.
+            \]
+            Therefore, we can express \( \cos{x} \) and \( \sin{x} \) in terms of \( e^{ix} \) and \( e^{-ix} \):
+            \[
+            \cos{x} = \frac{e^{ix} + e^{-ix}}{2}, \quad \sin{x} = \frac{e^{ix} - e^{-ix}}{2i}.
+            \]
+
+            Now express the functions \( g_1(x), g_2(x), g_3(x) \) in terms of \( f_1(x), f_2(x), f_3(x) \):
+            - \( g_1(x) = 1 = f_1(x) \),
+            - \( g_2(x) = \cos{x} = \frac{f_2(x) + f_3(x)}{2} \),
+            - \( g_3(x) = \sin{x} = \frac{f_2(x) - f_3(x)}{2i} \).
+
+            Comparing these expressions with the general form \( g_j = \sum_{i=1}^{3} P_{ij} f_i \), we get the matrix \( P \):
+            \[
+            P = \begin{pmatrix}
+            1 & 0 & 0 \\
+            0 & \frac{1}{2} & \frac{1}{2} \\
+            0 & \frac{1}{2i} & \frac{-1}{2i}
+            \end{pmatrix}.
+            \]
+
+            This matrix is invertible since its determinant is non-zero (you can compute it to confirm this). Thus, the required matrix \( P \) is:
+            \[
+            P = \begin{pmatrix}
+            1 & 0 & 0 \\
+            0 & \frac{1}{2} & \frac{1}{2} \\
+            0 & \frac{1}{2i} & \frac{-1}{2i}
+            \end{pmatrix}.
+            \]
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}
+    Let $V$ and $W$ be vector spaces over the field $\mathbb{F}$ and let $U$ be an isomorphism
+    of $V$ onto $W$. Prove that $T \rightarrow UTU^{-1}$ is an isomorphism of $L(V, V)$ onto $L(W, W)$.
+
+
+    \begin{solution}
+        Let \( L(V, V) \) denote the space of linear maps from \( V \) to \( V \), and \( L(W, W) \) denote the space of linear maps from \( W \) to \( W \). We are given that \( U: V \to W \) is an isomorphism, meaning that \( U \) is a bijective linear map.
+
+        Define the map \( \varphi: L(V, V) \to L(W, W) \) by
+        \[    \varphi(T) = UTU^{-1},    \]
+        where \( T \in L(V, V) \). We will prove that \( \varphi \) is an isomorphism by showing that it is both linear and bijective.
+
+        Linearity of \( \varphi \):\\
+        We need to check that for any \( T_1, T_2 \in L(V, V) \) and any scalar \( c \in \mathbb{F} \), the following properties hold:
+        \[
+        \varphi(T_1 + T_2) = \varphi(T_1) + \varphi(T_2),
+        \]
+        \[
+        \varphi(c T_1) = c \varphi(T_1).
+        \]
+
+        First, consider the sum \( T_1 + T_2 \):
+        \[
+        \varphi(T_1 + T_2) = U(T_1 + T_2)U^{-1} = UT_1U^{-1} + UT_2U^{-1} = \varphi(T_1) + \varphi(T_2).
+        \]
+        Thus, \( \varphi \) preserves addition.
+
+        Next, consider the scalar multiplication \( c T_1 \):
+        \[
+        \varphi(c T_1) = U(c T_1)U^{-1} = c(UT_1U^{-1}) = c \varphi(T_1).
+        \]
+        Therefore, \( \varphi \) is linear.
+
+        Bijectivity of \( \varphi \):\\
+        To prove that \( \varphi \) is bijective, we must show that it is both injective (one-to-one) and surjective (onto).
+
+        Injectivity:\\
+        Suppose \( \varphi(T_1) = \varphi(T_2) \) for some \( T_1, T_2 \in L(V, V) \). Then:
+        \[
+        UT_1U^{-1} = UT_2U^{-1}.
+        \]
+        Multiplying both sides on the right by \( U \) and on the left by \( U^{-1} \), we get:
+        \[
+        T_1 = T_2.
+        \]
+        Thus, \( \varphi \) is injective.
+
+        Surjectivity:\\
+        Let \( S \in L(W, W) \). We need to find \( T \in L(V, V) \) such that \( \varphi(T) = S \). That is, we want
+        \[
+        UTU^{-1} = S.
+        \]
+        Multiplying both sides on the left by \( U^{-1} \) and on the right by \( U \), we get:
+        \[
+        T = U^{-1} S U.
+        \]
+        Since \( S \in L(W, W) \) and \( U^{-1} \in L(W, V) \), the composition \( T = U^{-1} S U \) is a linear map in \( L(V, V) \). Therefore, \( \varphi \) is surjective.
+        
+        Since \( \varphi \) is both linear and bijective, it is an isomorphism. Thus, the map \( T \mapsto UTU^{-1} \) is an isomorphism of \( L(V, V) \) onto \( L(W, W) \).
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    Let $R$ be a ring (with identity) with group of units $U(R)$.
+
+    \begin{subproblem}
+        Define elements $r, s \in R$ to be \textit{left associate} if there exists a $u \in U(R)$ such
+        that $s = ur$. Show that this gives an equivalence relation on $R$. One defines \textit{right associate} similarly.
+        
+        \begin{solution}        
+            Reflexivity: For any \( r \in R \), we want to show \( r \) is left associate to itself. Since the identity element \( 1 \in U(R) \), we have \( r = 1 \cdot r \), so \( r \) is left associate to itself.
+            
+            Symmetry: If \( r \) is left associate to \( s \), then there exists \( u \in U(R) \) such that \( s = ur \). Since \( u \in U(R) \), its inverse \( u^{-1} \) exists, and we can write \( r = u^{-1}s \), which shows that \( s \) is left associate to \( r \).
+            
+            Transitivity: If \( r \) is left associate to \( s \), and \( s \) is left associate to \( t \), then there exist \( u, v \in U(R) \) such that \( s = ur \) and \( t = vs \). Substituting the expression for \( s \) into \( t = vs \), we get \( t = vur \). Since \( vu \in U(R) \) (because \( U(R) \) is closed under multiplication), this shows that \( r \) is left associate to \( t \).
+
+            Therefore, left associativity is an equivalence relation on \( R \). The proof for right associativity is analogous.
+        \end{solution}
+    \end{subproblem}
+    \begin{subproblem}
+        Define elements $r, s \in R$ to be \textit{associate} if there exists $u, v \in U(R)$ such that $s = urv$. Show that
+        this gives an equivalence relation on $R$.
+
+        \begin{solution}        
+            Reflexivity: For any \( r \in R \), we have \( r = 1 \cdot r \cdot 1 \), where \( 1 \in U(R) \), so \( r \) is associate to itself.
+            
+            Symmetry: If \( r \) is associate to \( s \), then there exist \( u, v \in U(R) \) such that \( s = urv \). Taking inverses, we have \( r = u^{-1}sv^{-1} \), showing that \( s \) is associate to \( r \).
+            
+            Transitivity: If \( r \) is associate to \( s \), and \( s \) is associate to \( t \), then there exist \( u_1, v_1, u_2, v_2 \in U(R) \) such that \( s = u_1rv_1 \) and \( t = u_2sv_2 \). Substituting the expression for \( s \), we get \( t = u_2(u_1rv_1)v_2 = (u_2u_1)r(v_1v_2) \). Since \( u_2u_1 \in U(R) \) and \( v_1v_2 \in U(R) \), this shows that \( r \) is associate to \( t \).
+            
+            Therefore, associativity is an equivalence relation on \( R \).
+        \end{solution}
+    \end{subproblem}
+    \begin{subproblem}
+        Define elements $r, s \in R$ to be \textit{conjugate} if there exists $u \in U(R)$ such that $s = uru^{-1}$. Show that
+        this gives an equivalence relation on $R$.
+
+        \begin{solution}
+            Reflexivity: For any \( r \in R \), we have \( r = 1 \cdot r \cdot 1^{-1} = r \), where \( 1 \in U(R) \), so \( r \) is conjugate to itself.
+            
+            Symmetry: If \( r \) is conjugate to \( s \), then there exists \( u \in U(R) \) such that \( s = uru^{-1} \). Taking inverses, we get \( r = u^{-1}su \), showing that \( s \) is conjugate to \( r \).
+            
+            Transitivity: If \( r \) is conjugate to \( s \), and \( s \) is conjugate to \( t \), then there exist \( u, v \in U(R) \) such that \( s = uru^{-1} \) and \( t = vsv^{-1} \). Substituting the expression for \( s \) into \( t \), we get \( t = v(uru^{-1})v^{-1} = (vu)r(vu)^{-1} \). Since \( vu \in U(R) \), this shows that \( r \) is conjugate to \( t \).
+            
+            Therefore, conjugacy is an equivalence relation on \( R \).
+        \end{solution}
+    \end{subproblem}
+    \begin{subproblem}
+        Explicitly determine the equivalence classes of the four equivalence relations given above for each of the rings
+        listed below and give a system of unique representatives in each case:
+
+        (1) $\mathbb{Z}$
+        \begin{solution}
+
+            Left associate / right associate: In \( \mathbb{Z} \), the only units are \( \pm 1 \). Thus, \( r \) and \( s \) are left or right associate if and only if \( r = \pm s \). The equivalence classes are \( \{n, -n\} \) for each \( n \in \mathbb{Z}_{\geq 0} \), with unique representatives \( 0, 1, 2, 3, \dots \).
+        
+            Associate: Similarly, \( r \) and \( s \) are associate if and only if \( r = \pm s \). The equivalence classes are the same as for left and right associativity.
+            
+            Conjugate: In \( \mathbb{Z} \), since all units commute with elements, conjugacy is the same as associativity. The equivalence classes are the same as above.\\    
+        \end{solution}
+
+        (2) $\mathbb{F}[x]$ for $\mathbb{F}$ a field.
+        \begin{solution}
+
+            Left associate / right associate: The units in \( \mathbb{F}[x] \) are the nonzero elements of \( \mathbb{F} \). Therefore, two polynomials \( f(x), g(x) \in \mathbb{F}[x] \) are left or right associate if and only if \( f(x) = \lambda g(x) \) for some \( \lambda \in \mathbb{F}^\times \). The equivalence classes consist of scalar multiples of a given polynomial. A system of unique representatives is given by choosing polynomials with leading coefficient 1, i.e., monic polynomials.
+        
+            Associate: Since left and right associate are the same in \( \mathbb{F}[x] \), the associate relation also leads to the same equivalence classes, with monic polynomials as unique representatives.
+            
+            Conjugate: Conjugation would imply some kind of change of variables, but since \( \mathbb{F}[x] \) is a commutative ring, conjugacy is again equivalent to associativity. The equivalence classes are the same.\\    
+        \end{solution}
+
+        (4) $\mathbb{F}[[x]]$ for $\mathbb{F}$ a field.
+        \begin{solution}
+
+            The reasoning for \( \mathbb{F}[[x]] \) is similar to that for \( \mathbb{F}[x] \). The units in \( \mathbb{F}[[x]] \) are the power series with a nonzero constant term.
+        
+            Left associate / right associate: Two elements \( f(x), g(x) \in \mathbb{F}[[x]] \) are left or right associate if and only if \( f(x) = \lambda g(x) \) for some \( \lambda \in \mathbb{F}^\times \). The equivalence classes consist of scalar multiples of a given power series.
+            
+            Associate: As in the case of polynomials, the associate relation yields the same equivalence classes.
+            
+            Conjugate: Since \( \mathbb{F}[[x]] \) is commutative, conjugacy is again the same as associativity. The equivalence classes are the same.
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}
+    Let $V$ be vector spaces over a field $\mathbb{F}$ and let $W$ be a subspace. By Exercise 4, we know that the subspaces of $V/W$ are in one-to-one
+    correspondence with the subspaces of $V$ which contain $W$. Now suppose $U$ is a subspace of $V$ which contains $W$, so that $U/W$ is a subspace of the vector space $V/W$.
+    Give a description of the vector space $(V/W)/(U/W)$ in terms of yet another quotient. 
+
+    \begin{solution}
+        For quotient spaces, elements of \( V/W \) are cosets of the form \( v + W \) for \( v \in V \), and elements of \( U/W \) are cosets of the form \( u + W \) for \( u \in U \).
+
+        The quotient \( (V/W)/(U/W) \) can be interpreted as the following:
+        \begin{itemize}
+            \item The elements of \( V/W \) are of the form \( v + W \) where \( v \in V \).
+            \item The subspace \( U/W \subseteq V/W \) consists of the cosets \( u + W \) where \( u \in U \).
+            \item The quotient \( (V/W)/(U/W) \) is the set of cosets of the form \( (v + W) + (U/W) \), where \( v + W \in V/W \).
+        \end{itemize}
+        This can be rewritten in terms of the vector space \( V/U \). Specifically, we can think of \( (v + W) + (U/W) \) as the equivalence class of \( v \) modulo \( U \). Thus, the quotient \( (V/W)/(U/W) \) is isomorphic to the quotient space \( V/U \).
+
+        Therefore, we have:
+        \[
+        (V/W)/(U/W) \cong V/U.
+        \]
+        This isomorphism holds because in both cases, we are quotienting out by the subspace \( U \) modulo the intermediate step of modding out by \( W \) first, which does not affect the final result.
+    \end{solution}
+\end{problem}
+
+\begin{problem} (Extra Problems)
+    Let $V_1, V_2, U$ be vector spaces over $\mathbb{F}$.
+
+    \begin{subproblem}
+        Show that there is a one-to-one correspondence between the set of linear transformations $T:V_1 \oplus V_2 \rightarrow U$ and pairs of linear transformations
+        $(T_1, T_2)$ where $T_i:V_i \rightarrow U$. Restate what you have proved as a universal mapping property.
+
+        \begin{solution}
+            We aim to show that every linear transformation \( T: V_1 \oplus V_2 \to U \) can be uniquely described by a pair of linear transformations \( T_1: V_1 \to U \) and \( T_2: V_2 \to U \).
+
+            Let \( v_1 \in V_1 \) and \( v_2 \in V_2 \).\\
+            Any element \( v \in V_1 \oplus V_2 \) can be written uniquely as \( v = (v_1, v_2) \), where \( v_1 \in V_1 \) and \( v_2 \in V_2 \).
+
+            Suppose we are given a linear transformation \( T: V_1 \oplus V_2 \to U \).\\
+            Define \( T_1: V_1 \to U \) and \( T_2: V_2 \to U \) by setting:
+            \[
+            T_1(v_1) = T(v_1, 0) \quad \text{and} \quad T_2(v_2) = T(0, v_2)
+            \]
+            for all \( v_1 \in V_1 \) and \( v_2 \in V_2 \).
+            
+            These are well-defined linear transformations because \( T \) is linear. Now, for any \( (v_1, v_2) \in V_1 \oplus V_2 \), we have:
+            \[
+            T(v_1, v_2) = T(v_1, 0) + T(0, v_2) = T_1(v_1) + T_2(v_2).
+            \]
+            This shows that \( T \) is uniquely determined by the pair \( (T_1, T_2) \).
+
+            Conversely, given any pair of linear transformations \( T_1: V_1 \to U \) and \( T_2: V_2 \to U \), we can define a linear transformation \( T: V_1 \oplus V_2 \to U \) by:
+            \[
+            T(v_1, v_2) = T_1(v_1) + T_2(v_2).
+            \]
+            This map is linear, and the pair \( (T_1, T_2) \) uniquely determines \( T \).
+
+            Therefore, we have a one-to-one correspondence between linear transformations \( T: V_1 \oplus V_2 \to U \) and pairs \( (T_1, T_2) \), where \( T_1: V_1 \to U \) and \( T_2: V_2 \to U \).
+
+            Universal Mapping Property\\
+            The direct sum \( V_1 \oplus V_2 \) satisfies the following universal mapping property:\\
+            For any vector space \( U \) and any pair of linear maps \( T_1: V_1 \to U \) and \( T_2: V_2 \to U \), there exists a unique linear map \( T: V_1 \oplus V_2 \to U \) such that:
+            \[
+            T(v_1, v_2) = T_1(v_1) + T_2(v_2).
+            \]
+            This characterizes the direct sum \( V_1 \oplus V_2 \) as the coproduct in the category of vector spaces.
+        
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        So the analogue of the previous question for linear transformations $T:U \rightarrow V_1 \oplus V_2$.
+
+        \begin{solution}
+            We aim to show that there is a one-to-one correspondence between linear transformations \( T: U \to V_1 \oplus V_2 \) and pairs of linear transformations \( (T_1, T_2) \), where \( T_1: U \to V_1 \) and \( T_2: U \to V_2 \).
+
+            Let \( T: U \to V_1 \oplus V_2 \) be a linear transformation. For any \( u \in U \), \( T(u) \in V_1 \oplus V_2 \) can be written uniquely as \( T(u) = (T_1(u), T_2(u)) \), where \( T_1(u) \in V_1 \) and \( T_2(u) \in V_2 \). We can define two linear maps:
+            \[
+            T_1: U \to V_1 \quad \text{and} \quad T_2: U \to V_2
+            \]
+            by projecting \( T(u) \) onto the first and second components, respectively:
+            \[
+            T_1(u) = \text{proj}_{V_1}(T(u)), \quad T_2(u) = \text{proj}_{V_2}(T(u)).
+            \]
+            Since \( T \) is linear, it follows that \( T_1 \) and \( T_2 \) are linear transformations.
+
+            Conversely, given any pair of linear maps \( T_1: U \to V_1 \) and \( T_2: U \to V_2 \), we can define a linear transformation \( T: U \to V_1 \oplus V_2 \) by:
+            \[
+            T(u) = (T_1(u), T_2(u)).
+            \]
+            This map is linear because both \( T_1 \) and \( T_2 \) are linear, and it determines the pair \( (T_1, T_2) \).
+
+            Therefore, we have a one-to-one correspondence between linear transformations \\
+            \( T: U \to V_1 \oplus V_2 \) and pairs \( (T_1, T_2) \), where \( T_1: U \to V_1 \) and \( T_2: U \to V_2 \).
+
+            Universal Mapping Property\\
+            The direct sum \( V_1 \oplus V_2 \) satisfies the following universal mapping property: For any vector space \( U \) and any pair of linear maps \( T_1: U \to V_1 \) and \( T_2: U \to V_2 \), there exists a unique linear map \( T: U \to V_1 \oplus V_2 \) such that:
+            \[
+            T(u) = (T_1(u), T_2(u)).
+            \]
+            This characterizes the direct sum \( V_1 \oplus V_2 \) as the product in the category of vector spaces.
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}
+    (Extra Problems)
+
+    \begin{subproblem}
+        Let $V$ be a vector space over the field $\mathbb{R}$ of real numbers. Let $u, v, w$ be linearly independent vectors in $V$. Prove that $u + v, v + w$, and $u + W$ are linearly independent as well. 
+
+        \begin{solution}
+            Given that \( u, v, w \) are linearly independent vectors in \( V \).\\
+            We need to show that the vectors \( u + v \), \( v + w \), and \( u + w \) are also linearly independent.
+
+            Assume that there exist scalars \( a, b, c \in \mathbb{R} \) such that:
+            \[
+            a(u + v) + b(v + w) + c(u + w) = 0.
+            \]
+            Expanding this equation, we have:
+            \[
+            a(u + v) + b(v + w) + c(u + w) = a u + a v + b v + b w + c u + c w = (a + c)u + (a + b)v + (b + c)w = 0.
+            \]
+            Since \( u, v, w \) are linearly independent, the coefficients of \( u \), \( v \), and \( w \) must all be zero. Thus, we obtain the system of equations:
+            \[
+            \begin{aligned}
+                a + c &= 0, \\
+                a + b &= 0, \\
+                b + c &= 0.
+            \end{aligned}
+            \]
+            Solving this system, from the first equation, we get \( a = -c \). Substituting this into the second equation, we get \( -c + b = 0 \), so \( b = c \). Substituting \( b = c \) into the third equation, we get \( c + c = 0 \), so \( c = 0 \). Therefore, \( a = 0 \) and \( b = 0 \) as well.
+
+            Therefore, the only solution to the equation is \( a = b = c = 0 \), which implies that \( u + v \), \( v + w \), and \( u + w \) are linearly independent.
+
+            Thus, the vectors \( u + v \), \( v + w \), and \( u + w \) are linearly independent.
+        \end{solution}
+    \end{subproblem}
+    \begin{subproblem}
+        Does the same statement hold when $\mathbb{F}$ is replaced by an arbitrary field? Determine precisly what is true.
+
+        \begin{solution}
+            The result holds over any field \( \mathbb{F} \), not just \( \mathbb{R} \), provided that the characteristic of the field is not 2. Here’s why:
+
+            In the proof, we relied on solving the system of equations:
+            \[
+            \begin{aligned}
+                a + c &= 0, \\
+                a + b &= 0, \\
+                b + c &= 0.
+            \end{aligned}
+            \]
+            This system can be solved if we are allowed to divide by 2. In fields of characteristic not equal to 2, division by 2 is possible, so the same argument works, and we conclude that \( u + v \), \( v + w \), and \( u + w \) are linearly independent.
+
+            However, in fields of characteristic 2, the system of equations simplifies to the same system but
+            this doesn't necessarily imply that \( a = b = c = 0 \); in fact, any nonzero value for \( a, b, c \) can satisfy this system in characteristic 2. Thus, the vectors \( u + v \), \( v + w \), and \( u + w \) could be linearly dependent in fields of characteristic 2.
+
+            Therefore, the statement holds true over any field \( \mathbb{F} \) as long as the characteristic of \( \mathbb{F} \) is not 2. In fields of characteristic 2, the vectors \( u + v \), \( v + w \), and \( u + w \) may be linearly dependent.
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}[Extra Problems]
+    Let $V = \mathcal{P}_n$ denote the subspace of all polynomials of degree less than $n$ over the field $\mathbb{F}$ (we also include the 0 polynomial whose degree is not defined). 
+    Define $D: V \rightarrow V$ by $D(f) = f'$, the ordinary derivative of $f$ (determined by $x^k \longmapsto kx^{k-1}$, not via any limiting process). Determine the kernel and image of $D$.
+
+    \begin{solution}
+        We need to determine the kernel and image of the linear map \( D: V \to V \), where \( D(f) = f' \) is the derivative of a polynomial \( f \in \mathcal{P}_n \).
+
+        Kernel of \( D \) (\( \ker(D) \)):\\
+        The kernel of \( D \) consists of all polynomials \( f \in \mathcal{P}_n \) such that \( D(f) = f' = 0 \). The derivative of a polynomial is zero if and only if the polynomial is a constant. Hence, the kernel consists of all constant polynomials.
+    
+        In other words:
+        \[\ker(D) = \{ f \in \mathcal{P}_n \mid f(x) = c \text{ for some } c \in \mathbb{F} \}.\]
+        Therefore, \( \ker(D) \) is the subspace of \( \mathcal{P}_n \) consisting of all constant polynomials. This is a one-dimensional subspace of \( \mathcal{P}_n \), spanned by the constant polynomial \( 1 \), so:
+        \[\ker(D) = \mathrm{span}\{1\}.\]
+    
+        Image of \( D \) (\( \operatorname{Im}(D) \)):\\
+        The image of \( D \) consists of all polynomials that can be obtained as the derivative of some polynomial in \( \mathcal{P}_n \). If \( f(x) \in \mathcal{P}_n \), then \( f(x) \) is a polynomial of degree at most \( n \), so:
+        \[f(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_1 x + a_0.\]
+        Taking the derivative, we get:
+        \[f'(x) = n a_n x^{n-1} + (n-1) a_{n-1} x^{n-2} + \cdots + 1 \cdot a_1.\]
+        Thus, \( f'(x) \) is a polynomial of degree at most \( n-1 \). In fact, any polynomial of degree at most \( n-1 \) can be obtained as the derivative of some polynomial in \( \mathcal{P}_n \).
+    
+        Therefore, the image of \( D \) is the subspace of \( \mathcal{P}_n \) consisting of all polynomials of degree at most \( n-1 \). That is:
+        \[\operatorname{Im}(D) = \mathcal{P}_{n-1}.\]
+        
+        Thus, the kernel of \( D \) is \( \ker(D) = \mathrm{span}\{1\} \), the subspace of constant polynomials. And the image of \( D \) is \( \operatorname{Im}(D) = \mathcal{P}_{n-1} \), the subspace of polynomials of degree at most \( n-1 \).
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    Using the Universal Mapping Property for Quotient Spaces prove the following:
+
+    Let $W \subseteq V$ be vector spaces and $T: V \longmapsto V$ be a linear transformation such that $T(W) \subseteq W$. Then $T$ induces a linear transformation $\overline{T}: V/W \longmapsto V/W$ given by $\overline{T}(v + W) = T(v) + W$.
+    [Hint: What condition do you have to check?]
+
+    \begin{solution}
+        We are asked to prove that the linear map \( T: V \to V \), which satisfies \( T(W) \subseteq W \), induces a well-defined linear map \( \overline{T}: V/W \to V/W \), where \( \overline{T}(v + W) = T(v) + W \).
+
+        The Universal Mapping Property for Quotient Spaces:\\
+        If \( T: V \to V \) is a linear transformation and \( T(W) \subseteq W \), then there exists a unique linear transformation \( \overline{T}: V/W \to V/W \) such that:
+        \[\overline{T}(v + W) = T(v) + W,\]
+        for all \( v \in V \).
+    
+        To prove that \( \overline{T} \) is well-defined, we need to check that if two representatives \( v_1 \) and \( v_2 \) in \( V \) represent the same coset in \( V/W \), i.e., \( v_1 + W = v_2 + W \), then \( \overline{T}(v_1 + W) = \overline{T}(v_2 + W) \).
+    
+        Well-definedness:\\
+        Suppose \( v_1 + W = v_2 + W \). This means that:
+        \[v_1 - v_2 \in W.\]
+        Since \( T(W) \subseteq W \), applying \( T \) to both sides of this equation gives:
+        \[T(v_1 - v_2) = T(v_1) - T(v_2) \in W.\]
+        Therefore, \( T(v_1) + W = T(v_2) + W \). This shows that:
+        \[\overline{T}(v_1 + W) = T(v_1) + W = T(v_2) + W = \overline{T}(v_2 + W),\]
+        meaning that \( \overline{T} \) is well-defined.
+    
+        Linearity of \( \overline{T} \):\\
+        To show that \( \overline{T} \) is linear, let \( v_1 + W \) and \( v_2 + W \) be any elements in \( V/W \), and let \( \alpha \in \mathbb{F} \). We need to check that:
+        \[\overline{T}((v_1 + v_2) + W) = \overline{T}(v_1 + W) + \overline{T}(v_2 + W),\]
+        and:
+        \[\overline{T}(\alpha v_1 + W) = \alpha \overline{T}(v_1 + W).\]
+    
+        First, by definition of \( \overline{T} \), we have:
+        \[\overline{T}((v_1 + v_2) + W) = T(v_1 + v_2) + W = T(v_1) + T(v_2) + W = (T(v_1) + W) + (T(v_2) + W),\]
+        which shows that \( \overline{T} \) is additive.
+    
+        Similarly, for scalar multiplication:
+        \[\overline{T}(\alpha v_1 + W) = T(\alpha v_1) + W = \alpha T(v_1) + W = \alpha (T(v_1) + W),\]
+        showing that \( \overline{T} \) is homogeneous.
+    
+        Since \( \overline{T} \) is both additive and homogeneous, it is a linear transformation.
+    
+        Thus, we have shown that the map \( \overline{T}: V/W \to V/W \), defined by \( \overline{T}(v + W) = T(v) + W \), is well-defined and linear. This proves that \( T \) induces the linear transformation \( \overline{T} \) on the quotient space.
+
+    \end{solution}
+\end{problem}
+
+\end{document}

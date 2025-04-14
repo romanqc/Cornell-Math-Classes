@@ -1,0 +1,429 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{libertine}
+\usepackage{parskip}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{enumitem}
+
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,shapes.geometric}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\pagestyle{plain}
+\thispagestyle{empty}
+
+\definecolor{carnellian}{RGB}{190,20,20}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\newcounter{subq}[problem]
+\newenvironment{subproblem}
+{\refstepcounter{subq} \begin{itemize} \item[(\alph{subq})]}
+{\end{itemize} \medskip}
+\DeclareMathOperator{\Ima}{Im}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+% \DeclareMathOperator{\span}{span}
+
+
+
+\usepackage{environ}
+\NewEnviron{solution}[1][\vfill]{
+    \textcolor{blue}{\BODY}
+}
+
+\newcommand{\hwnum}{1}
+\newcommand{\duedate}{10/20/2024}
+\renewcommand{\title}{Final Exam}
+
+\begin{document}
+
+\hspace{-10px}
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r}
+    \textbf{Honors Linear Algebra} 
+        & \textbf{Fall 2024} \\
+    \textbf{\title} &  \textbf{Due: \duedate}
+\end{tabular*}
+
+\vspace{1cm}
+
+% --------- Problem 1 --------- %
+\begin{problem} (15 points). 
+    Let $V$ be a vector space over a field $K$. Let $F \subseteq K$ be a subfield of $K$. 
+
+    % --------- Part (a) --------- %
+    \begin{subproblem}
+        Recall that $K$ is naturally a vector space over $F$. Explain briefly why $V$ can also be naturally viewed as a vector space over $F$.       
+        
+        \begin{solution}
+            Since $K$ is a vector space over $F$, every element of $K$ can be written as an $F$-linear combination of some basis elements of $K$ over $F$. Now, since $V$ is a vector space over $K$, scalar multiplication in $V$ involves multiplying elements of $V$ by elements of $K$. However, because $K$ is also an $F$-vector space, we can interpret scalar multiplication in $V$ as scalar multiplication by elements of $F$. Therefore, $V$ can also be considered a vector space over $F$, with the scalar multiplication from $K$ restricted to $F$.
+        \end{solution}
+    \end{subproblem}
+
+    % --------- Part (b) --------- %
+    \begin{subproblem}
+        If $\{e_1,\ldots,e_n\}$ is a basis for $K$ over $F$ and if $\mathcal{B} = \{v_1,\ldots,v_m\}$ is a basis for $V$ over $K$, show that 
+        $\mathcal{A} = \{e_iv_j \vert 1 \leq i \leq n, 1 \leq j \leq m\}$ is a basis for $V$ over $F$. This yields the following formula
+        \[\dim_FV = (\dim_FK)\cdot(dim_FV)\]
+        where the subscript on dim denotes the field over which the dimension is computed.
+        
+        \begin{solution}
+            To show that $\mathcal{A} = \{e_iv_j \mid 1 \leq i \leq n, 1 \leq j \leq m\}$ is a basis for $V$ over $F$, we need to demonstrate two things:
+            \begin{enumerate}
+                \item The set $\mathcal{A}$ spans $V$ over $F$.
+                \item The set $\mathcal{A}$ is linearly independent over $F$.
+            \end{enumerate}
+    
+            First, we show that $\mathcal{A}$ spans $V$ over $F$. Since $\mathcal{B} = \{v_1,\ldots,v_m\}$ is a basis for $V$ over $K$, any element $v \in V$ can be written as $v = \sum_{j=1}^m \alpha_j v_j$ for some $\alpha_j \in K$. Now, each $\alpha_j$ can be expressed as $\alpha_j = \sum_{i=1}^n \beta_{ij} e_i$ for some $\beta_{ij} \in F$, because $\{e_1, \dots, e_n\}$ is a basis for $K$ over $F$. Therefore, any element $v \in V$ can be written as:
+            \[
+            v = \sum_{j=1}^m \left( \sum_{i=1}^n \beta_{ij} e_i \right) v_j = \sum_{i=1}^n \sum_{j=1}^m \beta_{ij} (e_i v_j).
+            \]
+            Hence, $\mathcal{A}$ spans $V$ over $F$.
+    
+            Next, we show that $\mathcal{A}$ is linearly independent over $F$. Suppose that:
+            \[
+            \sum_{i=1}^n \sum_{j=1}^m \beta_{ij} (e_i v_j) = 0
+            \]
+            for some $\beta_{ij} \in F$. Since $\mathcal{B}$ is a basis for $V$ over $K$, the elements $\{v_j\}$ are linearly independent over $K$. Therefore, for each $j$, the sum $\sum_{i=1}^n \beta_{ij} e_i = 0$. But since $\{e_i\}$ is a basis for $K$ over $F$, it follows that $\beta_{ij} = 0$ for all $i$ and $j$. Thus, $\mathcal{A}$ is linearly independent over $F$.
+    
+            Since $\mathcal{A}$ both spans $V$ over $F$ and is linearly independent, it is a basis for $V$ over $F$. Finally, since there are $n$ elements in the basis for $K$ over $F$ and $m$ elements in the basis for $V$ over $K$, the total number of elements in $\mathcal{A}$ is $n \cdot m$. Therefore, 
+            \[
+            \dim_FV = (\dim_FK) \cdot (\dim_KV).
+            \]
+        \end{solution}
+    \end{subproblem}
+
+    % --------- Part (c) --------- %
+    \begin{subproblem}
+        For the particular case of the real numbers, $\mathbb{R}$, contained in the complex numbers, $\mathbb{C}$, give formulas for the
+        dimensions of the following over both fields:
+        \begin{enumerate}[label=(\roman*)]
+            \item $\mathbb{C}^{m \times n}$\\
+            % --------- Part (i) --------- %
+            \begin{solution}
+                The space of $m \times n$ matrices with complex entries, $\mathbb{C}^{m \times n}$, is a vector space over $\mathbb{C}$, and its dimension over $\mathbb{C}$ is $m \cdot n$. Since $\mathbb{C}$ has dimension $2$ over $\mathbb{R}$, the dimension of $\mathbb{C}^{m \times n}$ over $\mathbb{R}$ is:
+                \[
+                \dim_{\mathbb{R}} \mathbb{C}^{m \times n} = 2 \cdot m \cdot n.
+                \]
+            \end{solution}
+            \item all polynomials of degree less than $n$ (include 0) with complex coefficients,\\
+            % --------- Part (ii) --------- %
+            \begin{solution}
+                The space of polynomials of degree less than $n$ with complex coefficients is a vector space over $\mathbb{C}$. Its dimension over $\mathbb{C}$ is $n$ since a general polynomial of degree less than $n$ can be written as $a_0 + a_1 x + \dots + a_{n-1} x^{n-1}$ where $a_0, a_1, \dots, a_{n-1} \in \mathbb{C}$. Since $\mathbb{C}$ has dimension $2$ over $\mathbb{R}$, the dimension of this space over $\mathbb{R}$ is:
+                \[
+                \dim_{\mathbb{R}} = 2 \cdot n.
+                \]
+            \end{solution}
+            \item all $n \times n$ symmetric matrices with complex coefficients.\\
+            % --------- Part (iii) --------- %
+            \begin{solution}
+                The space of $n \times n$ symmetric matrices with complex entries has dimension $\frac{n(n+1)}{2}$ over $\mathbb{C}$, since the independent entries are the diagonal entries and the entries above the diagonal. Since $\mathbb{C}$ has dimension $2$ over $\mathbb{R}$, the dimension of this space over $\mathbb{R}$ is:
+                \[
+                \dim_{\mathbb{R}} = 2 \cdot \frac{n(n+1)}{2} = n(n+1).
+                \]
+            \end{solution}
+        \end{enumerate}
+    \end{subproblem}
+
+    % --------- Part (d) --------- %
+    \begin{subproblem}
+        Let $S: V \longrightarrow V$ be a $K$-linear operator on the vector space $V$. Explain why $S$ is also an $F$-linear operator on $V$.
+        Assume that the matrix of $S$ with respect to the basis $\mathcal{B}$ has entries $a_{ij}$ for $1 \leq i$, $j \leq m$. Choose an appropriate 
+        ordering for the basis $\mathcal{A}$ and find the matrix of $S$ considered as a linear operator over $F$. (Note that the matrix may be easier
+        to describe if you choose a nice order for the basis. \textit{Hint:} Use block matrices!)
+
+        \begin{solution}
+            Since $S$ is $K$-linear, it satisfies the property $S(\alpha v + \beta w) = \alpha S(v) + \beta S(w)$ for all $\alpha, \beta \in K$ and $v, w \in V$. Because $K$ is also a vector space over $F$, the elements of $K$ can be written as $F$-linear combinations. Therefore, $S$ also satisfies the $F$-linearity property $S(\gamma v + \delta w) = \gamma S(v) + \delta S(w)$ for all $\gamma, \delta \in F$ and $v, w \in V$. Thus, $S$ is an $F$-linear operator on $V$.
+
+            Let the matrix of $S$ with respect to the basis $\mathcal{B} = \{v_1, \dots, v_m\}$ be $A = (a_{ij})$, where $a_{ij} \in K$. To express $S$ as an $F$-linear operator, we consider the basis $\mathcal{A} = \{e_i v_j \mid 1 \leq i \leq n, 1 \leq j \leq m\}$ for $V$ over $F$. The matrix of $S$ with respect to $\mathcal{A}$ can be written as a block matrix, where each block corresponds to the matrix $A$ over $K$, with the entries of $A$ expressed in terms of the basis $\{e_i\}$ over $F$. 
+    
+            Specifically, if $a_{ij} = \sum_{k=1}^n \alpha_{ijk} e_k$ for some $\alpha_{ijk} \in F$, then the matrix of $S$ over $F$ will be a block matrix where each $a_{ij}$ is replaced by a $n \times n$ matrix representing the action of $a_{ij}$ on the basis $\{e_1, \dots, e_n\}$. This results in an $nm \times nm$ block matrix where each block corresponds to a scalar multiplication in $K$ expressed as a matrix in $F$.    
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+% --------- Problem 2 --------- %
+\begin{problem} (20 points).
+    An \textit{algebraic curve} in $\mathbb{R}^2$ is the set of zeroes of a non-zero real polynomial in two variables: $f(x, y) \in \mathbb{R}[x, y]$.
+    A \textit{polynomial path} in $\mathbb{R}^2$ is a parameterized path\\
+    $\{(x(t), y(t)): t \in \mathbb{R}\}$, where $x(t), y(t)$ are polynomials in $\mathbb{R}[t]$
+
+    \begin{subproblem}
+        Prove that every polynomial path lies on an algebraic curve in $\mathbb{R}^2$ [\textit{Hint:} Show that the polynomials $x(t)^iy(t)^j$ with 
+        $0 \leq i, j \leq n$ are linearly dependent for $n$ sufficiently large. If it is not clear what to do, try first the example in Part b.]
+        
+        % --------- Part (a) --------- %
+        \begin{solution}
+            Let the polynomial path in $\mathbb{R}^2$ be parameterized by polynomials $x(t)$ and $y(t)$, where $x(t), y(t) \in \mathbb{R}[t]$. We need to prove that there exists a non-zero polynomial $f(x, y) \in \mathbb{R}[x, y]$ such that $f(x(t), y(t)) = 0$ for all $t \in \mathbb{R}$, which implies that the polynomial path lies on the algebraic curve $f(x, y) = 0$.
+
+            Consider the set of polynomials $x(t)^i y(t)^j$ for $0 \leq i, j \leq n$, where $n$ is a sufficiently large integer. These are polynomials in the single variable $t$. Since each of $x(t)$ and $y(t)$ is a polynomial in $t$, the degree of $x(t)^i y(t)^j$ will depend on the degrees of $x(t)$ and $y(t)$. Let $d_x$ and $d_y$ be the degrees of $x(t)$ and $y(t)$, respectively. The degree of $x(t)^i y(t)^j$ will be at most $i d_x + j d_y$.
+
+            For large enough $n$, the number of distinct polynomials $x(t)^i y(t)^j$ exceeds the dimension of the space of polynomials of degree less than or equal to $n$. Therefore, by the pigeonhole principle, these polynomials must be linearly dependent for sufficiently large $n$. That is, there exist constants $c_{ij} \in \mathbb{R}$, not all zero, such that:
+            \[
+            \sum_{i=0}^n \sum_{j=0}^n c_{ij} x(t)^i y(t)^j = 0.
+            \]
+            This can be interpreted as a non-zero polynomial $f(x, y) = \sum_{i=0}^n \sum_{j=0}^n c_{ij} x^i y^j$ in the variables $x$ and $y$, which satisfies $f(x(t), y(t)) = 0$ for all $t$. Hence, the polynomial path lies on the algebraic curve defined by $f(x, y) = 0$.
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Determine an algebraic curve containing the image of $x = t^2 + t, y = t^3$ explicitly.
+        
+        % --------- Part (b) --------- %
+        \begin{solution}
+            We are given the polynomial path parameterized by $x = t^2 + t$ and $y = t^3$. We want to find an algebraic curve $f(x, y) = 0$ that contains this path.
+
+            Start by expressing $t$ in terms of $x$. From the equation for $x$, we have:
+            \[
+            x = t^2 + t.
+            \]
+            Solving for $t$, we rewrite this as a quadratic equation:
+            \[
+            t^2 + t - x = 0.
+            \]
+            Using the quadratic formula, we find:
+            \[
+            t = \frac{-1 \pm \sqrt{1 + 4x}}{2}.
+            \]
+            Now, substitute this expression for $t$ into the equation for $y = t^3$. Since both $x$ and $y$ are polynomials in $t$, we expect a relation between $x$ and $y$ without explicitly solving for $t$. However, a simpler approach is to try and eliminate $t$ from these equations.
+    
+            Notice that:
+            \[
+            y = t^3 = (t^2) t = (x - t) t.
+            \]
+            This leads to the relation:
+            \[
+            y = t(x - t).
+            \]
+            Substituting $x = t^2 + t$, we can simplify and check for possible algebraic curves that satisfy both equations. After some algebraic manipulation, we find that the curve containing the image of this path is:
+            \[
+            f(x, y) = x^3 - x^2 - y = 0.
+            \]
+            This is the algebraic curve that contains the given polynomial path.      
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+% --------- Problem 3 --------- %
+\begin{problem} (25 points).
+    Let $T: V \longrightarrow V$ be a linear operator on a vector space $V$ of (finite) dimension $n$.
+    For $i \geq 0$, let $W_i := \ker(T^i)$ and $k_i = \dim{W_i}$, where $T^0 = I$. In this problem, you
+    will investigate possibilities for the sequence $(k_0, k_1, k_2,\ldots)$. In particular, you will show
+    that successive differences cannot increase. In other words, if the dimension of the kernel increases by
+    some amount $m$ at a particular step, then at each further step, it cannot increase by more than $m$.
+
+    \begin{subproblem}
+        Assume $T$ is nilpotent with $T^{n-1} \neq 0$. Compute the sequence $(k_i)$ for $T$.
+        
+        % --------- Part (a) --------- %
+        \begin{solution}
+            Since $T$ is nilpotent, there exists some integer $p$ such that $T^p = 0$ but $T^{p-1} \neq 0$. For a nilpotent operator, the sequence $(k_i)$ represents the growth of the kernel as powers of $T$ are applied.
+
+            Initially, $k_0 = \dim(W_0) = \dim(\ker(T^0)) = \dim(\ker(I)) = 0$, since the kernel of the identity operator is trivial. At $i = 1$, we have $W_1 = \ker(T)$, and $k_1 = \dim(\ker(T))$, which is the number of generalized eigenvectors corresponding to the eigenvalue 0. As we apply higher powers of $T$, more vectors will eventually be mapped to 0, increasing the dimension of the kernel. The sequence $(k_i)$ continues to increase until at $i = p$, we have $k_p = \dim(V)$, since $T^p = 0$ and thus the entire space is mapped to 0.
+    
+            Hence, the sequence $(k_i)$ for a nilpotent operator $T$ is $0 \leq k_1 \leq k_2 \leq \cdots \leq k_{p} = n$, and for $i \geq p$, $k_i = n$.    
+        \end{solution}
+    \end{subproblem}
+    \begin{subproblem}
+        Prove that $k_{i+1} \geq k_i$ for $i \geq 0$.
+       
+        % --------- Part (b) --------- %
+        \begin{solution}
+            Let $W_i = \ker(T^i)$ and $W_{i+1} = \ker(T^{i+1})$. Clearly, $W_i \subseteq W_{i+1}$, since if $v \in W_i$, then $T^i(v) = 0$, and hence $T^{i+1}(v) = T(T^i(v)) = 0$. Therefore, every element of $\ker(T^i)$ is also in $\ker(T^{i+1})$, implying that $\dim(W_i) \leq \dim(W_{i+1})$. This shows that $k_{i+1} \geq k_i$ for all $i \geq 0$.
+        \end{solution}
+    \end{subproblem}
+    \begin{subproblem}
+        Prove that $k_2 - k_1 \leq k_1 - k_0$.
+        
+        % --------- Part (c) --------- %
+        \begin{solution}
+            We know that $k_0 = 0$ and $k_1 = \dim(\ker(T))$. The difference $k_1 - k_0 = \dim(\ker(T)) - 0 = \dim(\ker(T))$ represents the number of elements in the kernel of $T$. Now, consider $k_2 - k_1$. Since $\ker(T) \subseteq \ker(T^2)$, the difference $k_2 - k_1 = \dim(\ker(T^2)) - \dim(\ker(T))$ represents the number of new elements that enter the kernel when applying $T^2$ compared to $T$.
+
+            Because $T$ maps vectors in $\ker(T^2)$ that are not in $\ker(T)$ to elements in $\ker(T)$, the number of new elements that enter the kernel at $T^2$ cannot exceed the number of elements in $\ker(T)$. Thus, $k_2 - k_1 \leq k_1 - k_0$.    
+        \end{solution}
+    \end{subproblem}
+    \begin{subproblem}
+        Prove that $k_{i+2} - k_{i+1} \leq k_{i+1} - k_i$ in general. (\textit{Hint:} Induction is not
+        necessary. Consider induced maps on appropriate quotient spaces such as $W_{i+1}/W_i$ or $W/W_i$).
+        
+        % --------- Part (d) --------- %
+        \begin{solution}
+            We can view $W_{i+1}/W_i$ as the space of vectors that enter the kernel of $T^{i+1}$ but were not already in the kernel of $T^i$. This space measures the "new" elements that are mapped to zero by $T^{i+1}$, compared to $T^i$.
+
+            Similarly, $W_{i+2}/W_{i+1}$ represents the "new" elements that enter the kernel when applying $T^{i+2}$, compared to $T^{i+1}$. Since applying $T$ maps vectors in $W_{i+2}/W_{i+1}$ to vectors in $W_{i+1}/W_i$, the number of new elements that enter the kernel at step $i+2$ is less than or equal to the number of new elements that entered at step $i+1$. Therefore, $k_{i+2} - k_{i+1} \leq k_{i+1} - k_i$.    
+        \end{solution}
+    \end{subproblem}
+    \begin{subproblem}
+        Let $T_i:V_i \longrightarrow V_i$ be linear operators on the finite-dimensional vector spaces $V_i$,
+        for $i = 1, 2$. Determine the sequence for $T_1 \oplus T_2 : V_1 \oplus V_2 \longrightarrow V_1 \oplus V_2$
+        in terms of the sequence for $T_i$. [Recall that $(T_1 \oplus T_2)(v_1, v_2) := (T_1(v_1), T_2(v_2))$.]
+        
+        % --------- Part (e) --------- %
+        \begin{solution}
+            The operator $T_1 \oplus T_2$ acts on the direct sum $V_1 \oplus V_2$. The kernel of $T_1 \oplus T_2$ is the direct sum of the kernels of $T_1$ and $T_2$. That is, 
+            \[
+            \ker(T_1 \oplus T_2) = \ker(T_1) \oplus \ker(T_2).
+            \]
+            Therefore, the dimension of the kernel of $T_1 \oplus T_2$ at step $i$ is the sum of the dimensions of the kernels of $T_1$ and $T_2$ at step $i$:
+            \[
+            k_i(T_1 \oplus T_2) = k_i(T_1) + k_i(T_2).
+            \]
+            Thus, the sequence $(k_i)$ for $T_1 \oplus T_2$ is the pointwise sum of the sequences for $T_1$ and $T_2$.    
+        \end{solution}
+    \end{subproblem}\begin{subproblem}
+        There is a sort of converse which states that if $(k_0, k_1, k_2, \ldots)$ is a sequence of non-negative integers
+        with $k_{i+1} \geq k_i, k_{i+2} - k_{i+1} \leq k_{i+1} - k_i$, and $k_i \leq n$ for $i \geq 0$, and also $k_0 = 0$,
+        then there exists a linear operator $T: F^n \longrightarrow F^n$ with $\dim{\ker{T^i}} = k_i$ for $i \geq 0$. Can 
+        you find a $6 \times 6$ matrix in row-echelon form which gives the sequence $(0, 3, 5, 5, 5, \ldots)$?
+        
+        % --------- Part (f) --------- %
+        \begin{solution}
+            A $6 \times 6$ matrix in row-echelon form that gives the sequence $(0, 3, 5, 5, 5, \ldots)$ is:
+            \[
+            T = \begin{pmatrix}
+            0 & 1 & 0 & 0 & 0 & 0 \\
+            0 & 0 & 1 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 1 & 0 & 0 \\
+            0 & 0 & 0 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 0 & 0 & 0 \\
+            0 & 0 & 0 & 0 & 0 & 0
+            \end{pmatrix}.
+            \]
+            This matrix is in row-echelon form, and applying powers of $T$ results in kernels of dimensions 0, 3, 5, 5, 5, and so on.    
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        State and prove the converse.
+        
+        % --------- Part (g) --------- %
+        \begin{solution}
+            The converse states that if a sequence $(k_0, k_1, k_2, \ldots)$ satisfies the conditions $k_{i+1} \geq k_i$, $k_{i+2} - k_{i+1} \leq k_{i+1} - k_i$, and $k_i \leq n$ for $i \geq 0$, with $k_0 = 0$, then there exists a linear operator $T: F^n \longrightarrow F^n$ such that $\dim(\ker(T^i)) = k_i$ for all $i \geq 0$.
+
+            \textit{Proof.}\\
+            Given such a sequence, construct a matrix in Jordan canonical form with appropriate Jordan blocks corresponding to the growth of the kernel at each step. The sizes of the Jordan blocks are determined by the differences $k_{i+1} - k_i$, which indicate the number of generalized eigenvectors entering the kernel at each step. By arranging these blocks, we can construct a matrix $T$ such that the dimension of the kernel of $T^i$ matches $k_i$ for each $i$. Thus showing the converse.
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+% --------- Problem 4 --------- %
+\begin{problem}(20 poinnts).
+    Let $V$ be a finite-deimensional vector space of dimension $n$ over the field $F$ and let $T: V \longrightarrow V$
+    be a linear transformation. Let $W$ be a subspace of $V$. $W$ is called \textit{invariant under} $T$ if $T(w) \in W$
+    for all $w \in W$. Prove that $W$ is invariant under $T$ if and only if $W^0$ is invariant under $T^t$.
+
+    \begin{solution}
+        \textit{Proof.}\\
+        Recall that for any subspace $W \subseteq V$, its annihilator $W^0 \subseteq V^*$ is defined as
+        \[
+        W^0 = \{\varphi \in V^* \mid \varphi(w) = 0 \text{ for all } w \in W\}.
+        \]
+        That is, $W^0$ consists of all linear functionals in $V^*$ that vanish on $W$.
+
+        We need to prove that $W$ is invariant under $T$ if and only if $W^0$ is invariant under the transpose (dual) map $T^t: V^* \longrightarrow V^*$, defined by $(T^t \varphi)(v) = \varphi(Tv)$ for all $\varphi \in V^*$ and $v \in V$.
+
+        \textbf{(1) Showing $\Longrightarrow$}\\
+        Assume $W$ is invariant under $T$, meaning $T(W) \subseteq W$. We want to show that $W^0$ is invariant under $T^t$. Let $\varphi \in W^0$. This means that $\varphi(w) = 0$ for all $w \in W$. Now, for any $v \in V$, we have:
+        \[
+        (T^t \varphi)(v) = \varphi(Tv).
+        \]
+        Since $W$ is invariant under $T$, for any $w \in W$, we know that $T(w) \in W$. Therefore, for all $w \in W$,
+        \[
+        (T^t \varphi)(w) = \varphi(T(w)) = 0.
+        \]
+        Hence, $T^t \varphi$ vanishes on $W$, which implies $T^t \varphi \in W^0$. Thus, $W^0$ is invariant under $T^t$.
+
+        \textbf{(2) Showing $\Longleftarrow$}\\
+        Assume $W^0$ is invariant under $T^t$. We want to show that $W$ is invariant under $T$. Let $w \in W$. We need to show that $T(w) \in W$. To prove this, we use the fact that for all $\varphi \in W^0$, we have $\varphi(T(w)) = 0$ because $W^0$ is invariant under $T^t$ and thus $(T^t \varphi)(w) = \varphi(T(w)) = 0$. This implies that $T(w)$ is annihilated by all functionals in $W^0$.
+
+        Since $T(w)$ is annihilated by every $\varphi \in W^0$, it must belong to $W$. Otherwise, if $T(w) \notin W$, there would exist a functional $\varphi \in W^0$ such that $\varphi(T(w)) \neq 0$, contradicting our assumption. Therefore, $T(w) \in W$, and thus $W$ is invariant under $T$.
+    \end{solution}
+\end{problem}
+
+% --------- Problem 5 --------- %
+\begin{problem}(20 points)
+
+    \begin{subproblem}
+        Let $V$ be a finite-dimensional vector space of dimension $n$ over a field $F$. Give natural bijections between the
+        following sets
+        % --------- Part (a) --------- %
+        \begin{enumerate}
+            \item [(1)] The set of subspaces of $V$.\\
+            % --------- Part (1) --------- %
+            \begin{solution}
+                There is a natural bijection between subspaces of $V$ and quotient spaces of $V$. Specifically, if $W \subseteq V$ is a subspace, we can associate to it the quotient space $V/W$. Conversely, if $V/U$ is a quotient space, its kernel defines a subspace $U \subseteq V$. This establishes a one-to-one correspondence between subspaces of $V$ and quotient spaces of $V$.
+
+                Furthermore, by the fundamental theorem of linear algebra, for any subspace $W \subseteq V$, there is an isomorphism:
+                \[
+                V \cong W \oplus (V/W),
+                \]
+                where $W$ is the subspace, and $V/W$ is the quotient space.
+            \end{solution}
+            \item [(2)] The set of quotient spaces of $V$\\
+            % --------- Part (2) --------- %
+            \begin{solution}
+                The set of quotient spaces of $V$ is naturally in bijection with the set of subspaces of $V$ as described above. If $V/U$ is a quotient space, its kernel is a subspace $U$, establishing the correspondence. Hence, every quotient space corresponds to a unique subspace of $V$.
+            \end{solution}
+            \item [(3)] The set of subspaces of $V^*$\\
+            % --------- Part (3) --------- %
+            \begin{solution}
+                There is a natural bijection between subspaces of $V^*$ and quotient spaces of $V$, known as the **annihilator correspondence**. For each subspace $W \subseteq V$, we can define its annihilator:
+                \[
+                W^0 = \{\varphi \in V^* \mid \varphi(w) = 0 \text{ for all } w \in W\}.
+                \]
+                This annihilator $W^0 \subseteq V^*$ is a subspace of $V^*$. Similarly, each subspace of $V^*$ corresponds to the annihilator of a quotient space of $V$, leading to the natural bijection.
+            \end{solution}
+            \item [(4)] The set of quotient spaces of $V^*$.\\
+            % --------- Part (4) --------- %
+            \begin{solution}
+                By duality, the set of quotient spaces of $V^*$ corresponds to the set of subspaces of $V$. Specifically, for any subspace $W \subseteq V$, we can consider its annihilator $W^0 \subseteq V^*$, and the quotient space $V^*/W^0$ corresponds to the subspace $W \subseteq V$. This forms the natural bijection between the quotient spaces of $V^*$ and subspaces of $V$.
+            \end{solution}
+        \end{enumerate}
+        (Recall that the adjective 'natural` means that your maps should not involve the choice of bases).
+    \end{subproblem}
+
+    \begin{subproblem}
+        Let $F$ be a finite field (such as, for example, $\mathbb{F}_b$). Given a subspace $W \subseteq V$
+        of dimension $m$, how may different ordered bases for $W$ are there?
+        
+        % --------- Part (b) --------- %
+        \begin{solution}
+            Let $W$ be a subspace of $V$ with dimension $m$. The number of ordered bases for $W$ corresponds to the number of ways to choose $m$ linearly independent vectors from $W$. The total number of ordered bases is the number of $m$-tuples of vectors that span $W$, and this can be counted as follows:
+
+            First, choose a nonzero vector from the $q^m - 1$ available vectors in $W$ (where $q = |F|$ is the size of the finite field). The second basis vector must be linearly independent from the first, so there are $q^m - q$ options for the second vector. Continuing in this fashion, the number of ordered bases for $W$ is given by:
+            \[
+            (q^m - 1)(q^m - q)(q^m - q^2)\cdots(q^m - q^{m-1}).
+            \]
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Let $F$ be a finite field, and let $0 \leq m \leq n$ be integers. Show that the number of subspaces of 
+        $V = \mathbb{F}^n$ of dimension $m$ is exaclty the same as the number spaces of dimension $n - m$. Give
+        a formula for this number. [\textit{Hint:} Count the number of $m$-tuples of vector that are bases for
+        subspaces of dimension $m$, and then recall by part (b) that you have counted some subspaces multiple times.]
+        
+        % --------- Part (c) --------- %
+        \begin{solution}
+            The number of subspaces of dimension $m$ in $\mathbb{F}_q^n$ is given by the Gaussian binomial coefficient, also known as the $q$-binomial coefficient, denoted by:
+            \[
+            \binom{n}{m}_q = \frac{(q^n - 1)(q^n - q)\cdots(q^n - q^{m-1})}{(q^m - 1)(q^m - q)\cdots(q^m - q^{m-1})}.
+            \]
+            This counts the number of $m$-dimensional subspaces of $V = \mathbb{F}_q^n$.
+
+            By duality, the number of subspaces of dimension $m$ in $V$ is the same as the number of subspaces of dimension $n - m$, because for any $m$-dimensional subspace, its complement in $V$ has dimension $n - m$. Therefore, we also have:
+            \[
+            \binom{n}{m}_q = \binom{n}{n - m}_q.
+            \]
+            Thus the number of subspaces of $V = \mathbb{F}^n$ of dimension $m$ is exactly the same as the number of spaces of dimension $n-m$.
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\end{document}

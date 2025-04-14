@@ -1,0 +1,741 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{libertine}
+\usepackage{parskip}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,shapes.geometric}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\pagestyle{plain}
+\thispagestyle{empty}
+
+\definecolor{carnellian}{RGB}{190,20,20}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\newcounter{subq}[problem]
+\newenvironment{subproblem}
+{\refstepcounter{subq} \begin{itemize} \item[(\alph{subq})]}
+{\end{itemize} \medskip}
+\DeclareMathOperator{\ima}{im}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\der}{Der}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Char}{char}
+\DeclareMathOperator{\Cen}{Cen}
+% \DeclareMathOperator{\span}{span}
+
+
+
+\usepackage{environ}
+\NewEnviron{solution}[1][\vfill]{
+    \textcolor{blue}{\BODY}
+}
+
+\newcommand{\hwnum}{6}
+\newcommand{\duedate}{10/13/2024}
+\renewcommand{\title}{Dual Spaces}
+
+\begin{document}
+
+\hspace{-10px}
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r}
+    \textbf{Honors Linear Algebra} 
+        & \textbf{Fall 2024} \\
+    \textbf{HW\hwnum: \title} &  \textbf{Due: \duedate}
+\end{tabular*}
+
+\vspace{1cm}
+
+\begin{problem}
+    Let $V$ be a finite-dimensional vector space over the field $\mathbb{F}$ and let $T$ be a 
+    linear operator on $V$. Let $c$ be a scalar and suppose there is a non-zero vector $\alpha$
+    in $V$ such that $T\alpha = c\alpha$. Prove that there is a non-zero linear functional $f$
+    on $V$ such that $T^tf = cf$.
+
+    \begin{solution}
+        Since $T$ is a linear operator on $V$, we can consider the dual space $V^*$, which consists of all linear functionals on $V$. The operator $T$ induces a dual operator $T^t$ on $V^*$, defined by 
+        \[
+        (T^t f)(v) = f(Tv) \quad \text{for all} \quad v \in V, \, f \in V^*.
+        \]
+
+        We are given that there exists a non-zero vector $\alpha \in V$ such that $T \alpha = c \alpha$. Define a linear functional $f \in V^*$ by setting 
+        \[
+        f(v) = \langle v, \alpha \rangle
+        \]
+        for all $v \in V$, where $\langle \cdot, \cdot \rangle$ denotes the usual pairing between vectors and functionals in $V$ and $V^*$. 
+
+        Now, apply $T^t$ to $f$:
+        \[
+        (T^t f)(v) = f(Tv) = \langle Tv, \alpha \rangle.
+        \]
+        Using the fact that $T \alpha = c \alpha$, we get:
+        \[
+        (T^t f)(v) = \langle Tv, \alpha \rangle = \langle v, T^t \alpha \rangle = c \langle v, \alpha \rangle = c f(v).
+        \]
+        Thus, $T^t f = c f$, which shows that $f$ is an eigenfunctional of $T^t$ with eigenvalue $c$.
+
+        Since $\alpha \neq 0$, the functional $f$ is non-zero as well. Hence, we have found a non-zero linear functional $f \in V^*$ such that $T^t f = c f$, as required.
+
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    Let $n$ be a positive integer and let $V$ be the space of all polynomial functions over the field 
+    of real numbers which have degree at most $n$, i.e., functions of the form
+    \[
+        f(x) = c_0 + c_1x + \cdots + c_nx^n
+    \]
+    Let $D$ be the differentiation operator on $V$. Find a basis for the null space of the transpose
+    operator $D^t$.
+
+    \begin{solution}
+        First, recall that the operator $D$ on $V$ is the differentiation operator, so for any polynomial $f(x) = c_0 + c_1x + \cdots + c_nx^n$, we have
+        \[
+        D(f(x)) = c_1 + 2c_2x + \cdots + nc_nx^{n-1}.
+        \]
+        
+        The transpose operator $D^t$ acts on the dual space $V^*$ of $V$. The key to solving this problem is to use the fact that the null space of the transpose operator $D^t$ is the orthogonal complement of the image of $D$ in the dual space.
+
+        To find a basis for the null space of $D^t$, observe that any functional in the null space of $D^t$ must annihilate the image of $D$. The image of $D$ consists of all polynomials of degree at most $n-1$, because differentiating a degree-$n$ polynomial reduces its degree by 1.
+
+        Hence, a functional in the null space of $D^t$ must be supported on the part of $V$ that is orthogonal to the image of $D$. This corresponds to the part of $V$ that is "lost" under differentiation—namely, the constant term in a polynomial.
+
+        Therefore, the null space of $D^t$ consists of linear functionals that only act on the constant term of the polynomials in $V$. A natural basis for this null space is the linear functional that evaluates a polynomial at 0:
+        \[
+        f \mapsto f(0).
+        \]
+
+        Since this functional acts only on the constant term of a polynomial, it forms a one-dimensional subspace of $V^*$. Thus, the null space of $D^t$ is spanned by the single functional $f \mapsto f(0)$.
+
+        Therefore, a basis for the null space of $D^t$ is
+        \[
+        \{ \delta_0 \},
+        \]
+        where $\delta_0$ is the evaluation functional at $x = 0$.
+
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    Let $V$ be a vector space over the field $\mathbb{F}$ and let $W \subseteq V$ be a subspace.
+    Make no assumptions on the field $\mathbb{F}$ nor the dimension of $V$. Define Res: $V^* \longrightarrow W^*$
+    to be the restriction map; for $f \in V^*$ ad $w \in W$, define Res$(f)(w) = f(w)$. Shetland-wool
+
+    \begin{subproblem}
+        Res$(f) \in W^*$
+
+        \begin{solution}
+            To show that Res$(f) \in W^*$, we need to check that Res$(f)$ defines a linear functional on $W$. 
+            
+            For any $w_1, w_2 \in W$ and scalars $a_1, a_2 \in \mathbb{F}$, we have:
+            \[
+            \text{Res}(f)(a_1 w_1 + a_2 w_2) = f(a_1 w_1 + a_2 w_2).
+            \]
+            Since $f$ is a linear functional on $V$, this is equal to:
+            \[
+            f(a_1 w_1 + a_2 w_2) = a_1 f(w_1) + a_2 f(w_2).
+            \]
+            By the definition of the restriction map, this becomes:
+            \[
+            a_1 \text{Res}(f)(w_1) + a_2 \text{Res}(f)(w_2),
+            \]
+            which shows that Res$(f)$ is a linear functional on $W$. Thus, Res$(f) \in W^*$.
+
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Res is a linear transformation
+
+        \begin{solution}
+            To show that Res is a linear transformation, we must verify that Res preserves addition and scalar multiplication.
+
+            For any $f_1, f_2 \in V^*$ and any scalar $a \in \mathbb{F}$, we compute:
+            \[
+            \text{Res}(f_1 + f_2)(w) = (f_1 + f_2)(w) = f_1(w) + f_2(w) = \text{Res}(f_1)(w) + \text{Res}(f_2)(w),
+            \]
+            for all $w \in W$. Hence, 
+            \[
+            \text{Res}(f_1 + f_2) = \text{Res}(f_1) + \text{Res}(f_2).
+            \]
+            Similarly, for scalar multiplication:
+            \[
+            \text{Res}(a f_1)(w) = (a f_1)(w) = a f_1(w) = a \text{Res}(f_1)(w),
+            \]
+            which shows that 
+            \[
+            \text{Res}(a f_1) = a \text{Res}(f_1).
+            \]
+            Therefore, Res is a linear transformation.
+        
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Res is onto
+        
+        \begin{solution}
+            To show that Res is surjective, let $g \in W^*$ be an arbitrary linear functional on $W$. We need to find an $f \in V^*$ such that $\text{Res}(f) = g$.
+
+            Since $g$ is defined on $W$, extend $g$ to a linear functional $f$ on all of $V$. This is always possible by the Hahn-Banach theorem, which allows us to extend any linear functional from a subspace to the whole space without changing its values on the subspace.
+
+            Therefore, for this $f \in V^*$, we have $\text{Res}(f) = g$, showing that Res is surjective.
+        
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Compute ker Res
+        
+        \begin{solution}
+            
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}
+    Let $V$ and $W$ be vector spaces over the field $\mathbb{F}$ and let $T: V \longrightarrow W$ be a linear tranformation.
+
+    \begin{subproblem}
+        $\ker{T^t} = (\ima{T})^\circ$
+
+        \begin{solution}
+            The kernel of Res consists of all functionals $f \in V^*$ such that $\text{Res}(f) = 0$. This means that $f(w) = 0$ for all $w \in W$, i.e., $f$ annihilates $W$.
+
+            Hence, 
+            \[
+            \ker(\text{Res}) = \{ f \in V^* \mid f(w) = 0 \ \forall w \in W \}.
+            \]
+            In other words, $\ker(\text{Res})$ is the set of all linear functionals on $V$ that vanish on $W$. This corresponds to the annihilator of $W$ in $V^*$, which is denoted $W^\perp$.
+
+            Therefore, 
+            \[
+            \ker(\text{Res}) = W^\perp,
+            \]
+            the set of all functionals in $V^*$ that are zero on $W$.
+        
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        If $V$ and $W$ have finite dimension, then
+        \begin{enumerate}
+            \item[i.] $\rank T^t = \rank T$\\
+            \begin{solution}
+                For finite-dimensional vector spaces, the rank-nullity theorem states that:
+                \[
+                \dim(V) = \rank(T) + \dim(\ker(T)).
+                \]
+                The same applies to the transpose operator $T^t$ on the dual spaces. Since $T^t$ acts on $V^*$ and $W^*$, which have the same dimensions as $V$ and $W$, we can use the fact that the null spaces of $T$ and $T^t$ are orthogonal complements in their respective spaces.
+
+                Specifically, for any linear operator $T: V \to W$, we have:
+                \[
+                \rank(T^t) = \dim(W) - \dim(\ker(T^t)) = \dim(W) - \dim(\ima(T)^\circ).
+                \]
+                Since the rank of an operator equals the rank of its transpose in finite dimensions, we conclude that:
+                \[
+                \rank(T^t) = \rank(T).
+                \]
+            \end{solution}
+
+            \item[ii.] $\ima T^t = (\ker T)^\circ$\\
+            \begin{solution}
+                In finite dimensions, the image of the transpose operator $T^t$ is the annihilator of the kernel of $T$. Specifically, for any $f \in V^*$, the action of $T^t$ is given by:
+                \[
+                T^t f (v) = f(Tv).
+                \]
+                The image of $T^t$ consists of functionals $g \in W^*$ such that $g(w) = f(T^{-1}(w))$ for some $f \in V^*$. The condition that $f$ is non-zero outside $\ker(T)$ implies that:
+                \[
+                \ima(T^t) = \{ g \in W^* \mid g \text{ annihilates } \ker(T) \}.
+                \]
+                In other words, the image of $T^t$ is the annihilator of $\ker(T)$ in $W^*$, denoted as:
+                \[
+                \ima(T^t) = (\ker T)^\circ.
+                \]
+            \end{solution}
+        \end{enumerate}
+    \end{subproblem}
+
+    \begin{subproblem}
+        What happens in the previous part in the case of infinite dimensional vector spaces?
+
+        \begin{solution}
+            In the case of infinite-dimensional vector spaces, the situation becomes more complicated because dual spaces of \\infinite-dimensional spaces can behave differently from finite-dimensional cases. Specifically:
+            
+            \begin{enumerate}
+                \item[i.] $\rank T^t = \rank T$ may no longer hold in infinite dimensions. This is because the rank-nullity theorem does not apply in the same way, and the dimension of the image of $T^t$ may not necessarily be equal to the dimension of the image of $T$. Infinite-dimensional spaces can have subspaces that are not closed, leading to discrepancies in the rank between $T$ and $T^t$.
+
+                \item[ii.] $\ima T^t = (\ker T)^\circ$ remains valid in infinite dimensions, provided that we properly define the annihilator $(\ker T)^\circ$ in terms of weak topologies (such as the weak-* topology). However, the nature of the dual spaces in infinite-dimensional settings can introduce subtleties. For example, if $V$ is infinite-dimensional, $V^*$ can have a much larger dimension than $V$, leading to more complex behavior of $T^t$ and its image.
+            \end{enumerate}
+
+            Therefore, while the second statement can still hold in infinite dimensions, the first statement about the equality of ranks may fail due to the infinite-dimensional nature of the spaces involved.
+        
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}
+    Let $V$ be a finite dimensional vector space over the field $\mathbb{F}$. Let $W_1$ and $W_2$ be subspaces of $V$.
+
+    \begin{subproblem}
+        Show that $(W_1 + W_2)^\circ = W_1^\circ \cap W_2^\circ$.
+
+        \begin{solution}
+            To prove that $(W_1 + W_2)^\circ = W_1^\circ \cap W_2^\circ$, we first recall that for any subspace $W$ of $V$, the annihilator $W^\circ$ is the set of all functionals $f \in V^*$ such that $f(w) = 0$ for all $w \in W$.
+
+            Consider the sum of two subspaces $W_1$ and $W_2$. The annihilator of the sum, $(W_1 + W_2)^\circ$, consists of all functionals $f \in V^*$ such that:
+            \[
+            f(w_1 + w_2) = 0 \quad \forall w_1 \in W_1 \text{ and } w_2 \in W_2.
+            \]
+            This implies that $f$ must vanish on both $W_1$ and $W_2$, because any element of $W_1 + W_2$ is of the form $w_1 + w_2$ with $w_1 \in W_1$ and $w_2 \in W_2$. Therefore, $f$ must lie in both $W_1^\circ$ and $W_2^\circ$.
+
+            Thus, we have:
+            \[
+            (W_1 + W_2)^\circ \subseteq W_1^\circ \cap W_2^\circ.
+            \]
+
+            Now, to show the reverse inclusion, suppose $f \in W_1^\circ \cap W_2^\circ$. This means that $f$ annihilates both $W_1$ and $W_2$, i.e., $f(w_1) = 0$ for all $w_1 \in W_1$ and $f(w_2) = 0$ for all $w_2 \in W_2$. Therefore, for any $w_1 + w_2 \in W_1 + W_2$, we have:
+            \[
+            f(w_1 + w_2) = f(w_1) + f(w_2) = 0.
+            \]
+            Hence, $f$ annihilates $W_1 + W_2$, which means $f \in (W_1 + W_2)^\circ$.
+
+            Therefore, we conclude that:
+            \[
+            (W_1 + W_2)^\circ = W_1^\circ \cap W_2^\circ.
+            \]
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Show that $(W_1 \cap W_2)^\circ = W_1^\circ + W_2^\circ$.
+
+        \begin{solution}
+            To prove that $(W_1 \cap W_2)^\circ = W_1^\circ + W_2^\circ$, we use the fact that for any subspace $W$ of $V$, the annihilator $W^\circ$ is the set of all functionals in $V^*$ that vanish on $W$.
+
+            First, consider $W_1^\circ + W_2^\circ$. Any functional in $W_1^\circ + W_2^\circ$ can be written as $f_1 + f_2$, where $f_1 \in W_1^\circ$ and $f_2 \in W_2^\circ$. This functional annihilates both $W_1$ and $W_2$, meaning that for all $w_1 \in W_1$ and $w_2 \in W_2$, we have:
+            \[
+            f_1(w_1) = 0 \quad \text{and} \quad f_2(w_2) = 0.
+            \]
+            Now, for any $w \in W_1 \cap W_2$, both $f_1$ and $f_2$ annihilate $w$. Therefore:
+            \[
+            f_1(w) + f_2(w) = 0,
+            \]
+            which implies that $f_1 + f_2$ annihilates $W_1 \cap W_2$. Hence, $f_1 + f_2 \in (W_1 \cap W_2)^\circ$, and thus:
+            \[
+            W_1^\circ + W_2^\circ \subseteq (W_1 \cap W_2)^\circ.
+            \]
+
+            To show the reverse inclusion, suppose $f \in (W_1 \cap W_2)^\circ$. This means that $f$ annihilates $W_1 \cap W_2$, i.e., $f(w) = 0$ for all $w \in W_1 \cap W_2$. We aim to show that $f$ can be written as the sum of an element of $W_1^\circ$ and an element of $W_2^\circ$.
+
+            By the Hahn-Banach theorem (in finite dimensions), we can extend $f$ to a functional $f_1$ that annihilates $W_1$, and extend it to a functional $f_2$ that annihilates $W_2$. Then we have:
+            \[
+            f = f_1 + f_2,
+            \]
+            where $f_1 \in W_1^\circ$ and $f_2 \in W_2^\circ$. Therefore, $f \in W_1^\circ + W_2^\circ$, which shows that:
+            \[
+            (W_1 \cap W_2)^\circ \subseteq W_1^\circ + W_2^\circ.
+            \]
+
+            Hence, we conclude that:
+            \[
+            (W_1 \cap W_2)^\circ = W_1^\circ + W_2^\circ.
+            \]
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Determine what happens in each case if $V$ has infinite dimensions.
+
+        \begin{solution}
+            In infinite-dimensional vector spaces, the situation changes due to the lack of finite dimensionality and the potential for subtleties in dual space behavior. Let's analyze each case:
+
+            \begin{enumerate}
+                \item In the case of $(W_1 + W_2)^\circ = W_1^\circ \cap W_2^\circ$, this equality still holds in infinite dimensions. The reason is that the property of annihilating elements in $W_1 + W_2$ still requires that functionals must annihilate both $W_1$ and $W_2$ individually, so the intersection of annihilators remains the same.
+
+                \item In the case of $(W_1 \cap W_2)^\circ = W_1^\circ + W_2^\circ$, this equality may fail in infinite-dimensional spaces. In infinite dimensions, the Hahn-Banach theorem still applies, but the behavior of direct sums and intersections can differ, especially in the case where one or both of the subspaces are not closed. In infinite dimensions, the annihilator of an intersection may not equal the sum of the annihilators, as the extensions of functionals could involve considerations of weak topologies or closure of subspaces.
+            \end{enumerate}
+            
+            Therefore, in infinite dimensions, while the first result still holds, the second result may not, depending on the structure of the subspaces and their closure properties.
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}
+    Let $U$ and $V$ be arbitrary vector spaces over the field $\mathbb{F}$. Explicitly give a natural 
+    isomorphism $(U \oplus V)^* \longrightarrow U^* \oplus V^*$ and its inverse with proofs.
+
+    \begin{solution}
+        Let $U$ and $V$ be vector spaces over $\mathbb{F}$. We will define a natural isomorphism between $(U \oplus V)^*$ and $U^* \oplus V^*$, along with its inverse.
+
+        Step 1: Define the Isomorphism\\
+        We define the map:
+        \[
+        \varphi: (U \oplus V)^* \to U^* \oplus V^*.
+        \]
+        Given a functional $f \in (U \oplus V)^*$, we can split it into two functionals on $U$ and $V$ as follows. For each $f \in (U \oplus V)^*$, define:
+        \[
+        \varphi(f) = (f_U, f_V),
+        \]
+        where $f_U \in U^*$ and $f_V \in V^*$ are defined by the following rule: for all $u \in U$ and $v \in V$, 
+        \[
+        f_U(u) = f(u, 0) \quad \text{and} \quad f_V(v) = f(0, v).
+        \]
+        Thus, $f_U$ is the restriction of $f$ to $U \oplus \{0\}$, and $f_V$ is the restriction of $f$ to $\{0\} \oplus V$.
+
+        This defines a linear map from $(U \oplus V)^*$ to $U^* \oplus V^*$.
+
+        Step 2: Define the Inverse\\
+        Now, we define the inverse map:
+        \[
+        \psi: U^* \oplus V^* \to (U \oplus V)^*.
+        \]
+        Given $(f_U, f_V) \in U^* \oplus V^*$, we define a functional $g \in (U \oplus V)^*$ as follows: for all $(u, v) \in U \oplus V$,
+        \[
+        g(u, v) = f_U(u) + f_V(v).
+        \]
+        This gives a functional on $U \oplus V$, and hence $\psi(f_U, f_V) = g$.
+
+        Step 3: Verify that the Maps are Inverses\\
+        We now show that $\varphi$ and $\psi$ are inverses of each other.
+
+        - First, take $f \in (U \oplus V)^*$. Then:
+          \[
+          \psi(\varphi(f))(u, v) = \psi(f_U, f_V)(u, v) = f_U(u) + f_V(v) = f(u, 0) + f(0, v) = f(u, v).
+          \]
+          Thus, $\psi(\varphi(f)) = f$, so $\psi \circ \varphi = \text{id}_{(U \oplus V)^*}$.
+
+        - Next, take $(f_U, f_V) \in U^* \oplus V^*$. Then:
+          \[
+          \varphi(\psi(f_U, f_V)) = \varphi(g),
+          \]
+          where $g(u, v) = f_U(u) + f_V(v)$. By the definition of $\varphi$, we have:
+          \[
+          \varphi(g) = (g_U, g_V),
+          \]
+          where $g_U(u) = g(u, 0) = f_U(u)$ and $g_V(v) = g(0, v) = f_V(v)$. Hence, $\varphi(g) = (f_U, f_V)$, so $\varphi \circ \psi = \text{id}_{U^* \oplus V^*}$.
+
+        Step 4: Conclusion\\
+        Since $\varphi$ and $\psi$ are mutual inverses, we conclude that:
+        \[
+        (U \oplus V)^* \cong U^* \oplus V^*.
+        \]
+        This completes the proof of the natural isomorphism between $(U \oplus V)^*$ and $U^* \oplus V^*$, as well as the construction of its inverse.
+    
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    Consider the linear transformation Der,$X$ on the vector space $\mathbb{F}[x]$ defined as follows:
+    \[
+        \der(x^n) = nx^{n-1} \hspace{50px} X(x^n) = x^{n+1}
+    \]
+    \begin{subproblem}
+        Show that these linear transformations satisfy $\der \circ X - X \circ \der = \Id$, i.e., for 
+        any $f \in \mathbb{F}[x]$ we have $\der(X(f)) - X(\der(f)) = f$.
+
+        \begin{solution}
+            Let $f(x) = x^n \in \mathbb{F}[x]$. We will verify the given equation for $f(x) = x^n$.
+
+            First, compute $\der(X(f))$:
+            \[
+            X(f) = X(x^n) = x^{n+1}.
+            \]
+            Now apply $\der$ to $X(f)$:
+            \[
+            \der(X(f)) = \der(x^{n+1}) = (n+1)x^n.
+            \]
+
+            Next, compute $X(\der(f))$:
+            \[
+            \der(f) = \der(x^n) = nx^{n-1},
+            \]
+            so
+            \[
+            X(\der(f)) = X(nx^{n-1}) = nx^n.
+            \]
+
+            Now subtract the two results:
+            \[
+            \der(X(f)) - X(\der(f)) = (n+1)x^n - nx^n = x^n = f.
+            \]
+
+            Therefore, for any $f(x) = x^n \in \mathbb{F}[x]$, we have:
+            \[
+            \der(X(f)) - X(\der(f)) = f.
+            \]
+            This proves that $\der \circ X - X \circ \der = \Id$ on $\mathbb{F}[x]$.
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Construct analogs of the linear transformations $\der$ and $X$, which act on the vector space $C^\infty(\mathbb{R})$,
+        which also satisfy the equation $\der\circ X - X \circ \der = \Id$.
+
+        \begin{solution}
+            Let us define analogs of $\der$ and $X$ on the space $C^\infty(\mathbb{R})$, the space of infinitely differentiable functions on $\mathbb{R}$.
+
+            Define:
+            \[
+            \der(f(x)) = \frac{d}{dx}f(x) \quad \text{and} \quad X(f(x)) = x f(x).
+            \]
+
+            We now verify that these operators satisfy the equation $\der \circ X - X \circ \der = \Id$ on $C^\infty(\mathbb{R})$.
+
+            First, compute $\der(X(f))$:
+            \[
+            X(f(x)) = x f(x),
+            \]
+            so
+            \[
+            \der(X(f)) = \frac{d}{dx} (x f(x)) = f(x) + x \frac{d}{dx} f(x).
+            \]
+
+            Next, compute $X(\der(f))$:
+            \[
+            \der(f(x)) = \frac{d}{dx} f(x),
+            \]
+            so
+            \[
+            X(\der(f)) = x \frac{d}{dx} f(x).
+            \]
+
+            Now subtract the two results:
+            \[
+            \der(X(f)) - X(\der(f)) = (f(x) + x \frac{d}{dx} f(x)) - x \frac{d}{dx} f(x) = f(x).
+            \]
+
+            Therefore, we have shown that:
+            \[
+            \der \circ X - X \circ \der = \Id \quad \text{on} \quad C^\infty(\mathbb{R}).
+            \]
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Construct analogs $\tilde{D}$ and $\tilde{X}$ of the linear transformations $\der$ and $X$, which act on
+        the vector space $C(\mathbb{R})$ and satisfy the equation $\tilde{D} \circ \tilde{X} - \tilde{X} \circ \tilde{D} = \Id$.\\
+        \textbf{Hint:} You can not use any form of differentiation.
+
+        \begin{solution}
+            Since we are working in the space of continuous functions $C(\mathbb{R})$ and cannot use differentiation, we must define $\tilde{D}$ and $\tilde{X}$ in a way that avoids derivatives but still satisfies the commutator equation.
+
+            Define:
+            \[
+            \tilde{D}(f(x)) = f(x+1) - f(x) \quad \text{and} \quad \tilde{X}(f(x)) = x f(x).
+            \]
+
+            We now verify that these operators satisfy the equation $\tilde{D} \circ \tilde{X} - \tilde{X} \circ \tilde{D} = \Id$ on $C(\mathbb{R})$.
+
+            First, compute $\tilde{D}(\tilde{X}(f))$:
+            \[
+            \tilde{X}(f(x)) = x f(x),
+            \]
+            so
+            \[
+            \tilde{D}(\tilde{X}(f)) = (x+1) f(x+1) - x f(x).
+            \]
+
+            Next, compute $\tilde{X}(\tilde{D}(f))$:
+            \[
+            \tilde{D}(f(x)) = f(x+1) - f(x),
+            \]
+            so
+            \[
+            \tilde{X}(\tilde{D}(f)) = x (f(x+1) - f(x)) = x f(x+1) - x f(x).
+            \]
+
+            Now subtract the two results:
+            \[
+            \tilde{D}(\tilde{X}(f)) - \tilde{X}(\tilde{D}(f)) = (x+1) f(x+1) - x f(x) - (x f(x+1) - x f(x)) = f(x).
+            \]
+
+            Therefore, we have shown that:
+            \[
+            \tilde{D} \circ \tilde{X} - \tilde{X} \circ \tilde{D} = \Id \quad \text{on} \quad C(\mathbb{R}).
+            \]
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}
+    A linear transformation $D \in \Hom_\mathbb{F}(V, V)$ is called \textit{nilpotent} if there exists
+    some $N$ such that $D^N = 0$. Here $D^k$ denote the composition of $D$ with itself $k$ times, also
+    $D^0 = \Id$. The transformation is called \textit{locally nilpotent} if for every vector $v \in V$
+    there exists $n_v$ such that $D^{n_v}(v) = 0$.
+
+    \begin{subproblem}
+        Show that if $V$ is finite dimensional, then any locally nilpotent transformation is also nilponent.
+
+        \begin{solution}
+            Since $V$ is finite dimensional, the set $\{D^k(v) \mid k \geq 0\}$, for any vector $v \in V$, forms a finite-dimensional subspace of $V$. 
+            
+            Let $\{v_1, v_2, \dots, v_m\}$ be a basis for $V$. For each $v_i$, there exists a number $n_{v_i}$ such that $D^{n_{v_i}}(v_i) = 0$. Set $N = \max(n_{v_1}, n_{v_2}, \dots, n_{v_m})$. Then, for any vector $v \in V$ written as $v = \sum a_i v_i$, we have:
+            \[
+            D^N(v) = D^N\left(\sum a_i v_i\right) = \sum a_i D^N(v_i) = 0.
+            \]
+            Therefore, $D^N = 0$, meaning $D$ is nilpotent.
+        
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Show that the differential operator $\der : \mathbb{F}[x] \longrightarrow \mathbb{F}[x]$ from the
+        previous exercise defined by $\der(x^n) = nx^{n-1}$ is locally nilpotent.
+
+        \begin{solution}
+            For any polynomial $f(x) \in \mathbb{F}[x]$, let $f(x) = \sum_{i=0}^n a_i x^i$ be a polynomial of degree $n$. Applying the differential operator $\der$ to $f(x)$ repeatedly reduces the degree of the polynomial by 1 at each step:
+            \[
+            \der(f(x)) = \sum_{i=1}^n a_i i x^{i-1}, \quad \der^2(f(x)) = \sum_{i=2}^n a_i i(i-1) x^{i-2}, \quad \dots, \quad \der^n(f(x)) = n! a_n.
+            \]
+            Since the degree of $f(x)$ is $n$, after $n+1$ applications of $\der$, we get:
+            \[
+            \der^{n+1}(f(x)) = 0.
+            \]
+            Therefore, $\der$ is locally nilpotent.
+        
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Show that  $\der : \mathbb{F}[x] \longrightarrow \mathbb{F}[x]$ (from part b) is nilpotent if and only if
+        $\Char{\mathbb{F}} > 0$.
+
+        \begin{solution}
+            The differential operator $\der$ acts on monomials $x^n$ by $\der(x^n) = n x^{n-1}$. For $\der$ to be nilpotent, we must have some $N$ such that $\der^N = 0$ for all $f(x) \in \mathbb{F}[x]$.
+
+            If $\Char(\mathbb{F}) = 0$, the operator $\der$ is never nilpotent because the factorial terms appearing in the higher derivatives never vanish.
+
+            However, if $\Char(\mathbb{F}) = p > 0$, then for large enough $n$, $n! = 0$ in $\mathbb{F}$, and thus $\der^N(f(x)) = 0$ for some finite $N$. Therefore, $\der$ is nilpotent if and only if $\Char(\mathbb{F}) > 0$.
+        
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Let $D$ be a locally nilpotent transformation. Let $\pi_D$ be the map from $\mathbb{F}[[t]]$
+        to $\Hom_\mathbb{F}(V, V)$ defined as follows
+        \[
+            (\pi_D(\sum a_it^i))(v) = \sum a_iD^i(v)
+        \]
+        Verify that this map is well defined, i.e., all infinite sums make sense.
+
+        \begin{solution}
+            Since $D$ is locally nilpotent, for every vector $v \in V$ there exists an $n_v$ such that $D^{n_v}(v) = 0$. Therefore, when applying $\pi_D$ to any series $\sum a_i t^i$ and any $v \in V$, the sum
+            \[
+            \sum a_i D^i(v)
+            \]
+            has only finitely many non-zero terms. Specifically, after $i \geq n_v$, all terms involving $D^i(v)$ vanish. Hence, the infinite sum reduces to a finite sum, and $\pi_D$ is well defined.
+        
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Show that $\pi_D$ is an algebra homomorphism, i.e.
+        \[
+            \pi_D(f + g) = \pi_D(f) + \pi_D(g) \hspace{20px} \pi_D(\lambda f) = \lambda\pi_D(f) \hspace{20px} \pi_D(f\cdot g) = \pi_D(f) \circ \pi_D(g). 
+        \]
+        \begin{solution}
+            The first two properties follow immediately from the linearity of the map $\pi_D$. For any $f = \sum a_i t^i$ and $g = \sum b_i t^i$ in $\mathbb{F}[[t]]$:
+            \[
+            \pi_D(f + g)(v) = \sum (a_i + b_i) D^i(v) = \pi_D(f)(v) + \pi_D(g)(v).
+            \]
+            Similarly, for any scalar $\lambda \in \mathbb{F}$:
+            \[
+            \pi_D(\lambda f)(v) = \sum (\lambda a_i) D^i(v) = \lambda \pi_D(f)(v).
+            \]
+
+            To show that $\pi_D(f \cdot g) = \pi_D(f) \circ \pi_D(g)$, consider:
+            \[
+            \pi_D(f \cdot g)(v) = \sum_{i,j} a_i b_j D^{i+j}(v).
+            \]
+            On the other hand, applying $\pi_D(f)$ followed by $\pi_D(g)$ gives:
+            \[
+            \pi_D(f)(\pi_D(g)(v)) = \sum_i a_i D^i \left( \sum_j b_j D^j(v) \right) = \sum_{i,j} a_i b_j D^{i+j}(v).
+            \]
+            Therefore, $\pi_D(f \cdot g) = \pi_D(f) \circ \pi_D(g)$, proving that $\pi_D$ is an algebra homomorphism.
+        
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Let $\Cen_D$ denote the set of all linear transformations $T \in \Hom_\mathbb{F}(V, V)$ which commute with $D$, i.e.
+        \[
+            \Cen_D = \{T \in \Hom_\mathbb{F}(V, V) : T \circ D = D \circ T\}
+        \]
+        Show that $\Cen_D$ is a subspace of $\Hom_\mathbb{F}(V, V)$.
+        \begin{solution}
+            To prove that $\Cen_D$ is a subspace of $\Hom_\mathbb{F}(V, V)$, we must show that it is closed under addition, scalar multiplication, and contains the zero transformation.
+
+            1. The zero transformation $0 \in \Hom_\mathbb{F}(V, V)$ clearly commutes with $D$ since $0 \circ D = D \circ 0 = 0$.
+
+            2. If $T_1, T_2 \in \Cen_D$, then for any $v \in V$, we have:
+            \[
+            (T_1 + T_2) \circ D(v) = T_1(D(v)) + T_2(D(v)) = D(T_1(v)) + D(T_2(v)) = D((T_1 + T_2)(v)).
+            \]
+            Hence, $T_1 + T_2 \in \Cen_D$.
+
+            3. If $\lambda \in \mathbb{F}$ and $T \in \Cen_D$, then:
+            \[
+            (\lambda T) \circ D(v) = \lambda T(D(v)) = \lambda D(T(v)) = D(\lambda T(v)).
+            \]
+            Thus, $\lambda T \in \Cen_D$.
+
+            Therefore, $\Cen_D$ is a subspace of $\Hom_\mathbb{F}(V, V)$.
+        
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Show that if $D$ is locally nilpotent then $\ima\pi_D \subset \Cen_D$. \textbf{Hint:} This follows immediately from part c.
+
+        \begin{solution}
+            From part c, we know that if $D$ is locally nilpotent, then there exists some $N$ such that for any $v \in V$, $D^N(v) = 0$ for large enough $N$. This implies that for any $f \in \mathbb{F}[[t]]$, the sum $\pi_D(f)(v)$ is finite.
+
+            Now, for any $T \in \ima\pi_D$, we have $T = \pi_D(f)$ for some $f \in \mathbb{F}[[t]]$. By the definition of $\pi_D$:
+            \[
+            T \circ D(v) = \sum a_i D^i \circ D(v) = \sum a_i D^{i+1}(v) = D\left(\sum a_i D^i(v)\right) = D(T(v)).
+            \]
+            Thus, $T \in \Cen_D$. Therefore, $\ima \pi_D \subset \Cen_D$.
+        
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Show that $\ima{\pi}_{\der} = \Cen_{\der}$ for the operator $\der$ defined in part b, i.e. any linear operator on 
+        $\mathbb{F}[x]$ which commutes with $\der$ can be expressed as a formal power series. \textbf{Hint:} Look at the constant
+        term of $T(x^n)$ for $T \in \Cen_{\der}$.
+
+        \begin{solution}
+            Let $T \in \Cen_{\der}$. This means that $T \circ \der = \der \circ T$ as operators on $\mathbb{F}[x]$.
+
+            To show that $T$ can be expressed as a formal power series, consider how $T$ acts on the monomial $x^n$. For $T$ to commute with $\der$, the action of $T$ on $x^n$ must preserve the structure of the differential operator. In particular, the constant term of $T(x^n)$ must depend only on the degree of $x^n$.
+
+            Thus, we can express $T$ as a formal power series in $\der$, i.e., there exist coefficients $a_i$ such that $T = \sum a_i \der^i$. This shows that $T$ is in the image of $\pi_{\der}$, and therefore $\ima \pi_{\der} = \Cen_{\der}$.
+        
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Construct an example of a locally nilpotent transformation, such that $\ima{\pi_{D}}$ is a proper subspace of $\Cen_{D}$.
+
+        \begin{solution}
+            Consider the space $V = \mathbb{F}^2$ and let $D$ be the linear transformation defined by $D(e_1) = e_2$ and $D(e_2) = 0$, where $\{e_1, e_2\}$ is a basis for $V$. This transformation is locally nilpotent because $D^2 = 0$.
+
+            The map $\pi_D$ produces transformations of the form $a_0 \Id + a_1 D$. However, the centralizer $\Cen_D$ includes all transformations that commute with $D$. One example of such a transformation is the identity map, which cannot be written as a sum of $D^i$ terms for $i > 0$. Thus, $\ima \pi_D$ is a proper subspace of $\Cen_D$.
+        
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\end{document}

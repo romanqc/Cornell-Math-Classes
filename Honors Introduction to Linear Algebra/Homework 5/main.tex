@@ -1,0 +1,541 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{libertine}
+\usepackage{parskip}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,shapes.geometric}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\pagestyle{plain}
+\thispagestyle{empty}
+
+\definecolor{carnellian}{RGB}{190,20,20}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\newcounter{subq}[problem]
+\newenvironment{subproblem}
+{\refstepcounter{subq} \begin{itemize} \item[(\alph{subq})]}
+{\end{itemize} \medskip}
+\DeclareMathOperator{\Ima}{Im}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+% \DeclareMathOperator{\span}{span}
+
+
+
+\usepackage{environ}
+\NewEnviron{solution}[1][\vfill]{
+    \textcolor{blue}{\BODY}
+}
+
+\newcommand{\hwnum}{5}
+\newcommand{\duedate}{10/07/2024}
+\renewcommand{\title}{Vector Spaces}
+
+\begin{document}
+
+\hspace{-10px}
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r}
+    \textbf{Honors Linear Algebra} 
+        & \textbf{Fall 2024} \\
+    \textbf{HW\hwnum: \title} &  \textbf{Due: \duedate}
+\end{tabular*}
+
+\vspace{1cm}
+
+\begin{problem}
+    Let $V$ be a finite-dimensional vector space and let $T$ be a linear operator on $V$.
+    Suppose that $\rank(T^2) = \rank(T)$. Prove that the range and null space of $T$ are disjoint,
+    i.e., have only the zero vector in common. 
+
+    \begin{solution}
+        Let \( N(T) \) denote the null space of \( T \) and \( R(T) \) denote the range of \( T \). 
+        We need to show that \( N(T) \cap R(T) = \{ 0 \} \).
+
+        Since \( \rank(T^2) = \rank(T) \), by the rank-nullity theorem, we have:
+        \[
+        \dim(V) = \rank(T) + \dim(N(T))
+        \]
+        and
+        \[
+        \dim(V) = \rank(T^2) + \dim(N(T^2)).
+        \]
+        Since \( \rank(T^2) = \rank(T) \), we can substitute:
+        \[
+        \dim(V) = \rank(T) + \dim(N(T))
+        \]
+        and
+        \[
+        \dim(V) = \rank(T) + \dim(N(T^2)).
+        \]
+
+        Thus, we have:
+        \[
+        \dim(N(T)) = \dim(N(T^2)).
+        \]
+
+        Notice that \( N(T^2) \) includes vectors \( v \in V \) such that \( T^2(v) = 0 \). This implies \( T(T(v)) = 0 \), meaning \( T(v) \in N(T) \).
+
+        Suppose \( v \in R(T) \cap N(T) \). Then there exists some \( u \in V \) such that \( T(u) = v \) and \( T(v) = 0 \). Therefore, we have:
+        \[
+        T(T(u)) = 0 \implies T^2(u) = 0.
+        \]
+        This indicates that \( u \in N(T^2) \).
+
+        Since \( v \in R(T) \) and \( v = T(u) \) implies \( v \in N(T) \), we know:
+        \[
+        T(u) \in N(T) \implies u \in N(T^2).
+        \]
+
+        Since \( \dim(N(T)) = \dim(N(T^2)) \), the only possibility for the intersection \( R(T) \cap N(T) \) is the zero vector:
+        \[
+        N(T) \cap R(T) = \{0\}.
+        \]
+        Hence, we conclude that the range and null space of \( T \) are disjoint.
+
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    Let $p, m,$ and $n$ be positive integers and $\mathbb{F}$ a field. Let $V$ be the space of $m \times n$
+    matrices over $\mathbb{F}$ and $\mathbb{W}$ the space of $p \times n$ matrices over $\mathbb{F}$. Let $B$ 
+    be a fixed $p \times m$ matrix and let $T$ be the linear transformation from $V$ into $W$ defined by 
+    $T(A) = BA$. Prove that $T$ is invertible if and only if $p = m$ and $B$ is an invertible $m \times m$ matrix. 
+
+    \begin{solution}
+        To show that \( T \) is invertible, we need to establish two implications:
+
+        (1) showing $\implies$\\
+        If \( T \) is invertible, then it must map the entire space \( V \) onto \( \mathbb{W} \). The dimension of \( V \) is \( mn \), and the dimension of \( \mathbb{W} \) is \( pn \). Thus, we require:
+        \[
+        mn = pn.
+        \]
+        Since \( n \neq 0 \), we can simplify to:
+        \[
+        m = p.
+        \]
+
+        Let \( B \) be represented as an \( m \times m \) matrix. For \( T(A) = BA \) to be injective, the null space must only contain the zero matrix. Thus, if \( BA = 0 \) implies \( A = 0 \), then \( B \) must be injective, which holds if \( B \) is invertible.
+
+        (2) Showing $\impliedby$\\
+        Assume \( B \) is an invertible \( m \times m \) matrix. Given \( A \in V \) such that \( T(A) = BA = 0 \), it follows that \( B \) being invertible implies \( A = 0 \). Therefore, \( T \) is injective.
+
+        The range of \( T \) is all \( p \times n \) matrices because \( B \) can generate every linear combination of its columns. Thus, the image of \( T \) has dimension \( pn \).
+
+        Since \( \dim(V) = \dim(\mathbb{W}) \) and \( T \) is injective, it follows that \( T \) is bijective and therefore invertible.
+
+        Thus, \( T \) is invertible if and only if \( p = m \) and \( B \) is an invertible \( m \times m \) matrix.
+    
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    We have seen that the linear operator $T$ on $R^2$ defined by $T(x_1, x_2) = (x_1, 0)$ is represented in the standard ordered basis by the matrix
+    \begin{equation*}
+        A = 
+        \begin{bmatrix}
+            1 & 0\\
+            0 & 0
+        \end{bmatrix}.
+    \end{equation*}
+    This operator satisfies $T^2 = T$. Prove that if $S$ is a linear operator on $R^2$ such that $S^2 = S$, then $S = 0$, or $S = I$, or there is an ordered
+    basis $B$ for $R^2$ such that $[S]_{B} = A$ (above).
+
+    \begin{solution}
+        A linear operator \( S \) on \( \mathbb{R}^2 \) that satisfies \( S^2 = S \) is known as a projection operator. We will explore the implications of this condition.
+
+        Step 1: Eigenvalues of \( S \)\\
+        Since \( S^2 = S \), we can rewrite this as:
+        \[
+        S(Sv) = Sv \quad \text{for any } v \in \mathbb{R}^2.
+        \]
+        This implies that the eigenvalues of \( S \) can only be \( 0 \) or \( 1 \). Let \( \lambda \) be an eigenvalue of \( S \) corresponding to an eigenvector \( v \):
+        \[
+        S(v) = \lambda v.
+        \]
+        Applying \( S \) again gives:
+        \[
+        S(S(v)) = S(\lambda v) = \lambda S(v) = \lambda^2 v.
+        \]
+        Hence, we have:
+        \[
+        \lambda^2 v = \lambda v \implies (\lambda^2 - \lambda)v = 0.
+        \]
+        This confirms \( \lambda(\lambda - 1) = 0 \), so \( \lambda \) must be \( 0 \) or \( 1 \).
+
+        Step 2: The structure of \( S \)\\
+        Let \( V_0 = \ker(S) \) (the null space of \( S \)) and \( V_1 = \text{Im}(S) \) (the image of \( S \)). Since \( S \) is a linear operator on a two-dimensional space, we have:
+        \[
+        \dim(V_0) + \dim(V_1) = 2.
+        \]
+        The possible dimensions for \( V_0 \) and \( V_1 \) based on the eigenvalues are:
+        - If \( \dim(V_0) = 2 \), then \( S = 0 \).
+        - If \( \dim(V_1) = 2 \), then \( S = I \).
+        - If \( \dim(V_0) = 1 \) and \( \dim(V_1) = 1 \), then there exists a one-dimensional subspace for both. 
+
+        Step 3: Finding the basis \( B \)\\
+        In the case where \( \dim(V_0) = 1 \) and \( \dim(V_1) = 1 \), let \( v_0 \) be a non-zero vector in \( V_0 \) and \( v_1 \) be a non-zero vector in \( V_1 \). The set \( \{ v_0, v_1 \} \) forms a basis for \( \mathbb{R}^2 \).
+
+        We can express \( S \) in this basis. In the basis \( B = \{ v_0, v_1 \} \), the action of \( S \) on \( v_0 \) gives \( S(v_0) = 0 \) and \( S(v_1) = v_1 \), leading to the matrix representation:
+        \[
+        [S]_B = 
+        \begin{bmatrix}
+            0 & 0\\
+            0 & 1
+        \end{bmatrix}.
+        \]
+        However, by transforming to the standard basis via appropriate changes of basis, we can find an ordered basis such that \( S \) is represented by the matrix \( A \).
+
+        Conclusion:\\
+        We conclude that if \( S \) is a projection operator on \( \mathbb{R}^2 \), then either \( S = 0 \), \( S = I \), or there exists an ordered basis \( B \) such that \( [S]_{B} = A \).
+
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    Let $\mathbb{F}$ be a field and let $V$ be the vector space consisting of $0$ together with all polynomials of degree $n$ or less.
+    Define the function $\alpha$ on elements of $V$ by
+    \[\alpha(p(x)) = \frac{d}{dx}(x^n \cdot p(\frac{1}{x}))\]
+    for $p(x) \in V$. Show the following:
+
+    \begin{subproblem}
+        $\alpha(p(x)) \in V$ for $p(x) \in V$.
+
+        \begin{solution}
+            Let \( p(x) = a_0 + a_1 x + a_2 x^2 + \ldots + a_n x^n \) be a polynomial in \( V \), where \( a_i \in \mathbb{F} \).
+
+            To show that \( \alpha(p(x)) \in V \), we first compute \( p\left(\frac{1}{x}\right) \):
+            \[
+            p\left(\frac{1}{x}\right) = a_0 + a_1 \left(\frac{1}{x}\right) + a_2 \left(\frac{1}{x^2}\right) + \ldots + a_n \left(\frac{1}{x^n}\right).
+            \]
+            This expression can be rewritten as:
+            \[
+            p\left(\frac{1}{x}\right) = a_0 + \frac{a_1}{x} + \frac{a_2}{x^2} + \ldots + \frac{a_n}{x^n}.
+            \]
+            Hence, \( x^n \cdot p\left(\frac{1}{x}\right) \) becomes:
+            \[
+            x^n \cdot p\left(\frac{1}{x}\right) = a_0 x^n + a_1 x^{n-1} + a_2 x^{n-2} + \ldots + a_n.
+            \]
+            This polynomial is of degree at most \( n \) since the highest term is \( a_0 x^n \) (assuming \( a_0 \neq 0 \)).
+
+            Now, we differentiate this polynomial:
+            \[
+            \alpha(p(x)) = \frac{d}{dx}(x^n \cdot p\left(\frac{1}{x}\right)) = \frac{d}{dx}(a_0 x^n + a_1 x^{n-1} + a_2 x^{n-2} + \ldots + a_n).
+            \]
+            The derivative is given by:
+            \[
+            \alpha(p(x)) = a_0 n x^{n-1} + a_1 (n-1) x^{n-2} + a_2 (n-2) x^{n-3} + \ldots + a_n (0)
+            \]
+            \[
+                = n a_0 x^{n-1} + (n-1) a_1 x^{n-2} + \ldots + 0
+            \]
+            This resulting polynomial is also of degree at most \( n - 1 \), which is still in \( V \).
+
+            Therefore, we conclude that \( \alpha(p(x)) \in V \) for any polynomial \( p(x) \in V \).
+
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        $\alpha$ is a linear transformation. Compute the matrix $[\alpha]_{B, B}$ with respect to the standard
+        ordered basis $B = \{1, x, \ldots, x^n\}$.
+        
+        \begin{solution}
+            To show that \( \alpha \) is a linear transformation, we need to verify that:
+            \[
+            \alpha(p(x) + q(x)) = \alpha(p(x)) + \alpha(q(x)) \quad \text{and} \quad \alpha(c \cdot p(x)) = c \cdot \alpha(p(x))
+            \]
+            for any \( p(x), q(x) \in V \) and \( c \in \mathbb{F} \).
+
+            For the first property, consider \( p(x) + q(x) \):
+            \[
+            \alpha(p(x) + q(x)) = \frac{d}{dx}\left(x^n \cdot \left(p\left(\frac{1}{x}\right) + q\left(\frac{1}{x}\right)\right)\right).
+            \]
+            By the linearity of differentiation:
+            \[
+            = \frac{d}{dx}(x^n \cdot p\left(\frac{1}{x}\right)) + \frac{d}{dx}(x^n \cdot q\left(\frac{1}{x}\right)) = \alpha(p(x)) + \alpha(q(x)).
+            \]
+
+            For the second property:
+            \[
+            \alpha(c \cdot p(x)) = \frac{d}{dx}(x^n \cdot (c \cdot p\left(\frac{1}{x}\right))) = c \cdot \frac{d}{dx}(x^n \cdot p\left(\frac{1}{x}\right)) = c \cdot \alpha(p(x)).
+            \]
+            Hence, \( \alpha \) is a linear transformation.
+
+            Now we compute the matrix \( [\alpha]_{B,B} \):
+            The standard ordered basis \( B = \{ 1, x, x^2, \ldots, x^n \} \) consists of \( n+1 \) elements.
+
+            We need to compute \( \alpha \) applied to each basis element:
+            - For \( p(x) = 1 \):
+            \[
+            \alpha(1) = \frac{d}{dx}(x^n \cdot 1) = n x^{n-1}.
+            \]
+            - For \( p(x) = x \):
+            \[
+            \alpha(x) = \frac{d}{dx}(x^n \cdot \frac{1}{x}) = \frac{d}{dx}(x^{n-1}) = (n-1)x^{n-2}.
+            \]
+            - For \( p(x) = x^2 \):
+            \[
+            \alpha(x^2) = \frac{d}{dx}(x^n \cdot \frac{1}{x^2}) = \frac{d}{dx}(x^{n-2}) = (n-2)x^{n-3}.
+            \]
+            - Continuing this pattern, we find:
+            \[
+            \alpha(x^k) = (n-k)x^{n-k-1} \quad \text{for } k = 0, 1, 2, \ldots, n.
+            \]
+
+            Now, we can construct the matrix \( [\alpha]_{B,B} \):
+            \[
+            [\alpha]_{B,B} = 
+            \begin{bmatrix}
+                0 & 0 & 0 & \cdots & 0 & n \\
+                0 & 0 & 0 & \cdots & 0 & n-1 \\
+                0 & 0 & 0 & \cdots & 0 & n-2 \\
+                \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+                0 & 0 & 0 & \cdots & 0 & 1 \\
+                0 & 0 & 0 & \cdots & 0 & 0
+            \end{bmatrix}
+            \]
+            where the last row corresponds to \( \alpha(x^n) = 0 \).
+
+            Thus, the matrix \( [\alpha]_{B,B} \) is an upper triangular matrix with entries decreasing from \( n \) to \( 1 \) in the last column.
+
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}
+    (Nilpotentcy) A linear transformation $T: V \rightarrow V$ is called \textit{nilpotent} if $T^i = 0$ for some $i > 0$.
+    If $\dim(V) = n < \infty$ and $T$ is nilpotent, prove that $T^n = 0$.
+
+    \begin{solution}
+        Given that \( T \) is a nilpotent linear transformation on a finite-dimensional vector space \( V \) with \( \dim(V) = n \), we need to show that \( T^n = 0 \).
+
+        Step 1: Consider the sequence of subspaces\\
+        Let \( \{ V_k \} \) be the sequence of subspaces defined as follows:
+        \[
+        V_k = \text{Im}(T^k) \quad \text{for } k \geq 0,
+        \]
+        where \( V_0 = V \).
+
+        Since \( T \) is a linear transformation, it follows that \( V_{k+1} = T(V_k) \).
+
+        Step 2: Analyze the dimensions of the subspaces\\
+        By the properties of linear transformations, we have:
+        \[
+        \dim(V_{k+1}) \leq \dim(V_k).
+        \]
+        This implies that the dimensions of the subspaces \( \{ V_k \} \) form a non-increasing sequence:
+        \[
+        \dim(V_0) \geq \dim(V_1) \geq \dim(V_2) \geq \ldots.
+        \]
+        Since the dimension of \( V \) is finite (specifically \( n \)), the sequence must eventually stabilize. Therefore, there exists some integer \( m \leq n \) such that:
+        \[
+        \dim(V_k) = 0 \quad \text{for all } k \geq m.
+        \]
+
+        Step 3: Show that \( T^m = 0 \)\\
+        If \( \dim(V_m) = 0 \), then \( V_m = \{0\} \), which means:
+        \[
+        \text{Im}(T^m) = 0.
+        \]
+        This implies that \( T^m(v) = 0 \) for all \( v \in V \).
+
+        Since \( T \) is nilpotent, this means \( T^i = 0 \) for all \( i \geq m \).
+
+        Step 4: Relate \( m \) and \( n \)\\
+        Now we know that if \( T \) is nilpotent, we can choose \( m \) such that \( m \leq n \). In particular, we can take \( m = n \) without loss of generality, thus:
+        \[
+        T^n = 0.
+        \]
+
+        Therefore, we conclude that if \( T \) is nilpotent and \( \dim(V) = n < \infty \), then:
+        \[
+        T^n = 0.
+        \]
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    (Trace) Let $n$ be a positive integer.
+
+    \begin{subproblem}
+        Let $\tr: \mathbb{F}^{n \times n} \rightarrow \mathbb{F}$ denote the trace function on $n \times n$ matrices over the field $F$.
+        Show $\tr(AB) = \tr(BA)$ for any $A, B \in \mathbb{F}^{n \times n}$. Show that $\tr$ is never the zero linear functional. 
+
+        \begin{solution}
+            To prove that \( \tr(AB) = \tr(BA) \), we start by using the definition of the trace. The trace of a matrix is defined as the sum of its diagonal entries. 
+
+            Let \( A = [a_{ij}] \) and \( B = [b_{ij}] \) be matrices in \( \mathbb{F}^{n \times n} \).
+
+            The \( (i,j) \)-th entry of the matrix product \( AB \) is given by:
+            \[
+            (AB)_{ij} = \sum_{k=1}^n a_{ik} b_{kj}.
+            \]
+            Therefore, the trace of \( AB \) is:
+            \[
+            \tr(AB) = \sum_{i=1}^n (AB)_{ii} = \sum_{i=1}^n \sum_{k=1}^n a_{ik} b_{ki} = \sum_{k=1}^n \sum_{i=1}^n a_{ik} b_{ki}.
+            \]
+
+            Now consider \( BA \):
+            The \( (i,j) \)-th entry of \( BA \) is:
+            \[
+            (BA)_{ij} = \sum_{k=1}^n b_{ik} a_{kj}.
+            \]
+            Thus, the trace of \( BA \) is:
+            \[
+            \tr(BA) = \sum_{i=1}^n (BA)_{ii} = \sum_{i=1}^n \sum_{k=1}^n b_{ik} a_{ki} = \sum_{k=1}^n \sum_{i=1}^n b_{ik} a_{ki}.
+            \]
+
+            By renaming indices in the summation, we see that:
+            \[
+            \tr(AB) = \sum_{k=1}^n \sum_{i=1}^n a_{ik} b_{ki} = \sum_{i=1}^n \sum_{k=1}^n b_{ik} a_{ki} = \tr(BA).
+            \]
+
+            Thus, we have shown that \( \tr(AB) = \tr(BA) \).
+
+            Show that \( \tr \) is never the zero linear functional:\\
+            A linear functional \( f: \mathbb{F}^{n \times n} \rightarrow \mathbb{F} \) is zero if \( f(X) = 0 \) for all \( X \in \mathbb{F}^{n \times n} \). However, we can evaluate \( \tr(I) = n \) where \( I \) is the identity matrix. Since \( n \neq 0 \) for positive integers, \( \tr \) is never the zero functional.
+        
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Show that there do not exist $A, B \in \mathbb{F}^{n \times n}$ for $\mathbb{F}$ the field of complex numbers, such that $AB - BA = I$. What happens for an arbitrary field?
+
+        \begin{solution}
+            Assume for the sake of contradiction that there exist \( A, B \in \mathbb{F}^{n \times n} \) such that \( AB - BA = I \).
+
+            Taking the trace of both sides yields:
+            \[
+            \tr(AB - BA) = \tr(I).
+            \]
+            Using the property of trace we showed earlier, we have:
+            \[
+            \tr(AB) - \tr(BA) = 0.
+            \]
+            Hence:
+            \[
+            0 = \tr(I) = n.
+            \]
+            This is a contradiction since \( n \neq 0 \).
+
+            Thus, no such matrices \( A \) and \( B \) exist in the field of complex numbers.
+
+            For an arbitrary field \( \mathbb{F} \):\\
+            If \( \mathbb{F} \) has characteristic \( p \), the same argument holds unless \( p = n \). If \( n \equiv 0 \mod p \), it’s possible to have a solution in that case. However, if \( n \not\equiv 0 \mod p \), then the argument remains valid and \( AB - BA = I \) cannot hold.
+        
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Let $T: V \rightarrow V$ be a linear transformation where $V$ is a finite dimenstional vector space over a field $\mathbb{F}$. 
+        Choose a basis $B$ for $V$ and define $\tr(T) = \tr([T]_{B, B})$. Show that the definition does not depend on the choice of basis $B$.
+
+        \begin{solution}
+            Let \( B_1 \) and \( B_2 \) be two different bases for \( V \). The change of basis matrix from \( B_1 \) to \( B_2 \) is denoted by \( P \), which is invertible.
+
+            The matrix representation of \( T \) with respect to \( B_1 \) is \( [T]_{B_1} \) and with respect to \( B_2 \) is \( [T]_{B_2} \). We have the relation:
+            \[
+            [T]_{B_2} = P^{-1}[T]_{B_1}P.
+            \]
+
+            The trace of a matrix has the property that:
+            \[
+            \tr(P^{-1}AP) = \tr(A) \quad \text{for any square matrix } A.
+            \]
+            Therefore, we get:
+            \[
+            \tr([T]_{B_2}) = \tr(P^{-1}[T]_{B_1}P) = \tr([T]_{B_1}).
+            \]
+
+            This shows that \( \tr(T) \) is invariant under the choice of basis \( B \).
+        
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Let $f: \mathbb{F}^{n \times n} \rightarrow \mathbb{F}$ be a linear functional which satisfies $f(AB) = f(BA)$ for all $A, B \in \mathbb{F}^{n \times n}$. Prove that $f = a \cdot \tr$ for some scalar $a \in \mathbb{F}$.
+        Further show that if the characterisitc of $\mathbb{F}$ is $0$, then $f = \tr$ precisely when $f(1) = n$. What happens if the characteristic is not $0$? Can you find another way decide if $f = \tr$ by computing a single value? 
+
+        \begin{solution}
+            Since \( f \) is a linear functional that satisfies \( f(AB) = f(BA) \), we can utilize the basis \( E_{ij} \) of matrix units, where \( (E_{ij})_{kl} = \delta_{ik} \delta_{jl} \) (the matrix with \( 1 \) in the \( (i,j) \) position and \( 0 \) elsewhere). 
+
+            For any \( A \in \mathbb{F}^{n \times n} \):
+            \[
+            f(A) = f\left(\sum_{i,j} a_{ij} E_{ij}\right) = \sum_{i,j} a_{ij} f(E_{ij}).
+            \]
+
+            By the property of \( f \):
+            \[
+            f(E_{ij}) = f(E_{ji}),
+            \]
+            thus indicating that \( f(E_{ij}) \) depends only on the diagonal elements:
+            \[
+            f(E_{ii}) = c_i \quad \text{and} \quad f(E_{ij}) = 0 \text{ for } i \neq j.
+            \]
+
+            Therefore, we can express \( f(A) \) as:
+            \[
+            f(A) = \sum_{i=1}^n a_{ii} c_i,
+            \]
+            indicating \( f \) can be written as:
+            \[
+            f(A) = a \cdot \tr(A) \quad \text{where } a = c_1 + c_2 + \ldots + c_n.
+            \]
+
+            To check if \( f = \tr \), we calculate \( f(1) \):
+            \[
+            f(1) = c_1 + c_2 + \ldots + c_n = n \Rightarrow f = \tr \text{ if the characteristic of } \mathbb{F} \text{ is } 0.
+            \]
+
+            If the characteristic of \( \mathbb{F} \) is not \( 0 \), then the condition \( f(1) = n \) may not uniquely determine \( f \). In this case, computing \( f(E_{ij}) \) for \( i = j \) gives us diagonal information but may allow for scalars to differ by multiples of the characteristic, hence leading to non-uniqueness.
+
+            One can also decide if \( f = \tr \) by computing \( f(E_{ii}) \) for all \( i \) and checking whether all these values equal \( 1 \).
+        
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Let $S = \text{span}_{\mathbb{F}}(\{AB - BA : A, B \in \mathbb{F}^{n \times n}\})$. Prove that $S = \ker(\tr)$. 
+        (Hint: Compute the dimension of $\ker(\tr)$, and find a basis for $S$ using some well-known matrices.)
+
+        \begin{solution}
+            First, we calculate \( \ker(\tr) \):
+            \[
+            \ker(\tr) = \{ X \in \mathbb{F}^{n \times n} : \tr(X) = 0 \}.
+            \]
+
+            The dimension of \( \ker(\tr) \) can be computed as follows. The space \( \mathbb{F}^{n \times n} \) has dimension \( n^2 \), and the image of \( \tr \) is \( \mathbb{F} \), which has dimension \( 1 \). Therefore:
+            \[
+            \dim(\ker(\tr)) = n^2 - 1.
+            \]
+
+            Now consider the space \( S = \text{span}_{\mathbb{F}}(\{AB - BA : A, B \in \mathbb{F}^{n \times n}\}) \). 
+
+            The matrices \( AB - BA \) are trace-zero since:
+            \[
+            \tr(AB - BA) = \tr(AB) - \tr(BA) = 0.
+            \]
+            Thus, \( S \subseteq \ker(\tr) \).
+
+            To show \( \ker(\tr) \subseteq S \):\\
+            Take any matrix \( X \in \ker(\tr) \) such that \( \tr(X) = 0 \). The matrices \( E_{ij} \) where \( i \neq j \) yield \( E_{ij}E_{ji} - E_{ji}E_{ij} \) for non-diagonal matrices. Since all such combinations can form a linear combination to construct any \( X \) in \( \ker(\tr) \), we conclude that every element of \( \ker(\tr) \) can be expressed as an element of \( S \).
+
+            Hence, we conclude that \( S = \ker(\tr) \).
+        
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+
+
+\end{document}

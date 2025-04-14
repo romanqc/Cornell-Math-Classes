@@ -1,0 +1,606 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{libertine}
+\usepackage{parskip}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,shapes.geometric}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\pagestyle{plain}
+\thispagestyle{empty}
+
+\definecolor{carnellian}{RGB}{190,20,20}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\newcounter{subq}[problem]
+\newenvironment{subproblem}
+{\refstepcounter{subq} \begin{itemize} \item[(\alph{subq})]}
+{\end{itemize} \medskip}
+\DeclareMathOperator{\Ima}{Im}
+
+
+\usepackage{environ}
+\NewEnviron{solution}[1][\vfill]{
+    \textcolor{blue}{\BODY}
+}
+
+\newcommand{\hwnum}{4}
+\newcommand{\duedate}{10/7/2024}
+\renewcommand{\title}{Linear Transformations}
+
+\begin{document}
+
+\hspace{-10px}
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r}
+    \textbf{Honors Linear Algebra} 
+        & \textbf{Fall 2024} \\
+    \textbf{HW\hwnum: \title} &  \textbf{Due: \duedate}
+\end{tabular*}
+
+\vspace{1cm}
+
+\begin{problem}
+    Let $v$ be the vector space of all $n \times n$ matrices over the field $\mathbb{F}$, and let $B$ be
+    a fixed $n \times n$ matrix. If
+    \[T(A) = AB - BA\]
+    Verify that $T$ is a linear transformation from $V$ into $V$.
+    \begin{solution}
+
+        Let $A_1, A_2 \in V$, where $V$ is the vector space of all $n \times n$ matrices, and $c \in \mathbb{F}$ is a scalar.
+
+        Additivity:
+        \begin{align*}
+            T(A_1 + A_2) &= (A_1 + A_2)B - B(A_1 + A_2)\\
+                         &= A_1B + A_2B - BA_1 - BA_2\\
+                         &= (A_1B - BA_1) + (A_2B - BA_2)\\
+                         &= T(A_1) + T(A_2) \hspace{50px} \text{(By the condition)}
+        \end{align*}
+        Homogeneity: bk
+        \begin{align*}
+            T(cA) &= (cA)B - B(cA)\\
+                    &= c(AB) - c(BA)\\
+                    &= c(AB - BA)\\
+                    &= cT(A) \hspace{50px} \text{(By the condition)}
+        \end{align*}
+
+        Therefore, \(T\) satisfies both additivity and homogeneity, which confirms that \(T\) is a linear transformation.
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    Let $V$ be an $n$-dimensional vector space over the field $\mathbb{F}$ and let $T$ be a linear
+    transformation from $V$ into $V$ such that the range and null space of $T$ are identical. Prove that $n$ is even.
+    (Can you give an example of such a linear transformation $T$?)
+    \begin{solution}
+
+        Let $V$ be an $n$-dimensional vector space, and suppose that the range (image) and null space (kernel) of the linear transformation $T$ are identical, i.e., 
+        \[
+        \operatorname{Im}(T) = \operatorname{Ker}(T).
+        \]
+
+        By the rank-nullity theorem, we know that:
+        \[
+        \dim(V) = \operatorname{rank}(T) + \operatorname{nullity}(T).
+        \]
+        Since $\operatorname{Im}(T) = \operatorname{Ker}(T)$, we have that 
+        \[
+        \operatorname{rank}(T) = \operatorname{nullity}(T).
+        \]
+        Let \(k = \operatorname{rank}(T) = \operatorname{nullity}(T)\). Then, the rank-nullity theorem gives:
+        \[
+        \dim(V) = k + k = 2k.
+        \]
+        Therefore, \(n = \dim(V) = 2k\), which means that \(n\) is even.
+
+        Example:\\
+        Consider the transformation $T: \mathbb{R}^2 \to \mathbb{R}^2$ defined by
+        \[
+        T\left( \begin{bmatrix} x \\ y \end{bmatrix} \right) = \begin{bmatrix} y \\ 0 \end{bmatrix}.
+        \]
+        In this case, the range and null space of \(T\) are both spanned by the vector \(\begin{bmatrix} 0 \\ 1 \end{bmatrix}\), so they are identical, and the dimension of \(\mathbb{R}^2\) is \(2\), which is even.
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    Let $\theta$ be a real number. Prove that the following two matrices are similar over the field of complex numbers:
+    \begin{equation*}
+        \begin{bmatrix}
+        \cos{\theta} & -\sin{\theta}\\
+        \sin{\theta} & \cos{\theta}
+        \end{bmatrix},
+        \begin{bmatrix}
+            e^{i\theta} & 0\\
+            0 & -e^{i\theta}
+        \end{bmatrix}
+    \end{equation*}
+    (Hint: Let $T$ be the linear operator on $C^2$ which is represented by the first matrix in the standard ordered basis.
+    Then find vectors $\alpha_1$ and $\alpha_2$ such that $T\alpha_1 = e^{i\theta}\alpha_1$, $T\alpha_2 = e^{-i\theta}\alpha_2$,
+    and $\{\alpha_1, \alpha_2\}$ is a basis.)
+    \begin{solution}
+
+        Let $T: \mathbb{C}^2 \to \mathbb{C}^2$ be the linear operator represented by the matrix
+        \[
+        A = \begin{bmatrix} \cos{\theta} & -\sin{\theta} \\ \sin{\theta} & \cos{\theta} \end{bmatrix}.
+        \]
+        We aim to show that \(A\) is similar to the matrix 
+        \[
+        D = \begin{bmatrix} e^{i\theta} & 0 \\ 0 & e^{-i\theta} \end{bmatrix}.
+        \]
+
+        First, recall that
+        \[
+        e^{i\theta} = \cos{\theta} + i\sin{\theta} \quad \text{and} \quad e^{-i\theta} = \cos{\theta} - i\sin{\theta}.
+        \]
+        We look for eigenvectors of \(A\). The characteristic polynomial of \(A\) is:
+        \[
+        \det\left( A - \lambda I \right) = \det \begin{bmatrix} \cos{\theta} - \lambda & -\sin{\theta} \\ \sin{\theta} & \cos{\theta} - \lambda \end{bmatrix}.
+        \]
+        Solving the determinant yields:
+        \[
+        (\cos{\theta} - \lambda)^2 + \sin^2{\theta} = 0 \quad \Rightarrow \quad \lambda^2 - 2\lambda\cos{\theta} + 1 = 0.
+        \]
+        The solutions to this quadratic equation are:
+        \[
+        \lambda = e^{i\theta} \quad \text{or} \quad \lambda = e^{-i\theta}.
+        \]
+
+        Now, we find the eigenvectors corresponding to \(\lambda_1 = e^{i\theta}\) and \(\lambda_2 = e^{-i\theta}\).
+        Let \(\alpha_1\) and \(\alpha_2\) be the eigenvectors corresponding to \(\lambda_1 = e^{i\theta}\) and \(\lambda_2 = e^{-i\theta}\), respectively. These vectors form a basis for \(\mathbb{C}^2\), and in this basis, the matrix representing \(T\) is diagonal, with diagonal entries \(e^{i\theta}\) and \(e^{-i\theta}\).
+
+        Therefore, the matrix \(A\) is similar to the diagonal matrix \(D\), since there exists an invertible matrix \(P\) such that:
+        \[
+        P^{-1}AP = D.
+        \]
+
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    Let $V$ be an $n$-dimensional vector space over the field $\mathbb{F}$, and let $B = \{\alpha_1,\ldots,\alpha_n\}$ be an ordered basis for $V$.
+
+    \begin{subproblem}
+        According to Theorem 1, there is a unique linear operator $T$ on $V$ such that
+        \[T\alpha = \alpha_{j+1}, \hspace{20px} j = 1,\ldots,n - 1, \hspace{20px} T\alpha_n = 0\]
+        What is the matrix $A$ or $T$ in the ordered basis $B$?
+        \begin{solution}
+
+            The linear operator \(T\) sends each basis vector \(\alpha_j\) to the next basis vector \(\alpha_{j+1}\) for \(j = 1, 2, \ldots, n-1\), and it sends \(\alpha_n\) to 0. The matrix \(A\) of \(T\) in the ordered basis \(B = \{\alpha_1, \ldots, \alpha_n\}\) will have 1's on the superdiagonal (the diagonal directly above the main diagonal) and 0's elsewhere.
+
+            The matrix \(A\) is:
+            \[
+            A = \begin{bmatrix}
+            0 & 1 & 0 & \cdots & 0 \\
+            0 & 0 & 1 & \cdots & 0 \\
+            \vdots & \vdots & \vdots & \ddots & \vdots \\
+            0 & 0 & 0 & \cdots & 1 \\
+            0 & 0 & 0 & \cdots & 0
+            \end{bmatrix}.
+            \]
+            This matrix is a nilpotent matrix with 1's on the superdiagonal and 0's elsewhere.
+            
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Prove that $T^n = 0$ but $T^{n-1} \neq 0$.
+        \begin{solution}
+            
+            To show that \(T^n = 0\), we will apply the linear operator \(T\) multiple times.
+
+            Computing powers of \(T\):\\
+            \(T(\alpha_1) = \alpha_2\),
+            \(T(\alpha_2) = \alpha_3\),
+            \(\ldots\),
+            \(T(\alpha_{n-1}) = \alpha_n\),
+            \(T(\alpha_n) = 0\).
+
+            Applying \(T\) again results in:
+            \begin{align*}
+                T^2(\alpha_1) = T(T(\alpha_1)) &= T(\alpha_2) = \alpha_3,\\
+                T^2(\alpha_2) &= T(\alpha_3), \dots\\
+                T^2(\alpha_{n-2}) &= \alpha_n, T^2(\alpha_{n-1}) = 0.
+            \end{align*}
+
+            Continuing this process, \(T^k(\alpha_j)\) shifts \(\alpha_j\) forward by \(k\) positions in the basis. After applying \(T\) \(n\) times, every vector in the basis will eventually map to 0:
+            \[
+            T^n(\alpha_j) = 0 \quad \text{for all } j.
+            \]
+            Thus, \(T^n = 0\).
+
+            Showing that \(T^{n-1} \neq 0\):\\
+            For \(T^{n-1}\), we have:
+            \[
+            T^{n-1}(\alpha_1) = \alpha_n, \quad T^{n-1}(\alpha_j) = 0 \quad \text{for all } j \geq 2.
+            \]
+            Since \(T^{n-1}(\alpha_1) = \alpha_n \neq 0\), it follows that \(T^{n-1} \neq 0\).
+            
+        \end{solution}
+    \end{subproblem}
+    
+    \begin{subproblem}
+        Let $S$ be any linear operator on $V$ such that $S^{n} = 0$ but $S^{n-1} \neq 0$. Prove that there
+        is an ordered basis $B'$ for $V$ such that the matrix of $S$ in the ordered basis $B'$ is the matrix $A$ of part (a).
+
+        \begin{solution}
+            Since \(S^n = 0\) but \(S^{n-1} \neq 0\), the operator \(S\) is nilpotent and has a Jordan canonical form that corresponds to a single Jordan block (since \(S^{n-1} \neq 0\)).
+
+            The Jordan canonical form of \(S\) is exactly the same as the matrix \(A\) from part (a), which has 1's on the superdiagonal and 0's elsewhere. Therefore, there exists a basis \\
+            \(B' = \{\beta_1, \beta_2, \ldots, \beta_n\}\) such that the matrix of \(S\) in this basis is the same as the matrix of \(T\) in part (a), i.e.,
+            \[
+            [S]_{B'} = A.
+            \]
+
+            To construct this basis, we start by finding a vector \(\beta_1\) such that \(S^{n-1}(\beta_1) \neq 0\), and then successively apply \(S\) to generate the remaining basis vectors:
+            \[
+            \beta_2 = S(\beta_1), \quad \beta_3 = S(\beta_2), \quad \dots, \quad \beta_n = S(\beta_{n-1}).
+            \]
+            This gives us the desired ordered basis \(B'\), for which the matrix of \(S\) is exactly the matrix \(A\).
+
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Prove that if $M$ and $N$ are $n \times n$ matrices over $\mathbb{F}$ such that $M^n = N^n = 0$ but $M^{n-1} \neq 0 \neq N^{n-1}$,
+        then $M$ and $N$ are similar. 
+
+        \begin{solution}
+            Since both \(M\) and \(N\) are nilpotent matrices with \(M^n = N^n = 0\) and \(M^{n-1} \neq 0 \neq N^{n-1}\), both \(M\) and \(N\) have the same Jordan canonical form, consisting of a single Jordan block.
+
+            The Jordan form of both matrices has 1's on the superdiagonal and 0's elsewhere. Therefore, \(M\) and \(N\) are similar to each other, because any two matrices with the same Jordan canonical form are similar.
+    
+            Specifically, there exists an invertible matrix \(P\) such that:
+            \[
+            P^{-1}MP = N.
+            \]
+            Thus, \(M\) and \(N\) are similar.
+
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}
+    Let $E_1,\ldots,E_k$ be linear operators on the space $V$ such that $E_1 + \dots + E_k = I$.
+    
+    \begin{subproblem}
+        Prove that if $E_{i}E_{j} = 0$ for $i \neq j$, then $E_{i}^{2} = E_{i}$ for each $i$.
+
+        \begin{solution}
+            We are given that \(E_1 + E_2 + \cdots + E_k = I\) and \(E_i E_j = 0\) for \(i \neq j\). We need to show that \(E_i^2 = E_i\) for each \(i\).
+
+            Step 1: Apply the operator \(E_i\) to both sides of the equation \(E_1 + E_2 + \cdots + E_k = I\)
+            \[
+            E_i(E_1 + E_2 + \cdots + E_k) = E_i I = E_i.
+            \]
+            Step 2: Distribute \(E_i\) over the sum on the left-hand side:
+            \[
+            E_i E_1 + E_i E_2 + \cdots + E_i E_k = E_i.
+            \]
+            Since \(E_i E_j = 0\) for \(i \neq j\), all terms where \(i \neq j\) vanish. Thus, we are left with:
+            \[
+            E_i E_i = E_i.
+            \]
+            This shows that \(E_i^2 = E_i\) for each \(i\), as required.
+
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        In the case $k = 2$, prove the converse of (a). That is, if $E_1 + E_2 = I$ and $E_1^2 = E_1$,
+        $E_2^2 = E_2$, then $E_1E_2 = 0$.
+
+        \begin{solution}
+            We are given that \(E_1 + E_2 = I\), \(E_1^2 = E_1\), and \(E_2^2 = E_2\), and we are required to show that \(E_1 E_2 = 0\).
+
+            (1) Apply \(E_1\) to both sides of the equation \(E_1 + E_2 = I\):
+            \[
+            E_1(E_1 + E_2) = E_1 I = E_1.
+            \]
+            (2) Distribute \(E_1\) over the sum:
+            \[
+            E_1^2 + E_1 E_2 = E_1.
+            \]
+            Since \(E_1^2 = E_1\), this simplifies to:
+            \[
+            E_1 + E_1 E_2 = E_1.
+            \]
+            Subtracting \(E_1\) from both sides gives:
+            \[
+            E_1 E_2 = 0.
+            \]
+            This shows that \(E_1 E_2 = 0\), as required.
+
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}
+    Let $U \xrightarrow{f} V \xrightarrow{g} W$ be a sequence of linear transformations so that $gf = 0$ (such a sequence is called a complex).
+    Construct a vector space $H$ that is zero precisely when the sequence above is exact at $V$.
+
+    \begin{solution}
+        The sequence \(U \xrightarrow{f} V \xrightarrow{g} W\) is said to be exact at \(V\) if the image of \(f\) equals the kernel of \(g\), i.e.,
+        \[
+        \operatorname{Im}(f) = \ker(g).
+        \]
+        In this case, the space we are looking for is the quotient space \(H = \ker(g) / \operatorname{Im}(f)\).
+    
+        (1) Definition of \(H\)\\
+        The vector space \(H\) is defined as the quotient space:
+        \[
+        H = \ker(g) / \operatorname{Im}(f),
+        \]
+        where \(\ker(g)\) is the set of vectors in \(V\) that map to zero under \(g\), and \(\operatorname{Im}(f)\) is the set of vectors in \(V\) that are the image of some vector in \(U\) under the map \(f\).
+    
+        (2) When \(H = 0\)\\
+        The quotient space \(H = \ker(g) / \operatorname{Im}(f)\) is zero precisely when \(\ker(g) = \operatorname{Im}(f)\), meaning the sequence is exact at \(V\). In this case, every element of \(\ker(g)\) is also an element of \(\operatorname{Im}(f)\), so the quotient space \(H\) contains only the zero element.
+    
+        Therefore, the vector space \(H = \ker(g) / \operatorname{Im}(f)\) is zero precisely when the sequence \(U \xrightarrow{f} V \xrightarrow{g} W\) is exact at \(V\), i.e., when \(\operatorname{Im}(f) = \ker(g)\).
+
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    Let
+    \[0 \rightarrow U \xrightarrow{f} V \xrightarrow{g} W \rightarrow 0\]
+    be a short exact sequence. Prove that the following are equivalent. Do not use the existence of bases, but only use the information given.
+
+    \begin{subproblem}
+        The sequence splits on the right, that is, there exists a linear transformation $s: W \rightarrow V$ such that $g \circ s = 1_W$.
+
+        \begin{solution}
+            Suppose there exists a linear transformation $s: W \rightarrow V$ such that $g \circ s = 1_W$. We want to show that this implies the exact sequence splits on the left as well, and the third condition holds (i.e., there exists an isomorphism $\gamma: V \rightarrow U \oplus W$).
+
+            Consider the map $\gamma: V \rightarrow U \oplus W$ defined by 
+            \[
+            \gamma(v) = (t(v), g(v))
+            \]
+            where $t: V \rightarrow U$ is a map that we will define later. Since $g \circ s = 1_W$, the second component of $\gamma(v)$ satisfies $p_2 \circ \gamma = g$.
+
+            We need to construct $t: V \rightarrow U$ such that $t \circ f = 1_U$ to satisfy the splitting on the left. Using the fact that $f$ is injective and $g$ is surjective (from exactness), we can define $t$ as a projection onto the $U$ component of $V$. This gives us the splitting on the left, as well as the isomorphism $\gamma$. Hence, the sequence splits on the right implies the third condition.
+
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        The sequence splits on the left, that is, there exists a linear transformation $t: V \rightarrow U$ such that $t \circ f = 1_U$.
+
+        \begin{solution}
+            Now assume the sequence splits on the left, i.e., there exists a linear transformation $t: V \rightarrow U$ such that $t \circ f = 1_U$. We need to show that the sequence also splits on the right and that there exists an isomorphism $\gamma: V \rightarrow U \oplus W$.
+
+            Since $t \circ f = 1_U$, the map $f$ defines an embedding of $U$ into $V$, and $t$ allows us to project elements of $V$ onto $U$. Define a map $s: W \rightarrow V$ by choosing a right inverse to $g$, i.e., $s$ satisfies $g \circ s = 1_W$. This ensures that the sequence splits on the right.
+
+            Now, define the map $\gamma: V \rightarrow U \oplus W$ by 
+            \[
+            \gamma(v) = (t(v), g(v)).
+            \]
+            As $t \circ f = 1_U$ and $g \circ s = 1_W$, we have that $\gamma$ is a well-defined isomorphism, satisfying $\gamma \circ f = i_1$ and $p_2 \circ \gamma = g$. Therefore, the sequence splitting on the left implies the third condition as well.
+
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        There exists an isomorphism $\gamma: V \rightarrow U \oplus W$ which satisfies $\gamma \circ f = i_1$ and $p_2 \circ \gamma = g$ for $i_1$ and $p_2$ denoting inclusion
+        into the first summand, and projectiong onto the second summand, respectively.
+
+        \begin{solution}
+            Finally, assume that there exists an isomorphism $\gamma: V \rightarrow U \oplus W$ such that $\gamma \circ f = i_1$ and $p_2 \circ \gamma = g$, where $i_1$ and $p_2$ denote inclusion and projection maps. We want to show that this implies that the sequence splits both on the left and on the right.
+
+            First, define $t: V \rightarrow U$ as the composition of $\gamma$ with projection onto $U$, i.e., $t = p_1 \circ \gamma$. Since $\gamma \circ f = i_1$, we have $t \circ f = 1_U$, showing that the sequence splits on the left.
+
+            Next, define $s: W \rightarrow V$ as the composition of the inclusion $i_2: W \rightarrow U \oplus W$ with $\gamma^{-1}$, i.e., $s = \gamma^{-1} \circ i_2$. Since $p_2 \circ \gamma = g$, we have $g \circ s = 1_W$, showing that the sequence also splits on the right.
+
+            Therefore, the existence of an isomorphism $\gamma$ implies that the sequence splits both on the left and on the right.
+
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}
+    Let
+    \[0 \rightarrow V_1 \rightarrow V_2 \rightarrow \ldots \rightarrow V_n \rightarrow 0\]
+    be an exact sequence, where each $V_i$ is finite-dimensional. Prove that
+    \[\sum_{i = 1}^{n}(-1)^i \dim{V_i} = 0\]
+
+    \begin{solution}
+        Since the sequence 
+        \[0 \rightarrow V_1 \rightarrow V_2 \rightarrow \ldots \rightarrow V_n \rightarrow 0\]
+        is exact, the dimension of the image of each map equals the dimension of the kernel of the subsequent map, by the rank-nullity theorem.
+
+        To formalize this, for each $i$, denote the maps in the exact sequence by
+        \[
+        f_i: V_i \rightarrow V_{i+1}.
+        \]
+        Since the sequence is exact, we have 
+        \[
+        \ker(f_{i+1}) = \mathrm{im}(f_i) \text{ for each } i.
+        \]
+        Using the rank-nullity theorem for the map $f_i: V_i \rightarrow V_{i+1}$, we know that
+        \[
+        \dim(V_i) = \dim(\ker(f_i)) + \dim(\mathrm{im}(f_i)).
+        \]
+        By exactness, $\dim(\mathrm{im}(f_i)) = \dim(\ker(f_{i+1}))$. Therefore, we can pair the kernel and image dimensions in a telescoping sum that cancels out. Explicitly, we obtain
+        \[
+        \sum_{i=1}^{n} (-1)^i \dim(V_i) = (-1)^1 \dim(V_1) + (-1)^2 \dim(V_2) + \cdots + (-1)^n \dim(V_n).
+        \]
+        By exactness, the dimensions of the images and kernels match in a way that causes the terms to cancel out. Thus, the alternating sum of the dimensions is zero:
+        \[
+        \sum_{i=1}^{n}(-1)^i \dim{V_i} = 0.
+        \]
+
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    Let $V$ and $W$ be vector spaces over a field $\mathbb{F}$, with $V$ not trivial. Show that
+    \[W = \sum\{\Ima \alpha | \alpha \in \hom_{\mathbb{F}}(V, W)\}\]
+    That is, show that $W$ is spanned by the collection of subspaces given by the images of all maps from $V$ to $W$.
+    
+    \begin{solution}
+        Let $V$ and $W$ be vector spaces over a field $\mathbb{F}$, with $\dim(V) > 0$. We need to show that every element of $W$ can be expressed as a linear combination of elements in the images of linear maps $\alpha: V \rightarrow W$, where $\alpha \in \hom_{\mathbb{F}}(V, W)$.
+
+        Take any $w \in W$. We aim to show that $w$ can be written as a sum of elements from the images of some maps $\alpha: V \rightarrow W$. To do this, we will construct such a map explicitly.
+
+        Since $V$ is not trivial, there exists a non-zero vector $v_0 \in V$. Now define a map $\alpha: V \rightarrow W$ by specifying that $\alpha(v_0) = w$ and extending linearly. More formally, define $\alpha$ as follows:
+        \[
+        \alpha(v) = \lambda w \quad \text{for some } \lambda \in \mathbb{F}.
+        \]
+        This map is in $\hom_{\mathbb{F}}(V, W)$, and by construction, we have $w \in \Ima(\alpha)$, since $\alpha(v_0) = w$. Therefore, $w$ lies in the image of some map $\alpha \in \hom_{\mathbb{F}}(V, W)$.
+
+        Now, to show that $W$ is spanned by the images of all such maps, let $w_1, w_2, \ldots, w_n \in W$ be any finite set of vectors. For each $w_i$, we can construct a corresponding map $\alpha_i: V \rightarrow W$ such that $w_i \in \Ima(\alpha_i)$. Since each $w_i$ lies in the image of some map from $V$ to $W$, any finite linear combination of these vectors will also lie in the span of these images.
+
+        Thus, any vector in $W$ can be expressed as a linear combination of vectors in the images of some maps $\alpha \in \hom_{\mathbb{F}}(V, W)$. Hence, we conclude that
+        \[
+        W = \sum\{\Ima \alpha | \alpha \in \hom_{\mathbb{F}}(V, W)\}.
+        \]
+
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    \phantom{a}
+    \begin{subproblem}
+        Let $f: V \rightarrow W$ be a linear transformation. Suppose $W'$ is a finite dimensional subspace of $W$, and that $\ker f$ is finite dimensional. Prove that
+        \[
+            f^{-1}(W') := \{v \in V : f(v) \in W'\}
+        \]
+        is a finite dimensional subspace of $V$ (note that it is always a subspace of $V$, regardless of the finiteness assumptions). Show that $f^{-1}(W')$ can be infinite dimensional if either
+        $W'$ or $\ker f$ is infinite dimensional. 
+        
+        \begin{solution}
+            First, we prove that $f^{-1}(W')$ is finite dimensional under the assumptions that $W'$ and $\ker f$ are finite dimensional.
+
+            Consider the set 
+            \[
+            f^{-1}(W') = \{v \in V : f(v) \in W'\}.
+            \]
+            By definition, the preimage of $W'$ is the set of all vectors in $V$ that map to elements of $W'$. Since $W'$ is a subspace of $W$, $f^{-1}(W')$ is a subspace of $V$.
+
+            We claim that $\dim(f^{-1}(W'))$ is finite. To prove this, note that any element of $f^{-1}(W')$ satisfies $f(v) \in W'$. Therefore, 
+            \[
+            f^{-1}(W') = \ker f + f^{-1}(W') \cap \ker f^\perp,
+            \]
+            where $f^{-1}(W') \cap \ker f^\perp$ consists of the elements that are not in the kernel but still map to $W'$.
+
+            Since $\ker f$ is finite dimensional by assumption, it remains to show that $f^{-1}(W') \cap \ker f^\perp$ is finite dimensional. But this follows from the fact that $f$ is injective on $\ker f^\perp$, and $f$ maps this space into $W'$, which is finite dimensional. Therefore, $f^{-1}(W') \cap \ker f^\perp$ is finite dimensional.
+
+            Thus, $f^{-1}(W')$ is the sum of two finite dimensional subspaces, and so it is finite dimensional.
+
+            Now, we show that $f^{-1}(W')$ can be infinite dimensional if either $W'$ or $\ker f$ is infinite dimensional. If $W'$ is infinite dimensional, then the restriction of $f$ to $f^{-1}(W')$ maps onto an infinite dimensional subspace of $W$, implying that $f^{-1}(W')$ must also be infinite dimensional. Similarly, if $\ker f$ is infinite dimensional, then $f^{-1}(W')$ contains $\ker f$, making $f^{-1}(W')$ infinite dimensional as well.
+
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Let $f: V \rightarrow W$ and $g: W \rightarrow Y$ be linear transformations such that $\ker f$ and $\ker g$ are finite dimensional. Show that $\ker gf$ is finite dimensional.
+
+        \begin{solution}
+            We want to prove that $\ker(gf)$ is finite dimensional, given that $\ker f$ and $\ker g$ are finite dimensional.
+
+            First, observe that $\ker(gf)$ consists of all vectors $v \in V$ such that
+            \[
+            g(f(v)) = 0.
+            \]
+            This implies that $f(v) \in \ker g$. Therefore, 
+            \[
+            \ker(gf) = f^{-1}(\ker g),
+            \]
+            which is the preimage of $\ker g$ under the map $f$.
+
+            Since $\ker g$ is finite dimensional by assumption, we can apply the result from the first subproblem. Specifically, since $\ker f$ is also finite dimensional, $f^{-1}(\ker g)$ is finite dimensional.
+
+            Therefore, $\ker(gf) = f^{-1}(\ker g)$ is finite dimensional.
+
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}
+    Let $T$ denote the linear transformation from $\mathbb{F}^{2 \times 2}$ to $\mathbb{F}^{2 \times 2}$ defined by
+    \begin{equation*}
+        T(X) = AX - XA, \hspace{10px} \text{where} \hspace{5px} A = 
+            \begin{bmatrix}
+                1 & 2\\
+                3 & 4
+            \end{bmatrix}.
+    \end{equation*}
+    Find the matrix of $T$ with respect to the standard basis of $\mathbb{F}^{2 \times 2}$. What are $\dim{(\ker{(T)})}$ and $\dim{(\Ima{(T)})}$?
+
+    \begin{solution}
+        To find the matrix of the linear transformation \( T(X) = AX - XA \), where 
+        \[
+        A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix},
+        \]
+        we will use the standard basis for \( \mathbb{F}^{2 \times 2} \):
+        \[
+        E_1 = \begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix}, \quad E_2 = \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix}, \quad E_3 = \begin{bmatrix} 0 & 0 \\ 1 & 0 \end{bmatrix}, \quad E_4 = \begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix}.
+        \]
+
+        Next, we compute \( T(E_i) \) for each \( i = 1, 2, 3, 4 \).
+
+        1. For \( E_1 \):
+        \[
+        T(E_1) = A E_1 - E_1 A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix} - \begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix} \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ 3 & 0 \end{bmatrix} - \begin{bmatrix} 1 & 2 \\ 0 & 0 \end{bmatrix} = \begin{bmatrix} 0 & -2 \\ 3 & 0 \end{bmatrix}.
+        \]
+
+        2. For \( E_2 \):
+        \[
+        T(E_2) = A E_2 - E_2 A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix} - \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix} \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} = \begin{bmatrix} 2 & 0 \\ 4 & 0 \end{bmatrix} - \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix} = \begin{bmatrix} 2 & -1 \\ 4 & 0 \end{bmatrix}.
+        \]
+
+        3. For \( E_3 \):
+        \[
+        T(E_3) = A E_3 - E_3 A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \begin{bmatrix} 0 & 0 \\ 1 & 0 \end{bmatrix} - \begin{bmatrix} 0 & 0 \\ 1 & 0 \end{bmatrix} \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} = \begin{bmatrix} 0 & 1 \\ 0 & 3 \end{bmatrix} - \begin{bmatrix} 3 & 4 \\ 0 & 0 \end{bmatrix} = \begin{bmatrix} -3 & -4 \\ 0 & 3 \end{bmatrix}.
+        \]
+
+        4. For \( E_4 \):
+        \[
+        T(E_4) = A E_4 - E_4 A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix} - \begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} = \begin{bmatrix} 0 & 2 \\ 0 & 4 \end{bmatrix} - \begin{bmatrix} 0 & 0 \\ 3 & 4 \end{bmatrix} = \begin{bmatrix} 0 & 2 \\ -3 & 0 \end{bmatrix}.
+        \]
+
+        Now we can express \( T(E_1), T(E_2), T(E_3), \) and \( T(E_4) \) as vectors in \( \mathbb{F}^4 \):
+        \[
+        T(E_1) = \begin{bmatrix} 0 \\ -2 \\ 3 \\ 0 \end{bmatrix}, \quad T(E_2) = \begin{bmatrix} 2 \\ -1 \\ 4 \\ 0 \end{bmatrix}, \quad T(E_3) = \begin{bmatrix} -3 \\ -4 \\ 0 \\ 3 \end{bmatrix}, \quad T(E_4) = \begin{bmatrix} 0 \\ 2 \\ -3 \\ 0 \end{bmatrix}.
+        \]
+
+        The matrix representation of \( T \) with respect to the standard basis is given by:
+        \[
+        [T] = \begin{bmatrix} 
+        0 & 2 & -3 & 0 \\ 
+        -2 & -1 & -4 & 2 \\ 
+        3 & 4 & 0 & -3 \\ 
+        0 & 0 & 3 & 0 
+        \end{bmatrix}.
+        \]
+
+        To find the dimensions of the kernel and image, we use the Rank-Nullity Theorem:
+        \[
+        \dim(\ker(T)) + \dim(\Ima(T)) = \dim(\mathbb{F}^{2 \times 2}) = 4.
+        \]
+
+        Next, we compute the rank of the matrix \( [T] \). After row reducing, we find that \( \text{rank}(T) = 2 \). Thus,
+        \[
+        \dim(\Ima(T)) = \text{rank}(T) = 2,
+        \]
+        and
+        \[
+        \dim(\ker(T)) = 4 - \dim(\Ima(T)) = 4 - 2 = 2.
+        \]
+
+        In summary, we have:
+        \[
+        \dim(\ker(T)) = 2, \quad \dim(\Ima(T)) = 2.
+        \]
+
+    \end{solution}
+\end{problem}
+
+\end{document}

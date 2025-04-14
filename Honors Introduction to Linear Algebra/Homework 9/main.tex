@@ -1,0 +1,563 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{libertine}
+\usepackage{parskip}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,shapes.geometric}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\pagestyle{plain}
+\thispagestyle{empty}
+
+\definecolor{carnellian}{RGB}{190,20,20}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\newcounter{subq}[problem]
+\newenvironment{subproblem}
+{\refstepcounter{subq} \begin{itemize} \item[(\alph{subq})]}
+{\end{itemize} \medskip}
+\DeclareMathOperator{\ima}{im}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\der}{Der}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Char}{char}
+\DeclareMathOperator{\Cen}{Cen}
+\DeclareMathOperator{\ged}{ged}
+\DeclareMathOperator{\tor}{tor}
+% \DeclareMathOperator{\span}{span}
+
+
+
+\usepackage{environ}
+\NewEnviron{solution}[1][\vfill]{
+    \textcolor{blue}{\BODY}
+}
+
+\newcommand{\hwnum}{9}
+\newcommand{\duedate}{11/17/2024}
+\renewcommand{\title}{}
+
+\begin{document}
+
+\hspace{-10px}
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r}
+    \textbf{Honors Linear Algebra} 
+        & \textbf{Fall 2024} \\
+    \textbf{HW\hwnum: \title} &  \textbf{Due: \duedate}
+\end{tabular*}
+
+\vspace{1cm}
+
+\begin{problem}[TensorProducts 4]
+    Let $R$ be any commutative domain with field of fractions $\mathbb{F} = \{a/b | a,b \in R, b \neq 0\}$ (recall your earlier exercises). Show that:
+
+    \begin{subproblem}
+        $\mathbb{F} \otimes_R \mathbb{F} \approx \mathbb{F}$
+
+        \begin{solution}
+            % ----------- solution here ----------- %
+            To show $\mathbb{F} \otimes_R \mathbb{F} \approx \mathbb{F}$, we use the universal property of the tensor product. 
+
+            First, note that $\mathbb{F} = R[S^{-1}]$, where $S = R \setminus \{0\}$. The elements of $\mathbb{F}$ can be written as $a/b$ with $a, b \in R$ and $b \neq 0$. The tensor product $\mathbb{F} \otimes_R \mathbb{F}$ consists of finite sums of elements of the form $(a/b) \otimes (c/d)$ with $a, b, c, d \in R$ and $b, d \neq 0$.
+
+            Define a map $\phi: \mathbb{F} \otimes_R \mathbb{F} \to \mathbb{F}$ by
+            \[
+            \phi((a/b) \otimes (c/d)) = \frac{a \cdot c}{b \cdot d}.
+            \]
+            This map is well-defined, as it respects the relations in $\mathbb{F} \otimes_R \mathbb{F}$. For example:
+            \[
+            \phi((a/b) \otimes (rc/d)) = \phi((ar/b) \otimes (c/d)) = \frac{a \cdot rc}{b \cdot d} = \frac{(ar)c}{b \cdot d}.
+            \]
+
+            Next, $\phi$ is clearly bilinear. To check bijectivity:\\
+            \textbf{Injectivity}: If $\phi\left(\sum (a_i/b_i) \otimes (c_i/d_i)\right) = 0$, then $\sum \frac{a_i \cdot c_i}{b_i \cdot d_i} = 0$, which implies the original tensor sum is zero.\\
+            \textbf{Surjectivity}: For any $\frac{e}{f} \in \mathbb{F}$, choose $\frac{e}{f} = \phi((e/1) \otimes (1/f))$.
+
+            Thus, $\phi$ is an isomorphism, and we conclude $\mathbb{F} \otimes_R \mathbb{F} \approx \mathbb{F}$.
+        
+        \end{solution}
+    \end{subproblem}
+    \begin{subproblem}
+        $\mathbb{F} \otimes_R \mathbb{F}/I \approx 0$ for each non-zero ideal $I \subseteq R$.
+
+        \begin{solution}
+            % ----------- solution here ----------- %
+            To show $\mathbb{F} \otimes_R \mathbb{F}/I \approx 0$, consider a non-zero ideal $I \subseteq R$. Since $R$ is a domain, $I$ contains a non-zero element $r \neq 0$. 
+
+            In $\mathbb{F}$, any element can be written as $a/b$ with $a, b \in R$ and $b \neq 0$. The ideal $I$ induces elements in $\mathbb{F}/I$ of the form $(a + I)/b$. Consider the tensor product $\mathbb{F} \otimes_R (\mathbb{F}/I)$. 
+
+            For any $x \otimes y \in \mathbb{F} \otimes_R (\mathbb{F}/I)$, write $x = a/b$ and $y = (c+I)/d$ with $a, b, c, d \in R$ and $b, d \neq 0$. Then
+            \[
+            x \otimes y = \frac{a}{b} \otimes \frac{c+I}{d}.
+            \]
+            Multiply by $r \in I$:
+            \[
+            r \cdot x \otimes y = \frac{ra}{b} \otimes \frac{c+I}{d}.
+            \]
+            In $\mathbb{F}/I$, $r \in I$ implies $rc + I = 0$. Thus, $x \otimes y = 0$. Since $x \otimes y$ was arbitrary, $\mathbb{F} \otimes_R (\mathbb{F}/I) = 0$.
+
+            Therefore, $\mathbb{F} \otimes_R (\mathbb{F}/I) \approx 0$ for any non-zero ideal $I \subseteq R$.
+        
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}[TensorProducts 6]\phantom{text}
+
+    \begin{subproblem}
+        Let $I$ and $J$ be two ideals in the ring $R$. Construct a surjective homomorphism 
+        $p: I \otimes_R J \longrightarrow IJ$, where $IJ$ is the product of the ideals $I$
+        and $J$ ($IJ$ is the set of finite sums of elements of the form $ij$ for $i \in I$,
+        $j \in J$).
+
+        \begin{solution}
+            % ----------- solution here ----------- %
+            Define the map $p: I \otimes_R J \to IJ$ by
+            \[
+            p(i \otimes j) = ij \quad \text{for all } i \in I \text{ and } j \in J.
+            \]
+            This map is well-defined because the tensor product respects the bilinear relations in $R$. For instance, if $r \in R$, then:
+            \[
+            p((ri) \otimes j) = p((i \otimes rj)) = rij.
+            \]
+            Clearly, $p$ is linear in both arguments.
+
+            To show surjectivity, note that any element of $IJ$ is a finite sum of terms of the form $i_1j_1 + i_2j_2 + \cdots + i_nj_n$, where $i_k \in I$ and $j_k \in J$. For each such term, $i_k \otimes j_k \mapsto i_kj_k$ under $p$. Therefore, the image of $p$ contains all elements of $IJ$.
+
+            Hence, $p$ is a surjective homomorphism.
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Prove that if $I$ (or $J$) is a principal ideal and $R$ is a domain, then $p$ is an 
+        isomorphism. 
+
+        \begin{solution}
+            % ----------- solution here ----------- %
+            Assume $I = (a)$ is a principal ideal, where $a \in R$. Then every element of $I$ can be written as $i = ra$ for some $r \in R$. Similarly, let $j \in J$.
+
+            The tensor product $I \otimes_R J$ can be expressed as:
+            \[
+            I \otimes_R J = (a) \otimes_R J \cong J \quad \text{(as $R$-modules)}.
+            \]
+            Now, under the map $p$, we have
+            \[
+            p(i \otimes j) = p((ra) \otimes j) = ra \cdot j = r(aj) \in IJ.
+            \]
+            Since $IJ$ is generated by elements of the form $aj$ with $a \in I$ and $j \in J$, the map $p$ is injective. The surjectivity of $p$ has already been shown in the first part, so $p$ is bijective.
+
+            Therefore, when $I$ is principal, $p$ is an isomorphism. The same argument applies if $J$ is principal instead.
+        
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Show that if $R = \mathbb{Z}[x]$ and $I = J = (2, x)$,  then $p$ is NOT and isomorphism.
+        Compute the kernel of $p$.
+
+        \begin{solution}
+            % ----------- solution here ----------- %
+            Let $R = \mathbb{Z}[x]$ and $I = J = (2, x)$. Then $I$ and $J$ are generated by $\{2, x\}$. In the tensor product $I \otimes_R J$, elements are linear combinations of the form:
+            \[
+            r_1(2 \otimes 2) + r_2(2 \otimes x) + r_3(x \otimes 2) + r_4(x \otimes x), \quad r_1, r_2, r_3, r_4 \in R.
+            \]
+
+            Under the map $p$, we have:
+            \[
+            p(2 \otimes 2) = 4, \quad p(2 \otimes x) = 2x, \quad p(x \otimes 2) = 2x, \quad p(x \otimes x) = x^2.
+            \]
+            The image of $p$ is $IJ = (4, 2x, x^2)$, but $I \otimes_R J$ contains more relations than $IJ$. For example, consider the relation:
+            \[
+            2 \otimes x - x \otimes 2 \in \ker(p),
+            \]
+            because $p(2 \otimes x - x \otimes 2) = 2x - 2x = 0$. This indicates that $p$ is not injective.
+
+            To compute $\ker(p)$, observe that $\ker(p)$ is generated by all elements of the form:
+            \[
+            i \otimes j - j \otimes i \quad \text{for } i \in I, j \in J.
+            \]
+            In this case, $\ker(p)$ is generated by:
+            \[
+            2 \otimes x - x \otimes 2.
+            \]
+
+            Therefore, $p$ is not an isomorphism, and the kernel is:
+            \[
+            \ker(p) = \langle 2 \otimes x - x \otimes 2 \rangle.
+            \]
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}[TensorProducts 14]
+    Let $A$ and $B$ be two square matrices. Prove that the Kronecker products $A \otimes B$
+    and $B \otimes A$ are similar matrices.
+
+    \begin{solution}
+        % ----------- solution here ----------- %
+        To show that $A \otimes B$ and $B \otimes A$ are similar matrices, we construct an invertible matrix $P$ such that:
+        \[
+        P (A \otimes B) P^{-1} = B \otimes A.
+        \]
+
+        Let $A$ be an $m \times m$ matrix, and $B$ be an $n \times n$ matrix. The Kronecker product $A \otimes B$ is an $mn \times mn$ matrix. Define $P$ as the permutation matrix that rearranges the indices of $mn \times mn$ matrices based on the lexicographic ordering of the tensor product.
+
+        Specifically, let $e_{i,j}$ denote the standard basis of $m \times n$ matrices. The permutation matrix $P$ is defined such that:
+        \[
+        P(e_{i,j} \otimes e_{k,l}) = e_{i,k} \otimes e_{j,l},
+        \]
+        for all $1 \leq i, j \leq m$ and $1 \leq k, l \leq n$. Essentially, $P$ reorders the rows and columns of $A \otimes B$ to match the structure of $B \otimes A$.
+
+        Proof of Similarity:\\
+        Consider $A \otimes B$ with entries indexed by pairs of indices $(i,k)$ and $(j,l)$:
+        \[
+        (A \otimes B)_{(i,k),(j,l)} = A_{i,j} B_{k,l}.
+        \]
+        Applying the permutation matrix $P$ to $A \otimes B$ results in:
+        \[
+        P (A \otimes B) P^{-1} = B \otimes A,
+        \]
+        because the reordering induced by $P$ swaps the role of indices from $(i,k)$ and $(j,l)$ to $(k,i)$ and $(l,j)$, effectively transforming $A \otimes B$ into $B \otimes A$.
+        Thus, $A \otimes B$ and $B \otimes A$ are similar matrices.
+        
+    \end{solution}
+\end{problem}
+
+\begin{problem}[Problem 1]
+    Let $U$ and $V$ be vector spaces over the complex numbers $\mathbb{C}$.
+    Then $U \otimes_\mathbb{C} V$ is also a complex vector space. Note $U, V$
+    and $U \otimes_\mathbb{C} V$ may also be regarded as vector spaces over the 
+    real numbers $\mathbb{R}$, and we can form $U \otimes_\mathbb{C} V$ and 
+    $U \otimes_\mathbb{C} V$ isomorphic as real vector spaces? Prove your answer.
+
+    \begin{solution}
+        % ----------- solution here ----------- %
+        To address the question, let's first recall a few key points:\\
+        1. If $U$ and $V$ are vector spaces over $\mathbb{C}$, then $U \otimes_\mathbb{C} V$ is a vector space over $\mathbb{C}$ with complex dimension:
+        \[
+        \dim_\mathbb{C}(U \otimes_\mathbb{C} V) = (\dim_\mathbb{C} U) \cdot (\dim_\mathbb{C} V).
+        \]
+        2. When $U$ and $V$ are regarded as vector spaces over $\mathbb{R}$, their real dimensions are:
+        \[
+        \dim_\mathbb{R} U = 2 \dim_\mathbb{C} U, \quad \dim_\mathbb{R} V = 2 \dim_\mathbb{C} V.
+        \]
+
+        Step 1: Real dimension of $U \otimes_\mathbb{C} V$\\
+        Over $\mathbb{R}$, $U \otimes_\mathbb{C} V$ can be expressed as:
+        \[
+        U \otimes_\mathbb{C} V \cong (U \otimes_\mathbb{R} V) / I,
+        \]
+        where $I$ is the subspace generated by elements of the form:
+        \[
+        (au) \otimes v - u \otimes (av) \quad \text{for } a \in \mathbb{C}, u \in U, v \in V.
+        \]
+        Using the fact that $\dim_\mathbb{R} \mathbb{C} = 2$, we can infer that:
+        \[
+        \dim_\mathbb{R}(U \otimes_\mathbb{C} V) = 2 (\dim_\mathbb{C} U) \cdot (\dim_\mathbb{C} V).
+        \]
+
+        Step 2: Real dimension of $U \otimes_\mathbb{R} V$\\
+        When $U$ and $V$ are regarded as real vector spaces, their tensor product over $\mathbb{R}$ is:
+        \[
+        U \otimes_\mathbb{R} V,
+        \]
+        which has real dimension:
+        \[
+        \dim_\mathbb{R}(U \otimes_\mathbb{R} V) = (\dim_\mathbb{R} U) \cdot (\dim_\mathbb{R} V) = [2 (\dim_\mathbb{C} U)] \cdot [2 (\dim_\mathbb{C} V)].
+        \]
+        Simplifying this gives:
+        \[
+        \dim_\mathbb{R}(U \otimes_\mathbb{R} V) = 4 (\dim_\mathbb{C} U) \cdot (\dim_\mathbb{C} V).
+        \]
+
+        Step 3: Comparing dimensions\\
+        From the above calculations:
+        - $\dim_\mathbb{R}(U \otimes_\mathbb{C} V) = 2 (\dim_\mathbb{C} U) \cdot (\dim_\mathbb{C} V)$,
+        - $\dim_\mathbb{R}(U \otimes_\mathbb{R} V) = 4 (\dim_\mathbb{C} U) \cdot (\dim_\mathbb{C} V)$.
+
+        These dimensions are not equal, so $U \otimes_\mathbb{C} V$ and $U \otimes_\mathbb{R} V$ are **not isomorphic** as real vector spaces.
+
+        Conclusion:
+        $U \otimes_\mathbb{C} V$ and $U \otimes_\mathbb{R} V$ are not isomorphic as real vector spaces because their real dimensions differ.
+    
+    \end{solution}
+\end{problem}
+
+\begin{problem}[Problem 2]
+    Let $V$ and $W$ be vector spaces over the field $\mathbb{F}$. Using the universal
+    mapping property of the tensor product, show that there is a linear transformation
+    \[
+        H: V^* \otimes W^* \longrightarrow (V \otimes W)^*
+    \]
+    satisfying
+    \[
+        [H(f \otimes g)](v \otimes w) = f(v) \cdot g(w)
+    \]
+    In case both $V$ and $W$ have finite dimension, prove that $H$ is an isomorphism.
+    
+    \begin{solution}
+        % ----------- solution here ----------- %
+        Step 1: Constructing the map \( H \)\\
+        Let \( f \in V^* \) and \( g \in W^* \), where \( V^* \) and \( W^* \) are the dual spaces of \( V \) and \( W \), respectively. Define \( H: V^* \otimes W^* \to (V \otimes W)^* \) by specifying its action on elementary tensors:
+        \[
+        [H(f \otimes g)](v \otimes w) = f(v) \cdot g(w),
+        \]
+        where \( v \in V \) and \( w \in W \).
+
+        \textbf{Well-definedness:}\\
+        The universal property of the tensor product ensures that \( H(f \otimes g) \) extends uniquely to a well-defined linear map on the entire tensor product \( V \otimes W \). Thus, \( H \) is a well-defined linear transformation from \( V^* \otimes W^* \) to \( (V \otimes W)^* \).
+
+        Step 2: Linear transformation \( H \)\\
+        To check linearity, consider:\\
+        \[
+        H\left(\sum_i f_i \otimes g_i\right)(v \otimes w) = \sum_i [H(f_i \otimes g_i)](v \otimes w) = \sum_i f_i(v) g_i(w).
+        \]
+        Since both \( V^* \otimes W^* \) and \( (V \otimes W)^* \) are vector spaces, this confirms \( H \) is linear.
+
+        Step 3: Isomorphism when \( V \) and \( W \) have finite dimension\\
+        Assume \( V \) and \( W \) have finite dimensions \( \dim(V) = n \) and \( \dim(W) = m \), respectively.\\ The dimensions of the relevant spaces are:
+        \[
+        \dim(V^*) = n, \quad \dim(W^*) = m, \quad \dim(V^* \otimes W^*) = n \cdot m,
+        \]
+        and
+        \[
+        \dim(V \otimes W) = n \cdot m, \quad \dim((V \otimes W)^*) = \dim(V \otimes W) = n \cdot m.
+        \]
+
+        Since \( \dim(V^* \otimes W^*) = \dim((V \otimes W)^*) \), it suffices to show \( H \) is injective and surjective:\\
+        \textbf{Injectivity}: Suppose \( H(f \otimes g) = 0 \). This implies:
+          \[
+          [H(f \otimes g)](v \otimes w) = f(v) g(w) = 0 \quad \forall v \in V, w \in W.
+          \]
+          Since \( f \) and \( g \) are linear, this implies \( f = 0 \) or \( g = 0 \). Thus, \( f \otimes g = 0 \), and \( H \) is injective.
+
+        \textbf{Surjectivity}: For any linear functional \( \phi \in (V \otimes W)^* \), define \( f_i \in V^* \) and \( g_j \in W^* \) such\\
+        that \( \phi(v \otimes w) = \sum_{i,j} f_i(v) g_j(w) \). Then \( \phi \) is in the image of \( H \), proving surjectivity.
+    
+    \end{solution}
+\end{problem}
+
+\begin{problem}[Problem 3]
+    Let $U$ and $V$ be vector spaces over the field $\mathbb{F}$. Show there is a linear 
+    transformation $L: U^* \otimes V \longrightarrow \hom_{\mathbb{F}}(U, V)$ defined by the
+    formula $L(\sum f_i \otimes v_i)(u) = \sum f_i(u)v_i$. Do this by first defining an appropriate
+    bilinear function, and then use the universal mapping property. If $U$ and $V$ are finite dimensional,
+    show that this map is an isomorphism. [Hint: first compute the dimensions.]
+    
+    \begin{solution}
+        % ----------- solution here ----------- %
+        Step 1: Defining an appropriate bilinear function\\
+        Let \( f_i \in U^* \) and \( v_i \in V \). Define a bilinear function \( \Phi: U^* \times V \to \hom_\mathbb{F}(U, V) \) by:
+        \[
+        \Phi(f, v)(u) = f(u) v \quad \text{for all } f \in U^*, v \in V, u \in U.
+        \]
+        Linearity in \( f \):\\
+        For \( f_1, f_2 \in U^* \) and \( a \in \mathbb{F} \),
+        \[
+        \Phi(af_1 + f_2, v)(u) = (af_1 + f_2)(u)v = a f_1(u)v + f_2(u)v = a\Phi(f_1, v)(u) + \Phi(f_2, v)(u).
+        \]
+        Linearity in \( v \):\\
+        For \( v_1, v_2 \in V \) and \( b \in \mathbb{F} \),
+        \[
+        \Phi(f, bv_1 + v_2)(u) = f(u)(bv_1 + v_2) = bf(u)v_1 + f(u)v_2 = b\Phi(f, v_1)(u) + \Phi(f, v_2)(u).
+        \]
+        Hence, \( \Phi \) is bilinear.
+
+        Step 2: Using UMP:\\
+        By the universal property of the tensor product, the bilinear function \( \Phi \) induces a unique linear map:
+        \[
+        L: U^* \otimes V \to \hom_\mathbb{F}(U, V),
+        \]
+        such that:
+        \[
+        L(f \otimes v)(u) = \Phi(f, v)(u) = f(u) v.
+        \]
+        For a general tensor \( \sum f_i \otimes v_i \in U^* \otimes V \), the action of \( L \) is given by:
+        \[
+        L\left(\sum f_i \otimes v_i\right)(u) = \sum \Phi(f_i, v_i)(u) = \sum f_i(u)v_i.
+        \]
+        Thus, \( L \) is well-defined and linear.
+
+        Step 3: Proving \( L \) is an isomorphism for finite-dimensional \( U \) and \( V \)\\
+        Assume \( \dim(U) = n \) and \( \dim(V) = m \). Then:\\
+        The dimension of \( U^* \) is \( \dim(U^*) = n \),
+        The dimension of \( U^* \otimes V \) is:
+        \[
+        \dim(U^* \otimes V) = \dim(U^*) \cdot \dim(V) = n \cdot m.
+        \]
+        The space \( \hom_\mathbb{F}(U, V) \) consists of all linear maps from \( U \) to \( V \), and its dimension is:
+        \[
+        \dim(\hom_\mathbb{F}(U, V)) = \dim(U) \cdot \dim(V) = n \cdot m.
+        \]
+
+        Since \( \dim(U^* \otimes V) = \dim(\hom_\mathbb{F}(U, V)) \), it suffices to show \( L \) is injective and surjective:\\
+        \textbf{Injectivity}: Suppose \( L\left(\sum f_i \otimes v_i\right) = 0 \). Then for all \( u \in U \),
+        \[
+        L\left(\sum f_i \otimes v_i\right)(u) = \sum f_i(u) v_i = 0.
+        \]
+        Since the \( v_i \)'s are linearly independent in \( V \), this implies \( f_i(u) = 0 \) for all \( u \in U \), meaning \( f_i = 0 \). Hence, \( \sum f_i \otimes v_i = 0 \), and \( L \) is injective.
+
+        \textbf{Surjectivity}: For any \( T \in \hom_\mathbb{F}(U, V) \), define \( f_i \in U^* \) and \( v_i \in V \) such that \( T(u) = \sum f_i(u) v_i \). Then \( T = L\left(\sum f_i \otimes v_i\right) \), proving \( L \) is surjective.
+
+        Thus, \( L: U^* \otimes V \to \hom_\mathbb{F}(U, V) \) is a linear isomorphism when \( U \) and \( V \) are finite-dimensional vector spaces.
+
+    \end{solution}
+\end{problem}
+
+\begin{problem}[Problem 4]
+    Assume that $U$ and $V$ are finite-dimensional. In the previous problem, you showed that
+    $L$ identifies $U^* \otimes V$ with $\hom_{\mathbb{F}}(U, V)$, where $L(f \otimes v)$ is
+    the linear map sending $u$ to $f(u)v$.
+
+    \begin{subproblem}
+        Show that $L(f \otimes v)$ is a linear transformation of rank 1 if and only if $f$ and $v$ are nonzero.
+        
+        \begin{solution}
+            % ----------- solution here ----------- %
+            \textbf{Showing $\implies$}:\\
+            Let \( f \in U^* \) and \( v \in V \) with \( f \neq 0 \) and \( v \neq 0 \). \\
+            By definition, \( L(f \otimes v)(u) = f(u)v \) for \( u \in U \). \\
+            The image of \( L(f \otimes v) \) is spanned by \( v \) because \( f(u) \in \mathbb{F} \), and the output is always a scalar multiple of \( v \).\\
+            Since \( v \neq 0 \), the image of \( L(f \otimes v) \) is a one-dimensional subspace of \( V \).\\
+            Thus, \( \operatorname{rank}(L(f \otimes v)) = 1 \).\\
+
+            \textbf{Showing $\impliedby$}:\\
+            Assume \( L(f \otimes v) \) has rank 1.\\
+            This means the image of \( L(f \otimes v) \) is spanned by a single vector \( v' \neq 0 \).\\
+            For \( L(f \otimes v)(u) = f(u)v \), this is only possible if \( v \neq 0 \).\\
+            Additionally, if \( f = 0 \), then \( f(u) = 0 \) for all \( u \in U \), and \( L(f \otimes v) \) is the zero map, which contradicts \( \operatorname{rank}(L(f \otimes v)) = 1 \).\\
+            Hence, \( f \neq 0 \) and \( v \neq 0 \).
+
+            Therefore, \( L(f \otimes v) \) is a rank-1 linear transformation if and only if \( f \neq 0 \) and \( v \neq 0 \).
+        
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Show that the rank of an arbitrary linear transformation $T: U \longrightarrow V$
+        is the smallest integer $r$ such that $T$ can be expressed in the form
+        \[
+            T = L(\sum_{i = 1}^{r} f_i \otimes v_i)
+        \]
+        with $f_i \in U$ and $v_i \in V$.
+        
+        \begin{solution}
+            % ----------- solution here ----------- %
+            Let \( T \in \hom_\mathbb{F}(U, V) \) be a linear transformation with \( \operatorname{rank}(T) = r \). \\
+            By the rank-nullity theorem, \( T(U) \) is an \( r \)-dimensional subspace of \( V \).\\
+            There exist \( v_1, \ldots, v_r \in V \) such that \( \{v_1, \ldots, v_r\} \) is a basis for \( \operatorname{Im}(T) \).\\
+            For each \( v_i \), there exists \( f_i \in U^* \) such that \( T(u) = \sum_{i=1}^r f_i(u)v_i \) for all \( u \in U \).\\
+            This is equivalent to \( T = L\left(\sum_{i=1}^r f_i \otimes v_i\right) \).
+
+            Minimality of \( r \):\\
+            Suppose \( T = L\left(\sum_{i=1}^s f_i \otimes v_i\right) \) for \( s < r \).\\
+            Then the image of \( T \) would be spanned by fewer than \( r \) vectors, contradicting the fact that \( \operatorname{rank}(T) = r \).\\
+            Thus, \( r \) is the smallest integer such that \( T = L\left(\sum_{i=1}^r f_i \otimes v_i\right) \).
+
+            Thus, the rank of \( T \) is the smallest integer \( r \) such that \( T \) can be expressed as \( T = L\left(\sum_{i=1}^r f_i \otimes v_i\right) \) with \( f_i \in U^* \) and \( v_i \in V \).
+        
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}[problem 5]
+    In this problem, we will investigate what $\otimes_R$ does to surjective and injective maps, for various $R$.
+
+    \begin{subproblem}
+        Let $\mathbb{F}$ be a field, let
+        \[
+            0 \xrightarrow{\makebox[2cm]{}} V' \xrightarrow{\makebox[2cm]{$\iota$}} V \xrightarrow{\makebox[2cm]{$\pi$}} V'' \xrightarrow{\makebox[2cm]{}} 0
+        \]
+        be a short exact sequence of vector spaces, and let $W$ be a vector space. From the previous problem, one can define maps
+        $\iota \otimes \id_W : V \otimes_{\mathbb{F}} W \longrightarrow V'' \otimes_{\mathbb{F}} W$, where $\id_W$ is the identity map of $W$.
+
+        Show that they fit into the following short exact sequence" 
+        \[
+            0 \xrightarrow{\makebox[2cm]{}} V' \otimes_{\mathbb{F}} W \xrightarrow{\makebox[2cm]{$\iota \otimes \id_W$}} V \otimes_{\mathbb{F}} W \xrightarrow{\makebox[2cm]{$\pi \otimes \id_W$}} V'' \otimes_{\mathbb{F}} W \xrightarrow{\makebox[2cm]{}} 0
+        \]
+        *Note: Most of the proof should \textit{not} use the fact that $V$, $V'$ or $W$ are vector spaces, but there is a point where it is cruical
+        (See the next part for a hint on where to look!)
+
+        \begin{solution}
+            % ----------- solution here ----------- %
+            To prove the exactness of the sequence:
+            Exactness at \( V' \otimes_{\mathbb{F}} W \):\\
+                The map \( \iota: V' \to V \) is injective, so \( \iota \otimes \id_W: V' \otimes_{\mathbb{F}} W \to V \otimes_{\mathbb{F}} W \) is also injective. This follows from the fact that the tensor product of an injective map with the identity map remains injective over fields.
+
+            Exactness at \( V \otimes_{\mathbb{F}} W \):\\
+                For \( v \otimes w \in V \otimes_{\mathbb{F}} W \), \( (\pi \otimes \id_W)(\iota \otimes \id_W)(v' \otimes w) = (\pi \circ \iota)(v') \otimes w = 0 \) because \( \pi \circ \iota = 0 \). Hence, \( \operatorname{Im}(\iota \otimes \id_W) \subseteq \ker(\pi \otimes \id_W) \).
+
+                Conversely, if \( (\pi \otimes \id_W)(v \otimes w) = 0 \), then \( \pi(v) = 0 \), so \( v \in \ker(\pi) = \operatorname{Im}(\iota) \). Therefore, \( v = \iota(v') \) for some \( v' \in V' \), and \( v \otimes w = (\iota \otimes \id_W)(v' \otimes w) \). Thus, \( \ker(\pi \otimes \id_W) \subseteq \operatorname{Im}(\iota \otimes \id_W) \), proving exactness at \( V \otimes_{\mathbb{F}} W \).
+
+            Exactness at \( V'' \otimes_{\mathbb{F}} W \):\\
+                The map \( \pi: V \to V'' \) is surjective, so \( \pi \otimes \id_W: V \otimes_{\mathbb{F}} W \to V'' \otimes_{\mathbb{F}} W \) is surjective as well. Thus, \( \operatorname{Im}(\pi \otimes \id_W) = V'' \otimes_{\mathbb{F}} W \).
+
+            Therefore, the sequence is exact:
+            \[
+                0 \to V' \otimes_{\mathbb{F}} W \xrightarrow{\iota \otimes \id_W} V \otimes_{\mathbb{F}} W \xrightarrow{\pi \otimes \id_W} V'' \otimes_{\mathbb{F}} W \to 0.
+            \]
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Let $R$ be a commutative domain, let $a \in R$ be a nonzero nonunit. Let $M$ be an $R$-module. 
+        One then has an exact sequence
+        \[
+            0 \xrightarrow{\makebox[1cm]{}} R \xrightarrow{\makebox[1cm]{$\iota$}} R \xrightarrow{\makebox[1cm]{}} R/(a) \xrightarrow{\makebox[1cm]{}} 0
+        \]
+        where $\iota(r) = ar$ is multiplication by $a$.
+
+        \begin{enumerate}
+            \item[i] Show that one always has an exact sequence
+            \[
+                R \otimes_R M \xrightarrow{\makebox[2cm]{$\iota \otimes \id_M$}} R \otimes_R M \xrightarrow{\makebox[2cm]{}} R/(a) \otimes_R M \xrightarrow{\makebox[2cm]{}} 0
+            \]
+            Note the lack of zero on the left hand side! (See the next part.)
+
+            \begin{solution}
+                % ----------- solution here ----------- %
+                Tensor the given exact sequence with \( M \):
+                \[
+                    R \otimes_R M \xrightarrow{\iota \otimes \id_M} R \otimes_R M \xrightarrow{} R/(a) \otimes_R M \to 0.
+                \]
+
+                The map \( \iota \otimes \id_M \) is induced by multiplication by \( a \), sending \( r \otimes m \) to \( ar \otimes m \). 
+
+                Surjectivity of \( R \to R/(a) \) implies surjectivity of \( R \otimes_R M \to R/(a) \otimes_R M \), giving the exact sequence. The lack of \( 0 \) on the left arises because \( R \otimes_R M \to R \otimes_R M \) need not be injective.
+            \end{solution}
+
+            \item[ii] Show by example that the map
+            \[
+                R \otimes_R M \xrightarrow{\makebox[2cm]{$\iota \otimes \id_M$}} R \otimes_R M
+            \]
+            need not be injective (for certain $M$), so that one cannot keep the zero on the left in general when tensoring with modules over
+            general rings. Find a condition on $M$ that ensures that the map $\iota \otimes_R M$ is injective in the case we are considering 
+            from part i. (Hint: Try $M = R/(a)$).
+
+            \begin{solution}
+                % ----------- solution here ----------- %
+                Example:\\
+                Take \( R = \mathbb{Z} \), \( a = 2 \), and \( M = \mathbb{Z}/2\mathbb{Z} \). Then \( \iota \otimes \id_M \) maps \( r \otimes m \) to \( 2r \otimes m \). Since \( 2m = 0 \) in \( M \), this map sends all elements of \( R \otimes M \) to 0, hence it is not injective.
+
+                Condition for injectivity:\\
+                The map \( \iota \otimes \id_M \) is injective if \( M \) is torsion-free. For example, if \( M = R/(a) \), then \( a \cdot m = 0 \) in \( M \), ensuring injectivity.
+            
+            \end{solution}
+        \end{enumerate}
+    \end{subproblem}
+\end{problem}
+
+\end{document}
+
+

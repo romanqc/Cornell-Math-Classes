@@ -1,0 +1,407 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{libertine}
+\usepackage{parskip}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{tikz-cd}
+\usepackage[new]{old-arrows}
+
+
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,shapes.geometric}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\pagestyle{plain}
+\thispagestyle{empty}
+
+\definecolor{carnellian}{RGB}{190,20,20}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\newcounter{subq}[problem]
+\newenvironment{subproblem}
+{\refstepcounter{subq} \begin{itemize} \item[(\alph{subq})]}
+{\end{itemize} \medskip}
+\DeclareMathOperator{\ima}{im}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\der}{Der}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Char}{char}
+\DeclareMathOperator{\Cen}{Cen}
+\DeclareMathOperator{\ged}{ged}
+\DeclareMathOperator{\tor}{tor}
+% \DeclareMathOperator{\span}{span}
+
+
+
+\usepackage{environ}
+\NewEnviron{solution}[1][\vfill]{
+    \textcolor{blue}{\BODY}
+}
+
+\newcommand{\hwnum}{9}
+\newcommand{\duedate}{12/4/2024}
+\renewcommand{\title}{}
+
+\begin{document}
+
+\hspace{-10px}
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r}
+    \textbf{Honors Linear Algebra} 
+        & \textbf{Fall 2024} \\
+    \textbf{HW\hwnum: \title} &  \textbf{Due: \duedate}
+\end{tabular*}
+
+\vspace{1cm}
+
+\begin{problem}[Determinants 2]
+    Prove that if $M \neq 0$ is a free module then $M^{\otimes p} \neq 0$ for any $p \geq 1$.
+
+    \begin{solution}
+        1. Free Module and Tensor Product:\\
+        Since \( M \) is a free module, there exists a basis \( \{e_i\}_{i \in I} \) for \( M \). The tensor product \( M^{\otimes p} \) is the \( p \)-fold tensor power of \( M \), which is also a module over the same ring \( R \).
+
+        2. Basis of Tensor Product:\\
+        The elements of \( M^{\otimes p} \) are linear combinations of tensors of the form \( e_{i_1} \otimes e_{i_2} \otimes \cdots \otimes e_{i_p} \), where \( i_k \in I \) for \( k = 1, \dots, p \). Thus, the basis of \( M^{\otimes p} \) is given by all possible such products of basis elements of \( M \).
+
+        3. Non-Zero Property:\\
+        Since \( M \neq 0 \), its basis \( \{e_i\} \) is non-empty, implying \( I \neq \emptyset \). Therefore, the basis of \( M^{\otimes p} \) is also non-empty, as it consists of all \( p \)-fold tensors of the non-empty basis of \( M \). Hence, \( M^{\otimes p} \neq 0 \).
+
+        Thus, the assumption that \( M \neq 0 \) ensures the existence of a non-empty basis for \( M \), which in turn guarantees that \( M^{\otimes p} \) is non-zero for any \( p \geq 1 \).
+    \end{solution}
+\end{problem}
+
+\begin{problem}[Determinants 5]
+    Prove that if $M$ is a free module with basis $\mathcal{B} = \{m_1, m_2, \ldots, m_n\}$
+    then the elements $m_{i_1} \wedge \cdots \wedge m_{i_p}$ where $i_1 < i_2 < \cdots < i_p$
+    is a strictly ascending sequence are linearly independent by constructing many alternating
+    maps for $M^{\times p} \longrightarrow R$.
+
+    \begin{solution}
+        1. Definition of Alternating Map:\\  
+        An alternating map \( f: M^{\times p} \to R \) is a multilinear map satisfying the property that\\
+        \( f(m_{\sigma(1)}, \ldots, m_{\sigma(p)}) = \operatorname{sgn}(\sigma) f(m_1, \ldots, m_p) \), where \( \sigma \) is a permutation of \( \{1, \ldots, p\} \), and \( \operatorname{sgn}(\sigma) \) is the sign of the permutation. If \( m_i = m_j \) for some \( i \neq j \), then \( f(m_1, \ldots, m_p) = 0 \).
+
+        2. Construction of Maps:\\
+        Let \( I = \{i_1, i_2, \ldots, i_p\} \), where \( i_1 < i_2 < \cdots < i_p \), be a strictly ascending sequence of indices. Define \( f_I: M^{\times p} \to R \) by:
+        \[
+        f_I(m_{j_1}, \ldots, m_{j_p}) =
+        \begin{cases}
+            \det(A) & \text{if } (j_1, \ldots, j_p) = (i_1, \ldots, i_p), \\
+            0       & \text{otherwise},
+        \end{cases}
+        \]
+        where \( A \) is the \( p \times p \) matrix whose columns are the coordinates of \( m_{i_1}, \ldots, m_{i_p} \) with respect to the basis \( \mathcal{B} \).
+
+        3. Linearly Independent Elements:\\  
+        Each \( f_I \) is an alternating map that vanishes on any wedge product \( m_{j_1} \wedge \cdots \wedge m_{j_p} \) unless \( \{j_1, \ldots, j_p\} = \{i_1, \ldots, i_p\} \). Thus, applying \( f_I \) to \( m_{i_1} \wedge \cdots \wedge m_{i_p} \) gives:
+        \[
+        f_I(m_{i_1}, \ldots, m_{i_p}) = \det(A) \neq 0,
+        \]
+        while \( f_I(m_{j_1}, \ldots, m_{j_p}) = 0 \) for any other strictly ascending sequence \( \{j_1, \ldots, j_p\} \neq \{i_1, \ldots, i_p\} \).
+ 
+        Since we can construct one alternating map \( f_I \) for each strictly ascending sequence \( \{i_1, \ldots, i_p\} \), and each \( f_I \) uniquely distinguishes \( m_{i_1} \wedge \cdots \wedge m_{i_p} \), the set \( \{m_{i_1} \wedge \cdots \wedge m_{i_p} : i_1 < i_2 < \cdots < i_p\} \) is linearly independent. 
+        Thus, we have proven that \( m_{i_1} \wedge \cdots \wedge m_{i_p} \) are linearly independent by constructing alternating maps.
+
+    \end{solution}
+\end{problem}
+
+\begin{problem}[Determinants 8]
+    An associative algebra $A$ is called $\mathbb{Z}/2\mathbb{Z}$ graded if $A = A^(0) \oplus A^(1)$
+    and the multiplication preserves the grading, i.e.,
+    \[
+        A^{(i)} \cdot A^{(j)} \subset A^{(i+j)}
+    \]
+    for any $i, j$, where the addition is mod 2. The algebra is called supper commutative if
+    \[
+        a \cdot b = (-1)ijba \text{for any} a \in A^{(i)}, b \in A^{(j)}
+    \]
+
+    \begin{subproblem}
+        Verify the exterior algebra is super commutative. How do you define the grading?
+
+        \begin{solution}
+            1. Definition of Grading:  
+            The exterior algebra \( \Lambda^*(M) \) over an \( R \)-module \( M \) is graded by degree, where the grading is given as:
+            \[
+            \Lambda^*(M) = \bigoplus_{k \geq 0} \Lambda^k(M),
+            \]
+            with \( \Lambda^k(M) \) denoting the \( k \)-th exterior power of \( M \). To define a \( \mathbb{Z}/2\mathbb{Z} \)-grading, set:
+            \[
+            \Lambda^{(0)}(M) = \bigoplus_{k \text{ even}} \Lambda^k(M), \quad \Lambda^{(1)}(M) = \bigoplus_{k \text{ odd}} \Lambda^k(M).
+            \]
+
+            2. Super Commutativity:  
+            For \( x \in \Lambda^i(M) \) and \( y \in \Lambda^j(M) \), the wedge product satisfies:
+            \[
+            x \wedge y = (-1)^{ij} y \wedge x.
+            \]
+            This follows from the alternating property of the wedge product, which imposes the sign rule when swapping two elements. This property ensures that \( \Lambda^*(M) \) is super commutative under the \( \mathbb{Z}/2\mathbb{Z} \)-grading.
+
+            Thus, the exterior algebra \( \Lambda^*(M) \) is super commutative with the grading defined as above.
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Show that the exterior algebra satisfies the following universal property 
+        (assuming that 2 is invertible in $R$): Let $M$ be an $R$-module. Then for 
+        any super commutative associative unitial $R$-algebra $A$ and any $R$-module
+        homomorphism $\varphi : M \longrightarrow A^{(1)}$ there exists exactly one
+        $R$-algebra map $\bar{\varphi}$ such that the diagram commutes
+        \begin{center}
+            \begin{tikzcd}[column sep=huge, row sep=huge]
+                M \arrow[r, hook, "i"] \arrow[dr, "\varphi"]
+                & \Lambda^*(M) \arrow[d, dashrightarrow, "\bar{\varphi}"]\\
+                & A
+            \end{tikzcd}
+        \end{center}
+        i.e., $\varphi = \bar{\varphi} \circ i$, where $i : M \longhookrightarrow \Lambda^*M$ 
+        comes from the identification $M = M^{\otimes 1}$.
+
+        \begin{solution}
+            To show that the exterior algebra satisfies the universal property, assume \( \varphi : M \to A^{(1)} \) is an \( R \)-module homomorphism and \( A \) is a super commutative associative unital \( R \)-algebra. 
+
+            1. Existence of \( \bar{\varphi} \):  
+            The universal property of the exterior algebra \( \Lambda^*(M) \) states that there exists a unique \( R \)-algebra map \( \bar{\varphi} : \Lambda^*(M) \to A \) such that \( \bar{\varphi} \circ i = \varphi \), where \( i: M \hookrightarrow \Lambda^*(M) \) is the canonical inclusion.
+
+            2. Construction of \( \bar{\varphi} \):  
+            Since \( A \) is super commutative, the image of \( \varphi(M) \subset A^{(1)} \) satisfies:
+            \[
+            \varphi(m_1) \varphi(m_2) = -\varphi(m_2) \varphi(m_1), \quad \forall m_1, m_2 \in M.
+            \]
+            This ensures that \( \varphi \) extends uniquely to an \( R \)-algebra homomorphism \( \bar{\varphi} : \Lambda^*(M) \to A \), where the wedge product in \( \Lambda^*(M) \) corresponds to the multiplication in \( A \).
+
+            3. Uniqueness of \( \bar{\varphi} \):  
+            Any \( R \)-algebra homomorphism \( \bar{\varphi} \) must satisfy \( \bar{\varphi}(m) = \varphi(m) \) for \( m \in M \) because \( M \) generates \( \Lambda^*(M) \) as an \( R \)-algebra. The super commutativity of \( A \) ensures that \( \bar{\varphi} \) is well-defined and unique.
+
+            4. Commutativity of Diagram:  
+            By construction, \( \varphi = \bar{\varphi} \circ i \), as \( i(m) = m \) for \( m \in M \). Hence, the diagram commutes.
+
+            Thus, the exterior algebra satisfies the universal property, with \( \bar{\varphi} \) as the unique \( R \)-algebra map that makes the diagram commute.
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}[Determinants 12]
+    Prove that $T(R) \simeq R[x]$. Let $\alpha : R \longrightarrow R$ be the multiplication by 
+    $c$, i.e., $\alpha(r) = cr$. What is $\alpha^{\otimes\star}$ as a map from $R[x] \longrightarrow R[x]$
+
+    \begin{solution}
+        Tensor Algebra and Polynomial Ring:  
+        The tensor algebra \( T(R) \) over a ring \( R \) is given by:
+        \[
+        T(R) = \bigoplus_{n \geq 0} R^{\otimes n},
+        \]
+        where \( R^{\otimes 0} = R \) and \( R^{\otimes n} = R \otimes R \otimes \cdots \otimes R \) (with \( n \)-factors). Elements of \( T(R) \) can be written as finite sums of tensors \( r_0 + r_1 \otimes r_2 + \cdots \).
+
+        There is an isomorphism between \( T(R) \) and \( R[x] \), the ring of polynomials in \( x \) with coefficients in \( R \), given by:
+        \[
+        R^{\otimes n} \ni r_1 \otimes \cdots \otimes r_n \mapsto r_1 x r_2 x \cdots x r_n \in R[x].
+        \]
+        This identifies \( T(R) \) as the free associative \( R \)-algebra generated by one element \( x \), which corresponds to \( R[x] \).
+
+        Description of \( \alpha \):  
+        Let \( \alpha : R \to R \) be defined by \( \alpha(r) = cr \), where \( c \in R \). This is an \( R \)-module homomorphism that scales elements of \( R \) by \( c \).
+
+        Action of \( \alpha^{\otimes \star} \) on \( R[x] \):  
+        The map \( \alpha^{\otimes \star} \) extends \( \alpha \) to \( T(R) \) (and thus \( R[x] \)) via its action on the generators:
+        \[
+        \alpha^{\otimes \star}(r_1 x^n r_2 x^m \cdots r_k x^p) = \alpha(r_1) x^n \alpha(r_2) x^m \cdots \alpha(r_k) x^p.
+        \]
+        Explicitly, if \( f(x) = \sum_{i=0}^n a_i x^i \in R[x] \), then:
+        \[
+        \alpha^{\otimes \star}(f(x)) = \sum_{i=0}^n \alpha(a_i) x^i = \sum_{i=0}^n c a_i x^i.
+        \]
+        Thus, \( \alpha^{\otimes \star} \) acts as multiplication by \( c \) on the coefficients of \( f(x) \).
+
+        We have established that \( T(R) \simeq R[x] \) via the correspondence between tensors and polynomials, and the map \( \alpha^{\otimes \star} \) acts as a scaling map that multiplies each coefficient of a polynomial in \( R[x] \) by \( c \).
+    \end{solution}
+\end{problem}
+
+\begin{problem}[Determinants 13]
+    Prove that if a module $M$ can be generated by $m$ elements then $\wedge^pM = 0$ if $p>m$
+
+    \begin{solution}
+        Generating Set of \( M \):\\
+        Since \( M \) can be generated by \( m \) elements, there exists a set \( \{x_1, x_2, \ldots, x_m\} \subset M \) such that any element of \( M \) can be expressed as a linear combination of these generators.
+
+        Definition of \( \wedge^p M \):  
+        The \( p \)-th exterior power \( \wedge^p M \) is defined as the \( R \)-module generated by wedge products of the form:
+        \[
+        x_{i_1} \wedge x_{i_2} \wedge \cdots \wedge x_{i_p},
+        \]
+        where \( x_{i_j} \in M \) and \( i_1 < i_2 < \cdots < i_p \). The alternating property of the wedge product implies that if any two indices \( i_j \) and \( i_k \) are equal, the wedge product is zero.
+
+        Case \( p > m \):\\  
+        If \( p > m \), any subset of \( p \) elements chosen from \( \{x_1, x_2, \ldots, x_m\} \) must have at least one repeated index, as there are only \( m \) distinct generators. Due to the alternating property, the wedge product:
+        \[
+        x_{i_1} \wedge x_{i_2} \wedge \cdots \wedge x_{i_p} = 0
+        \]
+        for any such choice of \( i_1, i_2, \ldots, i_p \).
+        
+        Since every wedge product in \( \wedge^p M \) vanishes for \( p > m \), we have:
+        \[
+        \wedge^p M = 0 \quad \text{for } p > m.
+        \]
+    \end{solution}
+\end{problem}
+
+\begin{problem}[Determinants 15]
+    Express the determinants of the following linear transformations in terms of $\det(\alpha)$, 
+    $\det(\beta)$, $\dim{V}$, $\dim{W}$ where $\alpha \in \Hom(V, V)$ and $\beta \in \Hom(W, W)$:
+    \begin{enumerate}
+        \item $\det(\alpha \otimes \beta)$
+        \item $\det(\alpha^{\otimes p})$
+        \item $\det(\wedge^p\alpha)$
+        \item $\det(\wedge^*\alpha)$
+    \end{enumerate}
+
+    \begin{solution}
+        1. \( \det(\alpha \otimes \beta) \):\\
+        The linear transformation \( \alpha \otimes \beta \) acts on \( V \otimes W \), and its determinant is given by:
+        \[
+        \det(\alpha \otimes \beta) = \det(\alpha)^{\dim W} \cdot \det(\beta)^{\dim V}.
+        \]
+        This follows from the fact that the action of \( \alpha \otimes \beta \) corresponds to applying \( \alpha \) on \( V \) and \( \beta \) on \( W \), each scaled by the dimension of the other space.
+
+        2. \( \det(\alpha^{\otimes p}) \):\\ 
+        The linear transformation \( \alpha^{\otimes p} \) acts on \( V^{\otimes p} \), and its determinant is:
+        \[
+        \det(\alpha^{\otimes p}) = \det(\alpha)^{\dim V^{\otimes p}} = \det(\alpha)^{(\dim V)^p}.
+        \]
+        This uses the fact that the determinant of a tensor power scales with the dimension of the tensor space.
+
+        3. \( \det(\wedge^p \alpha) \):\\
+        The linear transformation \( \wedge^p \alpha \) acts on \( \wedge^p V \), and its determinant is:
+        \[
+        \det(\wedge^p \alpha) = \det(\alpha)^{\binom{\dim V}{p}}.
+        \]
+        Here, \( \binom{\dim V}{p} \) is the dimension of \( \wedge^p V \), as it represents the number of linearly independent wedge products of \( p \) basis vectors.
+
+        4. \( \det(\wedge^* \alpha) \):\\ 
+        The transformation \( \wedge^* \alpha \) acts on the full exterior algebra \( \wedge^* V = \bigoplus_{p=0}^{\dim V} \wedge^p V \). The determinant of \( \wedge^* \alpha \) is the product of the determinants over all \( \wedge^p V \):
+        \[
+        \det(\wedge^* \alpha) = \prod_{p=0}^{\dim V} \det(\wedge^p \alpha) = \prod_{p=0}^{\dim V} \det(\alpha)^{\binom{\dim V}{p}}.
+        \]
+        Using the binomial theorem, the sum of the binomial coefficients equals \( 2^{\dim V} \), so:
+        \[
+        \det(\wedge^* \alpha) = \det(\alpha)^{\sum_{p=0}^{\dim V} \binom{\dim V}{p}} = \det(\alpha)^{2^{\dim V}}.
+        \]
+    \end{solution}
+\end{problem}
+
+\begin{problem}[Determinants 19]
+    Do this problem according to the outline given. Let $a_1, \ldots, a_n$ be elements of the field $\mathbb{F}$.
+    Let $V_n$ denote the matrix whose $i$-th row is $1, \alpha_i, \alpha_i^2, \cdots, a_i^{n-1}$. Prove the formula
+    \[  
+        \det
+        \begin{pmatrix}
+            1 & a_1 & a_1^2 & \cdots & a_1^{n-1}\\
+            1 & a_2 & a_2^2 & \cdots & a_2^{n-1}\\
+            \vdots & \vdots & \vdots & \ddots & \vdots\\
+            1 & a_n & a_n^2 & \cdots & a_n^{n-1}\\
+        \end{pmatrix}
+        = \prod_{i > j}(a_i - a_j)
+    \]
+    where the product is over all pairs of integers $n \geq i > j \geq 1$. This is to be done as follows:
+    Define two polynomials $f(x), g(x) \in \mathbb{F}[x]$ by letting $f(x)$ be the determinant of the matrix
+    obtained from $B$ by replacing $a_n$ by $x$, and $g(x)$ the polynomial obtained by replacing $a_n$ by $x$
+    in the right-hand side of the above formula. Using properties of determinants and the ring $\mathbb{F}[x]$,
+    prove the formula by induction on $n$. Fist conclude that $f(x) = g(x)$ and then evaluate at $a_n$.
+
+    \begin{solution}
+        We aim to prove the determinant formula:
+        \[
+        \det(V_n) = \prod_{i > j}(a_i - a_j),
+        \]
+        where \( V_n \) is the Vandermonde matrix. This will be done as outlined, using polynomials \( f(x) \) and \( g(x) \) and induction on \( n \).
+
+        Step 1: Define \( f(x) \) and \( g(x) \)\\
+        Let \( V_n \) be the Vandermonde matrix:
+        \[
+        V_n =
+        \begin{pmatrix}
+        1 & a_1 & a_1^2 & \cdots & a_1^{n-1} \\
+        1 & a_2 & a_2^2 & \cdots & a_2^{n-1} \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        1 & a_n & a_n^2 & \cdots & a_n^{n-1} \\
+        \end{pmatrix}.
+        \]
+
+        Define \( f(x) \) as the determinant of the matrix \( V_n \) with \( a_n \) replaced by \( x \):
+        \[
+        f(x) = 
+        \det
+        \begin{pmatrix}
+        1 & a_1 & a_1^2 & \cdots & a_1^{n-1} \\
+        1 & a_2 & a_2^2 & \cdots & a_2^{n-1} \\
+        \vdots & \vdots & \vdots & \ddots & \vdots \\
+        1 & x & x^2 & \cdots & x^{n-1} \\
+        \end{pmatrix}.
+        \]
+
+        Define \( g(x) \) as the right-hand side of the formula with \( a_n \) replaced by \( x \):
+        \[
+        g(x) = \prod_{k=1}^{n-1} (x - a_k) \prod_{i > j} (a_i - a_j).
+        \]
+
+        Step 2: Base Case (\( n = 2 \))\\
+        For \( n = 2 \), the matrix is:
+        \[
+        V_2 =
+        \begin{pmatrix}
+        1 & a_1 \\
+        1 & a_2
+        \end{pmatrix}.
+        \]
+        Its determinant is:
+        \[
+        \det(V_2) = a_2 - a_1.
+        \]
+        The formula is:
+        \[
+        \prod_{i > j} (a_i - a_j) = a_2 - a_1.
+        \]
+        Thus, the formula holds for \( n = 2 \).
+
+        Step 3: Inductive Step\\
+        Assume the formula holds for \( n-1 \), i.e., for a Vandermonde matrix \( V_{n-1} \), we have:
+        \[
+        \det(V_{n-1}) = \prod_{i > j} (a_i - a_j).
+        \]
+
+        Now consider \( V_n \). Expanding \( f(x) \) along the last row gives:
+        \[
+        f(x) = \sum_{k=1}^n (-1)^{n+k} x^{k-1} \det(V_{n-1}'),
+        \]
+        where \( V_{n-1}' \) is the \((n-1) \times (n-1)\) matrix obtained by removing the \( n \)-th row and \( k \)-th column from \( V_n \). By properties of determinants, this expansion ensures that \( f(x) \) is a polynomial of degree \( n-1 \).
+
+        Similarly, \( g(x) \), as a product of linear terms, is also a polynomial of degree \( n-1 \). Since \( f(x) \) and \( g(x) \) agree at \( n \) distinct points (\( x = a_1, a_2, \ldots, a_{n-1} \)), they must be identical:
+        \[
+        f(x) = g(x).
+        \]
+
+        Step 4: Evaluate at \( x = a_n \)\\
+        Substitute \( x = a_n \) into \( f(x) \) and \( g(x) \). For \( f(x) \), this returns \( \det(V_n) \), and for \( g(x) \), this returns:
+        \[
+        g(a_n) = \prod_{k=1}^{n-1} (a_n - a_k) \prod_{i > j} (a_i - a_j).
+        \]
+        Thus:
+        \[
+        \det(V_n) = \prod_{i > j} (a_i - a_j).
+        \]
+
+    \end{solution}
+\end{problem}
+
+\end{document}
+
+

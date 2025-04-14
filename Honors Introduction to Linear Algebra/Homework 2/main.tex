@@ -1,0 +1,798 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{libertine}
+\usepackage{parskip}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,shapes.geometric}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\pagestyle{plain}
+\thispagestyle{empty}
+
+\definecolor{carnellian}{RGB}{190,20,20}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\newcounter{subq}[problem]
+\newenvironment{subproblem}
+{\refstepcounter{subq} \begin{itemize} \item[(\alph{subq})]}
+{\end{itemize} \medskip}
+
+\usepackage{environ}
+\NewEnviron{solution}[1][\vfill]{
+    \textcolor{blue}{\BODY}
+}
+
+\newcommand{\hwnum}{2}
+\newcommand{\duedate}{9/15/2024}
+\renewcommand{\title}{Vector Spaces}
+
+\begin{document}
+
+\hspace{-10px}
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r}
+    \textbf{Honors Linear Algebra} 
+        & \textbf{Fall 2024} \\
+    \textbf{HW\hwnum: \title} &  \textbf{Due: \duedate}
+\end{tabular*}
+
+\vspace{1cm}
+
+\begin{problem}
+    Let $\mathbb{F}$ be a finite field and let $n$ be a positive integer $(n \geq 2)$. Ket $V$ be the vector 
+    space of all $n \times n$ matrices over $\mathbb{F}$. Which of the following sets of matrices $A$ in $V$
+    are subspaces of $V$.
+    
+    \begin{subproblem}
+        all invertible $A$;
+        
+        \begin{solution}
+            A subspace of a vector space must be closed under both addition and scalar multiplication. The set of all invertible matrices is not closed under addition. For instance, the identity matrix \(I\) and \(-I\) are both invertible, but their sum, \(I + (-I) = 0\), is not invertible (it's the zero matrix, which is not invertible).
+
+            Thus, the set of all invertible matrices is not a subspace.
+        \end{solution}
+
+    \end{subproblem}
+
+    \begin{subproblem}
+        all non-invertible $A$;
+        
+        \begin{solution}
+            Similarly, the set of non-invertible matrices is also not closed under addition. For example, take two non-invertible matrices, their sum might be invertible, violating the closure under addition. Hence, this set does not form a subspace.
+
+            Thus, the set of all non-invertible matrices is not a subspace.
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        all $A$ such that $AB = BA$, where $B$ is some fixed matrix in $V$;
+        
+        \begin{solution}
+            This set is closed under both addition and scalar multiplication. If \(A_1\) and \(A_2\) commute with \(B\), then \((A_1 + A_2)B = A_1B + A_2B = BA_1 + BA_2 = B(A_1 + A_2)\), so \(A_1 + A_2\) commutes with \(B\). If \(A\) commutes with \(B\), then for any scalar \(\alpha \in \mathbb{F}\), \((\alpha A)B = \alpha (AB) = \alpha (BA) = B(\alpha A)\), so \(\alpha A\) also commutes with \(B\).
+
+            Thus, the set of all matrices that commute with a fixed matrix \(B\) is a subspace.
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        all $A$ such that $A^2 = A$
+        
+        \begin{solution}
+            These matrices are called idempotent matrices. To check whether this set forms a subspace, we need to verify closure under addition and scalar multiplication. If \(A_1^2 = A_1\) and \(A_2^2 = A_2\), then in general, \((A_1 + A_2)^2 \neq A_1 + A_2\), so the set is not closed under addition. Similarly, for a scalar \(\alpha\), \((\alpha A)^2 = \alpha^2 A^2 = \alpha^2 A\), which is not necessarily equal to \(\alpha A\) unless \(\alpha = 0\) or 1.
+
+            Thus, the set of idempotent matrices is not a subspace.
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}
+    Let $V$ be the vector space of all functions from $R$ into $R$; let $V_e$ be the subset of even functions, 
+    $f(-x) = f(x)$; let $V_o$ be the subset of odd functions, $f(-x) = -f(x)$.
+
+    \begin{subproblem}
+        Prove that $V_e$ and $V_o$ are subspaces of $V$.
+        
+        \begin{solution}
+            To prove that \( V_e \) and \( V_o \) are subspaces of \( V \), we must check that each set satisfies the conditions for a subspace: closure under addition, closure under scalar multiplication, and that each contains the zero function.
+
+            First, consider \( V_e \), the set of even functions. Let \( f, g \in V_e \), i.e., \( f(-x) = f(x) \) and \( g(-x) = g(x) \) for all \( x \in \mathbb{R} \). For closure under addition, we compute:
+            \[
+            (f + g)(-x) = f(-x) + g(-x) = f(x) + g(x) = (f + g)(x),
+            \]
+            which shows that \( f + g \in V_e \). For scalar multiplication, let \( c \in \mathbb{R} \). Then:
+            \[
+            (c f)(-x) = c f(-x) = c f(x) = (c f)(x),
+            \]
+            so \( c f \in V_e \). Finally, the zero function \( f(x) = 0 \) is clearly even, as \( 0(-x) = 0(x) \) for all \( x \). Hence, \( V_e \) is a subspace of \( V \).
+    
+            Now, consider \( V_o \), the set of odd functions. Let \( f, g \in V_o \), i.e., \( f(-x) = -f(x) \) and \( g(-x) = -g(x) \) for all \( x \in \mathbb{R} \). For closure under addition, we compute:
+            \[
+            (f + g)(-x) = f(-x) + g(-x) = -f(x) + -g(x) = -(f(x) + g(x)) = -(f + g)(x),
+            \]
+            which shows that \( f + g \in V_o \). For scalar multiplication, let \( c \in \mathbb{R} \). Then:
+            \[
+            (c f)(-x) = c f(-x) = c (-f(x)) = -(c f)(x),
+            \]
+            so \( c f \in V_o \). The zero function \( f(x) = 0 \) is also odd, as \( 0(-x) = -0(x) \) for all \( x \). Hence, \( V_o \) is a subspace of \( V \).
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Prove that $V_e + V_o = V$.
+
+        \begin{solution}
+            We need to show that any function \( f \in V \) can be written as the sum of an even function and an odd function. Given \( f \in V \), define two functions:
+            \[
+            f_e(x) = \frac{f(x) + f(-x)}{2}, \quad f_o(x) = \frac{f(x) - f(-x)}{2}.
+            \]
+            First, check that \( f_e \) is even:
+            \[
+            f_e(-x) = \frac{f(-x) + f(x)}{2} = \frac{f(x) + f(-x)}{2} = f_e(x).
+            \]
+            Thus, \( f_e \in V_e \). Next, check that \( f_o \) is odd:
+            \[
+            f_o(-x) = \frac{f(-x) - f(x)}{2} = -\frac{f(x) - f(-x)}{2} = -f_o(x).
+            \]
+            Thus, \( f_o \in V_o \).
+
+            Finally, observe that:
+            \[
+            f(x) = f_e(x) + f_o(x),
+            \]
+            which shows that any function \( f \in V \) can be written as the sum of an even function and an odd function. Therefore, \( V_e + V_o = V \).
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Prove that $V_e \cap V_o = \{0\}$.
+
+        \begin{solution}
+            Suppose \( f \in V_e \cap V_o \). This means that \( f \) is both even and odd. Thus, for all \( x \in \mathbb{R} \),
+            \[        f(-x) = f(x) \quad \text{(since \( f \) is even)},        \]
+            and
+            \[        f(-x) = -f(x) \quad \text{(since \( f \) is odd)}.        \]
+            Combining these, we get \( f(x) = -f(x) \), which implies that \( f(x) = 0 \) for all \( x \in \mathbb{R} \). Hence, \( f = 0 \), the zero function.
+
+            Therefore, \( V_e \cap V_o = \{0\} \).
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}
+    Let $V$ be the vector space of all $n \times n$ matrices over the field $\mathbb{F}$, and let $B$ be a fixed $n \times n$ matrix. if
+    \[T(A) = AB -BA\]
+    verify that $T$ is a linear transformation from $V$ into $V$. 
+
+    \begin{solution}
+        Additivity:\\
+        Let \( A_1, A_2 \in V \). We compute \( T(A_1 + A_2) \) as follows:
+        \[
+        T(A_1 + A_2) = (A_1 + A_2)B - B(A_1 + A_2).
+        \]
+        \[
+        T(A_1 + A_2) = A_1B + A_2B - (BA_1 + BA_2).
+        \]
+        \[
+        T(A_1 + A_2) = (A_1B - BA_1) + (A_2B - BA_2).
+        \]
+        \[
+        T(A_1 + A_2) = T(A_1) + T(A_2).
+        \]
+        Thus, \( T \) is additive.
+    
+        Homogeneity:\\
+        Let \( c \in \mathbb{F} \) and \( A \in V \). We compute \( T(cA) \) as follows:
+        \[
+        T(cA) = (cA)B - B(cA).
+        \]
+        \[
+        T(cA) = c(AB) - c(BA).
+        \]
+        \[
+        T(cA) = c(AB - BA) = cT(A).
+        \]
+        Thus, \( T \) is homogeneous.
+    
+        Since \( T \) satisfies both additivity and homogeneity, \( T \) is a linear transformation from \( V \) into \( V \).
+    
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    Let $V$ be a vector space and $T$ a linear transformation from $V$ in $V$. Prove that
+    the following two statements about $T$ are equivalent.
+
+    \begin{subproblem}
+        The intersection of the range of $T$ and the null space of $T$ is the zero subspace of $V$.
+
+        \begin{solution}
+            We want to show that the intersection of the range of \( T \) (aka the \( \operatorname{Im}(T) \)) and the null space of \( T \) (aka the \( \ker(T) \)) is the zero subspace:
+            \[
+            \operatorname{Im}(T) \cap \ker(T) = \{ 0 \}.
+            \]
+            Let \( v \in \operatorname{Im}(T) \cap \ker(T) \). By definition of intersection, \( v \in \operatorname{Im}(T) \) and \( v \in \ker(T) \).
+
+            Since \( v \in \ker(T) \), we have \( T(v) = 0 \).\\
+            Since \( v \in \operatorname{Im}(T) \), there exists some \( u \in V \) such that \( T(u) = v \).
+
+            Applying \( T \) to both sides of the equation \( T(u) = v \), we get:
+            \[
+            T(T(u)) = T(v) = 0.
+            \]
+            Therefore, \( T(T(u)) = 0 \), which means \( u \in \ker(T^2) \).
+
+            Now, since \( v = T(u) \in \ker(T) \), and \( T \) is linear, this implies that \( u \) must also be in \( \ker(T) \) (this will follow from the second subproblem). Hence, \( v = T(u) = 0 \).
+
+            Therefore, the only element in \( \operatorname{Im}(T) \cap \ker(T) \) is the zero vector, so:
+            \[
+            \operatorname{Im}(T) \cap \ker(T) = \{ 0 \}.
+            \]
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        If $T(T\alpha) = 0$, then $T\alpha = 0$.
+
+        \begin{solution}
+            We need to show that if \( T(T(\alpha)) = 0 \), then \( T(\alpha) = 0 \).
+
+            Assume \( T(T(\alpha)) = 0 \) for some \( \alpha \in V \). This means \( T(\alpha) \in \ker(T) \), i.e., the vector \( T(\alpha) \) is in the null space of \( T \). 
+
+            Now, consider the fact that the intersection of \( \operatorname{Im}(T) \) and \( \ker(T) \) is the zero subspace (from the first subproblem). Since \( T(\alpha) \in \operatorname{Im}(T) \) and \( T(\alpha) \in \ker(T) \), it follows that:
+            \[
+            T(\alpha) = 0.
+            \]
+
+            Therefore, if \( T(T(\alpha)) = 0 \), then \( T(\alpha) = 0 \).
+
+            This proves the implication.
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}
+    Find two linear operations $T$ and $U$ on $\mathbb{R^2}$ such that $TU = 0$ but $UT \neq 0$.
+    
+    \begin{solution}
+        Consider the following two linear maps \(T\) and \(U\) on \(\mathbb{R}^2\) represented by matrices:
+        \[
+        T = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}, \quad U = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}.
+        \]
+        First, let's compute the product \(TU\):
+        \[
+        TU = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix} = \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}.
+        \]
+        This gives \(TU = 0\), since every entry in the resulting matrix is zero.
+    
+        Now, let's compute the product \(UT\):
+        \[
+        UT = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} = \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix}.
+        \]
+        This gives \(UT = \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix}\), which is not the zero matrix.
+    
+        Therefore, we have found that \(TU = 0\) but \(UT \neq 0\).
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    Let $V$ be a vector space over the field $\mathbb{F}$ and $T$ a linear operator on $V$. If $T^2 = 0$, what can you say about the relation of the range
+    of $T$ to the null space of $T$? Give an example of a linear operator $T$ on $\mathbb{R}^2$ such that $T^2 = 0$ but $T \neq 0$.
+
+    \begin{solution}
+        The range of \(T\) is contained in the null space of \(T\). This is because for any vector \(v \in V\), if \(T(v) \in \text{Range}(T)\), then applying \(T\) to \(T(v)\) gives \(T(T(v)) = 0\), so \(T(v) \in \text{Null}(T)\).
+    
+        To see this more concretely, let \(T^2 = 0\) and let \(W = \text{Range}(T)\). For any \(w \in W\), there exists some \(v \in V\) such that \(w = T(v)\). Then applying \(T\) again, \(T(w) = T(T(v)) = 0\), so \(w \in \text{Null}(T)\). Thus, \(W \subseteq \text{Null}(T)\).
+    
+        Example of a linear operator \(T\) on \(\mathbb{R}^2\) such that \(T^2 = 0\) but \(T \neq 0\).
+        \[
+        T = \begin{pmatrix}
+        0 & 1 \\
+        0 & 0
+        \end{pmatrix}.
+        \]
+    
+        Let's check that \(T^2 = 0\):
+        \[
+        T^2 = \begin{pmatrix}
+        0 & 1 \\
+        0 & 0
+        \end{pmatrix} \begin{pmatrix}
+        0 & 1 \\
+        0 & 0
+        \end{pmatrix} = \begin{pmatrix}
+        0 & 0 \\
+        0 & 0
+        \end{pmatrix} = 0.
+        \]
+    
+        So \(T^2 = 0\). Also, \(T \neq 0\) because \(T\) is not the zero matrix.
+    
+        The range of \(T\) is:
+        \[
+        \text{Range}(T) = \text{span} \left\{ \begin{pmatrix}
+        0 \\
+        1
+        \end{pmatrix} \right\},
+        \]
+        which is a one-dimensional subspace of \(\mathbb{R}^2\).
+    
+        The null space of \(T\) is:
+        \[
+        \text{Null}(T) = \left\{ \begin{pmatrix}
+        x \\
+        0
+        \end{pmatrix} \mid x \in \mathbb{R} \right\},
+        \]
+        which is a one-dimensional subspace of \(\mathbb{R}^2\).
+    
+        \(\text{Range}(T) \subseteq \text{Null}(T)\), satisfying the condition that the range of \(T\) is contained in the null space of \(T\).
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    Let V be a vector space over the field $\mathbb{F}$. Assume $W$ is a subspace of $V$ and $S, S_i, i \in I$ are arbitrary subsets. Verify the following:
+
+    \begin{subproblem}
+        Span$_{\mathbb{F}}(W) = W$
+
+        \begin{solution}
+            By definition, the span of a set \( W \) is the set of all linear combinations of elements of \( W \). Since \( W \) is a subspace of \( V \), it is closed under linear combinations and contains all such combinations of its elements. Thus, \( \text{Span}_{\mathbb{F}}(W) \) includes every element of \( W \), and every element of \( \text{Span}_{\mathbb{F}}(W) \) is in \( W \). Therefore:
+            \[
+            \text{Span}_{\mathbb{F}}(W) = W.
+            \]
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Span$_{\mathbb{F}}$(Span$_{\mathbb{F}}(S)) = $Span$_\mathbb{F}(S)$
+
+        \begin{solution}
+            Let \( T = \text{Span}_{\mathbb{F}}(S) \). By definition, \( \text{Span}_{\mathbb{F}}(T) \) is the set of all linear combinations of elements in \( T \). Since \( T \) is already the span of \( S \), it means \( T \) consists of all linear combinations of elements in \( S \). Therefore:
+            \[
+            \text{Span}_{\mathbb{F}}(\text{Span}_{\mathbb{F}}(S)) = \text{Span}_{\mathbb{F}}(S).
+            \]
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Span$_{\mathbb{F}}\displaystyle(\bigcup_{i \in I}S_i) = \displaystyle\sum_{i\in I}$Span$_{\mathbb{F}}(S_i)$.
+
+        \begin{solution}
+            Let \( \mathcal{S} = \bigcup_{i \in I} S_i \). The span of \( \mathcal{S} \) is the set of all linear combinations of elements in \( \mathcal{S} \). Each element in \( \mathcal{S} \) belongs to some \( S_i \), so every linear combination of elements in \( \mathcal{S} \) can be expressed as a linear combination of elements in \( S_i \) for some \( i \in I \). Thus:
+            \[
+            \text{Span}_{\mathbb{F}} \left( \bigcup_{i \in I} S_i \right) = \sum_{i \in I} \text{Span}_{\mathbb{F}}(S_i),
+            \]
+            where \( \sum_{i \in I} \text{Span}_{\mathbb{F}}(S_i) \) denotes the set of all finite sums of elements where each element is from some \( \text{Span}_{\mathbb{F}}(S_i) \).    
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Span$_{\mathbb{F}}\displaystyle(\bigcap_{i \in I}S_i) \subseteq \displaystyle\bigcap_{i\in I}$Span$_{\mathbb{F}}(S_i)$. Equality may not hold; give an explicit example of this.
+
+        \begin{solution}
+            Let us show the inclusion first. If \( x \in \text{Span}_{\mathbb{F}} \left( \bigcap_{i \in I} S_i \right) \), then \( x \) is a linear combination of elements in \( \bigcap_{i \in I} S_i \). Each such element belongs to every \( S_i \), so \( x \) is in every \( \text{Span}_{\mathbb{F}}(S_i) \). Therefore:
+            \[
+            \text{Span}_{\mathbb{F}} \left( \bigcap_{i \in I} S_i \right) \subseteq \bigcap_{i \in I} \text{Span}_{\mathbb{F}}(S_i).
+            \]
+
+            Example where equality does not hold:
+
+            Consider \( V = \mathbb{R}^2 \), and let:
+            \[
+            S_1 = \{ (x, 0) \mid x \in \mathbb{R} \}, \quad S_2 = \{ (0, y) \mid y \in \mathbb{R} \}.
+            \]
+            Then:
+            \[
+            \bigcap_{i \in \{1,2\}} S_i = \{ (0, 0) \},
+            \]
+            and:
+            \[
+            \text{Span}_{\mathbb{F}} \left( \bigcap_{i \in \{1,2\}} S_i \right) = \text{Span}_{\mathbb{F}} \{ (0,0) \} = \{ (0, 0) \}.
+            \]
+            However:
+            \[
+            \text{Span}_{\mathbb{F}}(S_1) = \text{Span}_{\mathbb{F}} \{ (1,0) \} = \mathbb{R}^2,
+            \]
+            and:
+            \[
+            \text{Span}_{\mathbb{F}}(S_2) = \text{Span}_{\mathbb{F}} \{ (0,1) \} = \mathbb{R}^2.
+            \]
+            Therefore:
+            \[
+            \bigcap_{i \in \{1,2\}} \text{Span}_{\mathbb{F}}(S_i) = \mathbb{R}^2,
+            \]
+            which is strictly larger than:
+            \[
+            \text{Span}_{\mathbb{F}} \left( \bigcap_{i \in \{1,2\}} S_i \right) = \{ (0,0) \}.
+            \]
+            Thus, in this example:
+            \[
+            \text{Span}_{\mathbb{F}} \left( \bigcap_{i \in I} S_i \right) \neq \bigcap_{i \in I} \text{Span}_{\mathbb{F}}(S_i).
+            \]
+        \end{solution}
+    \end{subproblem}
+
+\end{problem}
+
+\begin{problem}
+    (Direct Sums)
+
+    \begin{subproblem}
+        Show that the operation of direct sums is ``commutative'': that is, there is a natural isophorism
+        \[V_1 \oplus V_2 \approx V_2 \oplus V_1\]
+
+        \begin{solution}
+            Consider the vector space \( V_1 \oplus V_2 \). An element of \( V_1 \oplus V_2 \) can be written as a pair \( (v_1, v_2) \), where \( v_1 \in V_1 \) and \( v_2 \in V_2 \). 
+    
+            Define a map \( \phi: V_1 \oplus V_2 \to V_2 \oplus V_1 \) by
+            \[        \phi((v_1, v_2)) = (v_2, v_1).        \]
+            We will show that \( \phi \) is a linear isomorphism.
+    
+            Linearity:\\
+            For \( (v_1, v_2), (w_1, w_2) \in V_1 \oplus V_2 \) and \( c \in \mathbb{F} \):
+            \[
+            \phi((v_1, v_2) + (w_1, w_2)) = \phi((v_1 + w_1, v_2 + w_2)) = (v_2 + w_2, v_1 + w_1).
+            \]
+            \[
+            \phi((v_1, v_2)) + \phi((w_1, w_2)) = (v_2, v_1) + (w_2, w_1) = (v_2 + w_2, v_1 + w_1).
+            \]
+            Thus, \( \phi \) preserves addition. 
+    
+            For scalar multiplication:
+            \[
+            \phi(c(v_1, v_2)) = \phi((cv_1, cv_2)) = (cv_2, cv_1),
+            \]
+            \[
+            c \phi((v_1, v_2)) = c (v_2, v_1) = (cv_2, cv_1).
+            \]
+            Thus, \( \phi \) preserves scalar multiplication.
+    
+            Bijectivity:\\
+            To show that \( \phi \) is bijective, we need to find its inverse. Define \( \psi: V_2 \oplus V_1 \to V_1 \oplus V_2 \) by
+            \[
+            \psi((v_2, v_1)) = (v_1, v_2).
+            \]
+            It is straightforward to verify that \( \psi \) is the inverse of \( \phi \) since:
+            \[
+            \phi \circ \psi((v_2, v_1)) = \phi((v_1, v_2)) = (v_2, v_1),
+            \]
+            \[
+            \psi \circ \phi((v_1, v_2)) = \psi((v_2, v_1)) = (v_1, v_2).
+            \]
+    
+            Thus, \( \phi \) is an isomorphism, proving that \( V_1 \oplus V_2 \cong V_2 \oplus V_1 \).
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Explain the difference between the vector spaces $(V_1 \oplus V_2)\oplus V_3$ and $V_1 \oplus (V_2 \oplus V_3)$.
+
+        \begin{solution}
+            Note that an element of \( (V_1 \oplus V_2) \oplus V_3 \) can be represented as \( ((v_1, v_2), v_3) \), where \( v_1 \in V_1 \), \( v_2 \in V_2 \), and \( v_3 \in V_3 \). Similarly, an element of \( V_1 \oplus (V_2 \oplus V_3) \) can be represented as \( (v_1, (v_2, v_3)) \), where \( v_1 \in V_1 \), \( v_2 \in V_2 \), and \( v_3 \in V_3 \).
+
+            Define a map \( \phi: (V_1 \oplus V_2) \oplus V_3 \to V_1 \oplus (V_2 \oplus V_3) \) by
+            \[        \phi(((v_1, v_2), v_3)) = (v_1, (v_2, v_3)).        \]
+            To show that \( \phi \) is an isomorphism, note that:
+            \[
+            \phi(((v_1, v_2), v_3) + ((w_1, w_2), w_3)) = \phi(((v_1 + w_1, v_2 + w_2), v_3 + w_3)) = (v_1 + w_1, (v_2 + w_2, v_3 + w_3)),
+            \]
+            \[
+            \phi(((v_1, v_2), v_3)) + \phi(((w_1, w_2), w_3)) = (v_1, (v_2, v_3)) + (w_1, (w_2, w_3)) = (v_1 + w_1, (v_2 + w_2, v_3 + w_3)).
+            \]
+
+            For scalar multiplication:
+            \[
+            \phi(c((v_1, v_2), v_3)) = \phi((cv_1, cv_2), cv_3) = (cv_1, (cv_2, cv_3)),
+            \]
+            \[
+            c \phi(((v_1, v_2), v_3)) = c (v_1, (v_2, v_3)) = (cv_1, (cv_2, cv_3)).
+            \]
+
+            Thus, \( \phi \) is a linear isomorphism, showing that \( (V_1 \oplus V_2) \oplus V_3 \cong V_1 \oplus (V_2 \oplus V_3) \). The isomorphism preserves the structure of the vector spaces, so the direct sum operation is associative.
+        
+
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Show that the operation of direct sum is ``associative'': that is, there is a natural isomorphism
+        \[(V_1 \oplus V_2) \oplus V_3 \approx V_1 \oplus (V_2 \oplus V_3)\]
+
+        \begin{solution}
+            Consider the vector space \( (V_1 \oplus V_2) \oplus V_3 \). An element of \( (V_1 \oplus V_2) \oplus V_3 \) is of the form \( ((v_1, v_2), v_3) \), where \( v_1 \in V_1 \), \( v_2 \in V_2 \), and \( v_3 \in V_3 \).
+
+            Define a map \( \phi: (V_1 \oplus V_2) \oplus V_3 \to V_1 \oplus (V_2 \oplus V_3) \) by
+            \[        \phi(((v_1, v_2), v_3)) = (v_1, (v_2, v_3)).        \]
+            We need to show that \( \phi \) is a linear isomorphism.
+
+            Linearity:\\
+            For \( ((v_1, v_2), v_3), ((w_1, w_2), w_3) \in (V_1 \oplus V_2) \oplus V_3 \) and \( c \in \mathbb{F} \):
+            \[
+            \phi((((v_1, v_2), v_3) + ((w_1, w_2), w_3))) = \phi(((v_1 + w_1, v_2 + w_2), v_3 + w_3)) = (v_1 + w_1, (v_2 + w_2, v_3 + w_3)).
+            \]
+            \[
+            \phi((v_1, (v_2, v_3))) + \phi((w_1, (w_2, w_3))) = (v_1, (v_2, v_3)) + (w_1, (w_2, w_3)) = (v_1 + w_1, (v_2 + w_2, v_3 + w_3)).
+            \]
+
+            For scalar multiplication:
+            \[
+            \phi(c((v_1, v_2), v_3)) = \phi((cv_1, cv_2), cv_3) = (cv_1, (cv_2, cv_3)),
+            \]
+            \[
+            c \phi(((v_1, v_2), v_3)) = c (v_1, (v_2, v_3)) = (cv_1, (cv_2, cv_3)).
+            \]
+
+            Thus, \( \phi \) preserves both vector addition and scalar multiplication, making it a linear map.
+
+            Bijectivity:\\
+            To find the inverse, define \( \psi: V_1 \oplus (V_2 \oplus V_3) \to (V_1 \oplus V_2) \oplus V_3 \) by
+            \[
+            \psi((v_1, (v_2, v_3))) = ((v_1, v_2), v_3).
+            \]
+            Verify that \( \psi \) is the inverse of \( \phi \):
+            \[
+            \phi \circ \psi((v_1, (v_2, v_3))) = \phi(((v_1, v_2), v_3)) = (v_1, (v_2, v_3)),
+            \]
+            \[
+            \psi \circ \phi(((v_1, v_2), v_3)) = \psi((v_1, (v_2, v_3))) = ((v_1, v_2), v_3).
+            \]
+
+            Hence, \( \phi \) is an isomorphism, proving that \( (V_1 \oplus V_2) \oplus V_3 \cong V_1 \oplus (V_2 \oplus V_3) \). The direct sum operation is associative.
+        
+
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Give a definition of the direct sum of $k > 3$ vector spaces ove $\mathbb{F}$ using $k$-tuples.
+        Give an inductive definition assuming the case $k = 2$ is given. Verify that the two definitions
+        give isomorphic vector spaces. 
+
+        \begin{solution}
+            The direct sum of \( k \) vector spaces \( V_1, V_2, \ldots, V_k \) over a field \( \mathbb{F} \) can be defined using \( k \)-tuples. Specifically, the direct sum is:
+            \[
+            V_1 \oplus V_2 \oplus \cdots \oplus V_k = \{ (v_1, v_2, \ldots, v_k) \mid v_i \in V_i \text{ for } i = 1, 2, \ldots, k \}.
+            \]
+            This space is the set of all \( k \)-tuples where each component is an element from the corresponding vector space.
+
+            Inductive Definition:\\
+            Assume that the direct sum is defined for \( k \) vector spaces, i.e.,
+            \[
+            V_1 \oplus V_2 \oplus \cdots \oplus V_k = \{ (v_1, v_2, \ldots, v_k) \mid v_i \in V_i \text{ for } i = 1, 2, \ldots, k \}.
+            \]
+            For \( k + 1 \) vector spaces, we can define:
+            \[
+            V_1 \oplus V_2 \oplus \cdots \oplus V_k \oplus V_{k+1} = \{ ((v_1, v_2, \ldots, v_k), v_{k+1}) \mid v_i \in V_i \text{ for } i = 1, 2, \ldots, k+1 \}.
+            \]
+            This can be seen as taking the direct sum of the previously defined direct sum with \( V_{k+1} \).
+
+            Verification of Isomorphism:\\
+            To verify that these definitions are isomorphic, we need to show that:
+            \[
+            (V_1 \oplus V_2 \oplus \cdots \oplus V_k) \oplus V_{k+1} \cong V_1 \oplus (V_2 \oplus \cdots \oplus (V_k \oplus V_{k+1}) \cdots)
+            \]
+            Define a map \( \phi: (V_1 \oplus V_2 \oplus \cdots \oplus V_k) \oplus V_{k+1} \to V_1 \oplus (V_2 \oplus \cdots \oplus (V_k \oplus V_{k+1}) \cdots) \) by
+            \[        \phi(((v_1, v_2, \ldots, v_k), v_{k+1})) = (v_1, (v_2, \ldots, (v_k, v_{k+1}) \cdots)).        \]
+            To verify that \( \phi \) is an isomorphism, check that it preserves addition and scalar multiplication, and is bijective with a clear inverse.
+
+            Thus, by induction, the direct sum operation is associative and can be defined using \( k \)-tuples.
+        
+
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+\begin{problem}
+    Show that if the index set $I$ is infinite and all vector spaces $V_i$ are non-trivial (i.e., the have elements different from $0$), then the direct sum $\bigoplus_{i \in I}V_i$ is a proper
+    subspace of the direct product $\prod_{i \in I}V_i$. (This uses the axiom of choice). 
+
+    \begin{solution}
+        Definitions:\\
+        The direct sum \(\bigoplus_{i \in I} V_i\) consists of all tuples \((v_i)_{i \in I}\) where \( v_i \in V_i \) and \( v_i = 0 \) for all but finitely many \( i \in I \).
+        The direct product \(\prod_{i \in I} V_i\) consists of all tuples \((v_i)_{i \in I}\) where \( v_i \in V_i \) for all \( i \in I \).
+    
+        Claim: \(\bigoplus_{i \in I} V_i \subsetneq \prod_{i \in I} V_i\)
+    
+        \textit{Proof.}
+    
+        1. \(\bigoplus_{i \in I} V_i \subseteq \prod_{i \in I} V_i\):
+    
+            By definition, every element of \(\bigoplus_{i \in I} V_i\) is an element of \(\prod_{i \in I} V_i\), because the direct sum is a subset of the direct product. Thus, we have:
+            \[
+            \bigoplus_{i \in I} V_i \subseteq \prod_{i \in I} V_i.
+            \]
+    
+        2. \(\bigoplus_{i \in I} V_i\) is a proper subspace of \(\prod_{i \in I} V_i\):
+    
+            To prove this, we need to show that there exists at least one element in \(\prod_{i \in I} V_i\) that is not in \(\bigoplus_{i \in I} V_i\).
+    
+            Since \( I \) is infinite, there exists an infinite subset \( J \subset I \). For each \( i \in J \), choose a non-zero vector \( v_i \in V_i \) (possible because each \( V_i \) is non-trivial).
+    
+            Define a tuple \( (w_i)_{i \in I} \in \prod_{i \in I} V_i \) by:
+            \[
+            w_i = 
+            \begin{cases} 
+            v_i & \text{if } i \in J, \\
+            0 & \text{if } i \notin J.
+            \end{cases}
+            \]
+    
+            This tuple \( (w_i)_{i \in I} \) is an element of \(\prod_{i \in I} V_i\) because each \( w_i \in V_i \).
+    
+            However, \( (w_i)_{i \in I} \notin \bigoplus_{i \in I} V_i \), because \( J \) is infinite and thus there are infinitely many non-zero entries in \( (w_i)_{i \in I} \). By definition of \(\bigoplus_{i \in I} V_i\), it can only contain tuples with finitely many non-zero entries.
+    
+            Therefore, the tuple \( (w_i)_{i \in I} \) is not in \(\bigoplus_{i \in I} V_i\), showing that \(\bigoplus_{i \in I} V_i\) is a proper subset of \(\prod_{i \in I} V_i\).
+    
+            Thus, the direct sum \(\bigoplus_{i \in I} V_i\) is indeed a proper subspace of the direct product \(\prod_{i \in I} V_i\).
+    
+
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    Let $W_1$ and $W_2$ be subspaces of a vector space $V$ such that their
+    set-theoretic union is also a subspace. Prove that one of the spaces $W_i$ is contained in the other.
+
+    \begin{solution}    
+        Showing that \(W_1 \cap W_2 \neq \emptyset\):
+    
+        Since \(W_1 \cup W_2\) is a subspace, it must contain the zero vector. Therefore, \(0 \in W_1 \cup W_2\). This implies that \(0\) is in at least one of \(W_1\) or \(W_2\), but more importantly, \(0 \in W_1 \cap W_2\). Hence, \(W_1 \cap W_2\) is non-empty.
+    
+        Proving that \(W_1 \cup W_2\) being a subspace implies \(W_1\) and \(W_2\) are contained in each other.
+    
+        Since \(W_1 \cup W_2\) is a subspace, it is closed under addition and scalar multiplication. Consider any vectors \(u \in W_1\) and \(v \in W_2\). Since \(W_1 \cup W_2\) is a subspace, their sum \(u + v\) must also be in \(W_1 \cup W_2\).
+    
+        There are two cases to consider:
+    
+        Case 1 \(u + v \in W_1\):\\
+        If \(u + v \in W_1\), since \(u \in W_1\) and \(u + v \in W_1\), it follows that \(v\) must be in \(W_1\) (because \(W_1\) is a subspace and closed under subtraction). Therefore, \(W_2 \subseteq W_1\) because \(v\) was an arbitrary element of \(W_2\).
+    
+        Case 2 \(u + v \in W_2\):\\
+        Similarly, if \(u + v \in W_2\), then since \(v \in W_2\) and \(u + v \in W_2\), it follows that \(u\) must be in \(W_2\) (because \(W_2\) is a subspace and closed under subtraction). Thus, \(W_1 \subseteq W_2\) because \(u\) was an arbitrary element of \(W_1\).
+    
+        In either case, we find that one of the subspaces is contained in the other.
+    \end{solution}
+\end{problem}
+
+\begin{problem}
+    (Subspaces)
+
+    \begin{subproblem}
+        Let $R$ be an commutative ring (we assume that $R$ is also associative and has a unit). Show that the set $R*$ of invertible elements in $R$ is an 
+        abelian group, i.e., there is an operation $\boxplus$ which is commutative, associative, there exist a zero element and “negatives”
+
+        \begin{solution}
+            To show that \( R^* \), the set of invertible elements in a commutative ring \( R \), forms an abelian group under multiplication, we need to verify the following group properties:
+
+            Closure under Multiplication:\\
+            Let \( a, b \in R^* \). Since \( a \) and \( b \) are invertible, there exist \( a^{-1} \) and \( b^{-1} \) in \( R \) such that:
+            \[
+            a \cdot a^{-1} = 1 \quad \text{and} \quad b \cdot b^{-1} = 1.
+            \]
+            We need to show that \( a \cdot b \) is also invertible. Consider:
+            \[
+            (a \cdot b)^{-1} = b^{-1} \cdot a^{-1}.
+            \]
+            \[
+            (a \cdot b) \cdot (b^{-1} \cdot a^{-1}) = a \cdot (b \cdot b^{-1}) \cdot a^{-1} = a \cdot 1 \cdot a^{-1} = a \cdot a^{-1} = 1.
+            \]
+            \[        (b^{-1} \cdot a^{-1}) \cdot (a \cdot b) = b^{-1} \cdot (a^{-1} \cdot a) \cdot b = b^{-1} \cdot 1 \cdot b = b^{-1} \cdot b = 1.        \]
+            Therefore, \( a \cdot b \) is invertible, and \( (a \cdot b)^{-1} = b^{-1} \cdot a^{-1} \), confirming that \( R^* \) is closed under multiplication.
+    
+            Associativity:\\
+            Multiplication in \( R \) is associative, and since \( R^* \) is a subset of \( R \), the operation of multiplication is associative in \( R^* \). Specifically, for any \( a, b, c \in R^* \):
+            \[
+            (a \cdot b) \cdot c = a \cdot (b \cdot c).
+            \]
+        
+            Existence of Identity Element:\\
+            The identity element in \( R \) under multiplication is \( 1 \), and \( 1 \in R^* \) because \( 1 \) is invertible with \( 1^{-1} = 1 \). Therefore, \( 1 \) serves as the identity element for \( R^* \).
+    
+            Existence of Inverses:\\
+            By definition, each element \( a \in R^* \) has an inverse \( a^{-1} \in R \). Thus, for every \( a \in R^* \), the element \( a^{-1} \) is also in \( R^* \), satisfying the requirement for inverses in the group.
+    
+            Commutativity:\\
+            Since \( R \) is commutative, for any \( a, b \in R^* \):
+            \[
+            a \cdot b = b \cdot a.
+            \]
+            Hence, \( R^* \) inherits this commutativity from \( R \), and so \( R^* \) is abelian.
+    
+            Therefore, \( (R^*, \cdot) \) is an abelian group where the group operation is multiplication. It is closed, associative, has an identity element, and every element has an inverse, and the operation is commutative.
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Let $\mathbb{F}_p$ be the field with $p$ elements, $p$ a prime. Let $A$ be an abelian group.
+        Find a ``natural'' condition in order that $A$ will be a vector space over $\mathbb{F}_p$ (in a
+        unique way). [Hint: 1 does what?]
+
+        \begin{solution}
+            The element 1 in the field $\mathbb{F}_p$ must act as the multiplicative identity on the abelian group $A$. 
+            This requirement ensures that $A$ can be given a vector space structure over $\mathbb{F}_p$ where the scalar multiplication by 1 leaves each vector unchanged. 
+
+            The "natural" condition for \( A \) to be a vector space over \(\mathbb{F}_p\) is that \( A \) must be a finite abelian group of order \( p^n \) for some positive integer \( n \). This condition ensures that \( A \) has a structure that allows it to be a vector space over \(\mathbb{F}_p\) in a unique way. 
+
+            The field \(\mathbb{F}_p\) has exactly \( p \) elements. For \( A \) to be a vector space over \(\mathbb{F}_p\), \( A \) must be isomorphic to \(\mathbb{F}_p^n\) for some \( n \). Therefore, \( A \) must have \( p^n \) elements.
+
+            The order of \( A \) must be \( p^n \) because this is the number of elements in \( \mathbb{F}_p^n \). For \( A \) to have this order, it must be that \( A \) is a finite abelian group whose order is a power of \( p \).
+
+            Given \( A \) is a finite abelian group of order \( p^n \), there is a unique (up to isomorphism) vector space structure on \( A \) over \(\mathbb{F}_p\). This is because every finite abelian group of order \( p^n \) is isomorphic to a direct sum of \( n \) copies of \(\mathbb{F}_p\), thus it has a unique vector space structure over \(\mathbb{F}_p\).
+
+            Therefore, the natural condition for \( A \) to be a vector space over \(\mathbb{F}_p\) is that \( A \) must be a finite abelian group whose order is a power of \( p \). This ensures that \( A \) can be given a unique vector space structure over \(\mathbb{F}_p\).
+
+            
+        \end{solution}
+    \end{subproblem}
+
+    \begin{subproblem}
+        Show that if $R$ is the ring of $n$-tuples of elements in $\mathbb{F}_4$ with componentwise
+        addition and multiplication, then $R*$ is a vector space over $\mathbb{F}_3$.
+
+        \begin{solution}
+            Firstly, recall that \( R \) is defined as:
+            \[
+            R = (\mathbb{F}_4)^n,
+            \]
+            where \( \mathbb{F}_4 \) is the finite field with 4 elements. We can describe \( \mathbb{F}_4 \) as \( \mathbb{F}_2[x]/(x^2 + x + 1) \) with elements \( \{0, 1, \alpha, \alpha + 1\} \), where \( \alpha \) is a root of \( x^2 + x + 1 \) in \( \mathbb{F}_4 \).
+
+            Next, \( R^* \) denotes the additive group of \( R \), so:
+            \[
+            R^* = (\mathbb{F}_4)^n,
+            \]
+            which is the same as \( R \) under addition. Hence, \( R^* \) consists of all \( n \)-tuples over \( \mathbb{F}_4 \) with componentwise addition.
+
+            To show that \( R^* \) is a vector space over \( \mathbb{F}_3 \), we need to define scalar multiplication by elements of \( \mathbb{F}_3 \). Given an element \( \mathbf{v} = (v_1, v_2, \ldots, v_n) \in R^* \) and a scalar \( c \in \mathbb{F}_3 \), we define scalar multiplication as:
+            \[
+            c \cdot \mathbf{v} = (c \cdot v_1, c \cdot v_2, \ldots, c \cdot v_n),
+            \]
+            where \( c \cdot v_i \) denotes the multiplication of the scalar \( c \in \mathbb{F}_3 \) with the element \( v_i \in \mathbb{F}_4 \) (computed in \( \mathbb{F}_4 \)).
+
+            To verify that \( R^* \) is a vector space, we check the vector space axioms over \( \mathbb{F}_3 \).
+
+            Firstly, \( R^* \) is closed under addition. Given two vectors \( \mathbf{u} = (u_1, u_2, \ldots, u_n) \) and \( \mathbf{v} = (v_1, v_2, \ldots, v_n) \) in \( R^* \), their sum is:
+            \[
+            \mathbf{u} + \mathbf{v} = (u_1 + v_1, u_2 + v_2, \ldots, u_n + v_n).
+            \]
+            Since addition in \( \mathbb{F}_4 \) is closed, \( \mathbf{u} + \mathbf{v} \) is also in \( R^* \), so \( R^* \) is closed under addition.
+
+            Next, \( R^* \) is closed under scalar multiplication. Given a vector \( \mathbf{v} = (v_1, v_2, \ldots, v_n) \in R^* \) and a scalar \( c \in \mathbb{F}_3 \), scalar multiplication is defined as:
+            \[
+            c \cdot \mathbf{v} = (c \cdot v_1, c \cdot v_2, \ldots, c \cdot v_n).
+            \]
+            Since multiplication in \( \mathbb{F}_4 \) is closed and \( \mathbb{F}_4 \) is a vector space over \( \mathbb{F}_3 \), each component \( c \cdot v_i \) remains in \( \mathbb{F}_4 \), so \( c \cdot \mathbf{v} \in R^* \). Hence, \( R^* \) is closed under scalar multiplication.
+
+            The properties of associativity and commutativity of addition hold because \( \mathbb{F}_4 \) itself is an associative and commutative ring.
+
+            The zero vector \( \mathbf{0} = (0, 0, \ldots, 0) \) is in \( R^* \), and for any \( \mathbf{v} \in R^* \), \( \mathbf{v} + \mathbf{0} = \mathbf{v} \), ensuring the existence of an additive identity.
+
+            For any vector \( \mathbf{v} = (v_1, v_2, \ldots, v_n) \in R^* \), its additive inverse is \( -\mathbf{v} = (-v_1, -v_2, \ldots, -v_n) \). Since \( \mathbb{F}_4 \) is closed under additive inverses, \( R^* \) also contains all additive inverses.
+
+            Scalar multiplication distributes over vector addition and field addition:
+            \[
+            c \cdot (\mathbf{u} + \mathbf{v}) = c \cdot \mathbf{u} + c \cdot \mathbf{v},
+            \]
+            \[
+            (c + d) \cdot \mathbf{v} = c \cdot \mathbf{v} + d \cdot \mathbf{v},
+            \]
+            and scalar multiplication is associative:
+            \[
+            c \cdot (d \cdot \mathbf{v}) = (c \cdot d) \cdot \mathbf{v}.
+            \]
+
+            Since \( R^* \) satisfies all these axioms, it follows that \( R^* \) is a vector space over \( \mathbb{F}_3 \).
+
+        \end{solution}
+    \end{subproblem}
+\end{problem}
+
+
+\end{document}
