@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1745191266.31602 "c:/Users/roman/OneDrive/Desktop/Math Classes/Honors Introduction to Algebra/Homework 6/main.tex" "main.pdf" "main" 1745191267.82574 0
-  "c:/Users/roman/OneDrive/Desktop/Math Classes/Honors Introduction to Algebra/Homework 6/main.tex" 1745191265 10456 c0f62c50f55827c864040a94b53a2f21 ""
+["pdflatex"] 1745132081.65361 "c:/Users/roman/OneDrive/Desktop/Math Classes/Honors Introduction to Algebra/Homework 7/main.tex" "main.pdf" "main" 1745132083.22354 0
+  "c:/Users/roman/OneDrive/Desktop/Math Classes/Honors Introduction to Algebra/Homework 7/main.tex" 1745132080 11198 3eb3863a0cf9ebb0008833590606b6b8 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/libertine/lbtn_kijugd.enc" 1725156421 2822 11e839d2bbb939844844619b2cff7df6 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/libertine/lbtn_lyu3x3.enc" 1725156421 2835 bfce207f80837ef8737b6a788d8bc760 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/libertine/lbtn_oexx6f.enc" 1725156421 2807 3bc923a7d38598e901b235df221224cb ""
@@ -209,8 +209,8 @@
   "c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1725163782 5543950 2aa73a438b7054b2327b796fbe5f4275 ""
   "c:/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1725163920 8239325 c4acdb2bbb9aaa858c49bcf540a50c87 ""
   "c:/texlive/2024/texmf.cnf" 1725163763 713 e69b156964470283e0530f5060668171 ""
-  "main.aux" 1745191267 32 ab05033ccbb38b00a31b200ccedf8001 "pdflatex"
-  "main.tex" 1745191265 10456 c0f62c50f55827c864040a94b53a2f21 ""
+  "main.aux" 1745132082 32 ab05033ccbb38b00a31b200ccedf8001 "pdflatex"
+  "main.tex" 1745132080 11198 3eb3863a0cf9ebb0008833590606b6b8 ""
   (generated)
   "main.aux"
   "main.log"

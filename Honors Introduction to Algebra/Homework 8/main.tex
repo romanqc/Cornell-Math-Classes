@@ -1,0 +1,338 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{libertine}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,shapes.geometric}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\pagestyle{plain}
+\thispagestyle{empty}
+
+\definecolor{carnellian}{RGB}{190,20,20}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\newcounter{subq}[problem]
+\newenvironment{subproblem}
+{\refstepcounter{subq} \begin{itemize} \item[(\alph{subq})]}
+{\end{itemize} \medskip}
+\DeclareMathOperator{\Ima}{Im}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Span}{Span}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Ann}{Ann}
+\DeclareMathOperator{\Mat}{Mat}
+%\DeclareMathOperator{\deg}{deg}
+
+
+
+\usepackage{environ}
+\NewEnviron{solution}[1][\vfill]{
+    \textcolor{blue}{\BODY}
+}
+
+\newcommand{\hwnum}{8}
+\newcommand{\duedate}{4/8/2025}
+\renewcommand{\title}{Groups, Modules, and Vector Spaces}
+
+\begin{document}
+
+\hspace{-10px}
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r}
+    \textbf{Honors Algebra} & \textbf{Spring 2025} \\
+    \textbf{HW \hwnum : \title} &  \textbf{\duedate} \\
+\end{tabular*}
+
+\vspace{1cm}
+
+\textit{Abstract Algebra: An Integrated Approach by J.H. Silverman.}\\
+Page 320-325: 10.13, 10.16, 10.22, 10.23, 10.27\\
+Page 357–370: 11.24, 11.32, 11.37\\
+Page 393–396: 12.16\\
+Do problem 11.32 for modules over non-commutative rings, i.e., show that 
+if M is left R module then the annihiliator Ann(M) is two sided ideal in R.
+
+
+\vspace{1cm}
+
+%-----------TEMPLATE------------%
+% \begin{problem}
+%     \begin{enumerate}[label=(\alph*)]
+%         \item 
+%         \begin{solution}
+
+%         \end{solution}
+
+%         \item 
+%         \begin{solution}
+
+%         \end{solution}
+%     \end{enumerate}
+% \end{problem}
+
+\begin{problem}[10.13]
+    For each of the following linear operators, find eigenvectors and eigenvalues as we did in Example 10.27. 
+    \begin{enumerate}[label=(\alph*)]
+        \item $L(e_1) = -e_1 + 4e_2$ and $L(e_2) = 4e_1 - e_2$
+        \begin{solution}
+
+        \end{solution}
+
+        \item $L(e_1) = e_2$ and $L(e_2) = -e_1$. (You may take $F = \mathbb{C}$ for this part.)
+        \begin{solution}
+
+        \end{solution}
+
+        \item $L(e_1) = e_1 - e_3$, $L(e_2) = 4e_3$, and $L(e_3) = 2e_1 + e_2 + 2e_3$
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[10.16]
+    Let $V$ be a finite-dimensional vector space. Let $L1, L2 \in \End_F{(V)}$ be linear operators on $V$ such that the following three statements are true: 
+    \begin{enumerate}[label=(\arabic*)]
+        \item There is a basis for $V$ consisting of eigenvectors of $L_1$
+        \begin{solution}
+
+        \end{solution}
+
+        \item There is a basis for $V$ consisting of eigenvectors of $L_2$
+        \begin{solution}
+
+        \end{solution}
+
+        \item $L_1L_2 = L_2L_1$
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+    Prove that there is a basis for $V$ consisting of vectors that are simultaneously eigenvectors of $L1$ and eigenvectors of $L2$. 
+    This result is often stated as follows: “commuting diagonalizable matrices are simultaneously diagonalizable.” 
+    (Hint. If you’re not sure how to get started, first try the case that $L1$ has $\dim(V)$ distinct eigenvalues.)
+\end{problem}
+
+\begin{problem}[10.22]
+    Let $L \in \End_F{(V)}$ be an invertible linear operator.
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove that
+        \[
+            P_{L^{-1}}(T) = \det(L)^{-1} \cdot (-T)^{\dim{V}} \cdot P_L(T^{-1})
+        \]
+        \begin{solution}
+
+        \end{solution}
+
+        \item Let $n = \dim{V}$, and let the eigenvalues of $L$ be $\lambda_1, \ldots \lambda_n$ (repeated with appropriate multiplicity).
+        Prove that the eigenvalues of $L^{-1}$ are $\lambda_1^{-1}, \ldots , \lambda_n^{-1}$.
+        \begin{solution}
+
+        \end{solution}
+
+        \item If $L^d = I$, prove that the eigenvalues of $L$ are $d$th-roots of unity.
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[10.23]
+    Let $V$ be an $n$-dimensional $F$ vector space, let $L \in \End_F(V)$, and let
+    \[
+        P_L(T) = T^n - c_1(L)T^{n-1} + c_2(L)T^{n-2} - \cdots + (-1)^{c}c_n(L)
+    \]
+    The \textit{trace of} $L$ is defined to be the quantity
+    \[
+        \tr(L) = c_1(L)
+    \]
+    \begin{enumerate}[label=(\alph*)]
+        \item Let $J, L \in \End_F(V)$. Prove that
+        \[
+            \tr(JL) = \tr(LJ)
+        \]
+        In particular, if $J$ is invertible, prove that
+        \[
+            \tr(J^{-1}LJ) = \tr(L)
+        \]
+        \begin{solution}
+
+        \end{solution}
+
+        \item Prove that
+        \[
+            \tr(aL_1 + bL_2) = a\tr(L_1) + b\tr(L_2);
+        \]
+        i.e., prove that the map
+        \[
+            \tr : \End_F(V) \longrightarrow F
+        \]
+        is an $F$-linear transformation.
+        \begin{solution}
+
+        \end{solution}
+
+        \item Suppose that $F$ is algebraically closed and that $\lambda_1, \ldots, \lambda_n$ are the eigenvalues of $L$, 
+        repeated with appropriate multiplicities so that $P_L(T) = \prod(T - \lambda_i)$. Prove that
+        \[
+            \tr(L) = \lambda_1 + \cdots + \lambda_n
+        \]
+        \begin{solution}
+
+        \end{solution}
+
+        \item Let $\mathcal{B}$ be a basis for $V$, and let
+        \begin{equation}
+            \mathcal{M}_{\mathcal{L}, \mathcal{B}, \mathcal{B}} = 
+            \begin{bmatrix}
+                a_{11} & \cdots & a_{1n}\\ 
+                \cdots & \ddots & \vdots\\   
+                a_{n1}& \cdots & a_{nn}
+            \end{bmatrix}
+            \in \Mat_{n \times n}(F)
+        \end{equation}
+        be the matrix associated to $\mathcal{L}$ for the basis $\mathcal{B}$. Prove that
+        \[
+            \tr(L) = a_{11} + a_{22} + \cdots + a_{nn}
+        \]
+        is the sum of the diagonal elements of the martix $L$.
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[10.27]
+    We defined the product of an infinite list of vector spaces $V1, V2, V3, \ldots$, but suppose that we want to 
+    take the product of an uncountable number of vector spaces. In general, we take an arbitrary index set $I$, 
+    and we suppose that for each $i in I$ we are given an $F$-vector space $V_i$. We can no longer talk about ordered 
+    lists of infinite-tuples, since the index set $I$ is arbitrary, so we define the direct product of the $V_i$ over 
+    all $i \in I$ to be a vector space of functions,
+
+    \[
+        \prod_{i \in I}V_i = \biggl\{ \text{functions }v : I \longrightarrow \bigcup_{i \in I} V_i \hspace{10px}\text{satisfying } v(i) \in V_i \hspace{10px}\text{for all } i \in I \biggr\}
+    \]
+    Addition and scalar multiplication in $\prod_{i \in I}V_i$ are defined by
+    \[
+        (v + w)(i) = v(i) + w(i) \hspace{10px} \text{and} \hspace{10px} (cv)(i) = cv(i)
+    \]
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove that $\prod_{i \in I} v_i$ is an $F$-vector space.
+        \begin{solution}
+
+        \end{solution}
+
+        \item If $I = \mathbb{N}$, explain why the definition of $\prod_{i \in \mathbb{N}} V_i$ in this exercise is the same as the one given
+        in Definition 10.48
+        \begin{solution}
+
+        \end{solution}
+
+        \item Explain how you would define the direct sum of the $V_i$ for an arbitrary index set $I$.
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[11.24]
+    An \textit{Artinian ring} is a ring in which every descending list of ideals
+    \[
+        I_1 \supseteq I_2 \supseteq I_3 \supseteq \cdots
+    \]
+    eventually stabilizes; i.e., there is a $k \geq 1$ so that $I_k = I_{k + i}$ for all $i \geq 0$. Although this resembles
+    the definition of Noetherian ring, the Artinian condition is actually fare more restrictive.
+
+    \begin{enumerate}[label=(\alph*)]
+        \item Let $R$ be an Artinian ring, and let $I$ be an ideal in $R$. Prove that $R/I$ is an Artinian ring.
+        \begin{solution}
+
+        \end{solution}
+
+        \item Let $R$ be an Artinian ring that is an integral domain. Prove that $R$ is a field. (\textit{Hint.} Let $a \in R$
+        and consider the ideals $aR \supseteq a^2R \supseteq a^3R \supseteq \cdots$)
+        \begin{solution}
+
+        \end{solution}
+
+        \item Let $R$ be an Artinian ring. Prove that every prime ideal in $R$ is a maximal ideal. (\textit{Hint.} Use (a)
+        and (b)).
+        \begin{solution}
+
+        \end{solution}
+
+        \item Let $R$ be an Artinian ring. Prove that $R$ has only finitely many maximal ideals.
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[11.32] Do problem 11.32 for modules over non-commutative rings, i.e., show that 
+    if M is left R module then the annihiliator Ann(M) is two sided ideal in R. Let $M$ be an 
+    $R$-module. Prove that the annihilator
+    \[
+        \Ann(M) = \{ a \in R : am = 0 \hspace{10px} \text{for all} \hspace{10px} m \in M \}
+    \]
+    is an ideal of $R$.
+    \begin{solution}
+
+    \end{solution}
+\end{problem}
+
+\begin{problem}[11.37]
+    Let $R$ be a commutative ring.
+    \begin{enumerate}[label=(\alph*)]
+        \item Suppose that $a, b \in R$ have the property that $aR + bR = R$. Prove that for all $m, n \geq 1$
+        we have 
+        \[
+            a^mR + b^nR = R
+        \]
+        \begin{solution}
+
+        \end{solution}
+
+        \item More generally, let $a_1, \ldots, a_t \in R$, and let $e_1, \ldots, e_t \geq 1$ be positive integers.
+        Prove that 
+        \[
+            a_1R + a_2R + \cdots + a_tR = R \hspace{10px} \iff \hspace{10px} a_1^{e_1}R + a_2^{e_2}R + \cdots + a_t^{e_t}R = R.
+        \]
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[12.16]
+    This exercise give examples showing that the list of composition quotients of a finite group $G$
+    are not enough to determine $G$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove that composition series for the cyclic group $\mathcal{C}_4$ and the product group $\mathcal{C}_2 \times \mathcal{C}_2$
+        have the same length and the same composition quotients.
+        \begin{solution}
+
+        \end{solution}
+
+        \item Prove that composition series for the cyclic group $\mathcal{C}_6$ and the symmetric group $\mathcal{S}_3$ have the
+        same length and the same composition quotients.
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\end{document}

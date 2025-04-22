@@ -1,8 +1,8 @@
-PWD c:/Users/roman/OneDrive/Desktop/Math Classes/Honors Introduction to Algebra/Homework 6
+PWD c:/Users/roman/OneDrive/Desktop/Math Classes/Honors Introduction to Algebra/Homework 10
 INPUT c:/texlive/2024/texmf.cnf
 INPUT c:/texlive/2024/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT c:/Users/roman/OneDrive/Desktop/Math Classes/Honors Introduction to Algebra/Homework 6/main.tex
+INPUT c:/Users/roman/OneDrive/Desktop/Math Classes/Honors Introduction to Algebra/Homework 10/main.tex
 OUTPUT main.log
 INPUT c:/texlive/2024/texmf-dist/tex/latex/base/article.cls
 INPUT c:/texlive/2024/texmf-dist/tex/latex/base/article.cls
@@ -319,6 +319,8 @@ INPUT c:/texlive/2024/texmf-dist/fonts/enc/dvips/libertine/lbtn_kijugd.enc
 INPUT c:/texlive/2024/texmf-dist/fonts/vf/public/libertine/LinLibertineT-tlf-ot1.vf
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-ot1--base.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/enc/dvips/libertine/lbtn_oexx6f.enc
+INPUT c:/texlive/2024/texmf-dist/fonts/vf/public/libertine/LinLibertineT-tlf-ot1.vf
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/libertine/LinLibertineT-tlf-ot1--base.tfm
 INPUT main.aux
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/libertine/LinLibertineT.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/libertine/LinLibertineTB.pfb
@@ -334,3 +336,4 @@ INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
+INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb

@@ -1,0 +1,252 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{libertine}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,shapes.geometric}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\pagestyle{plain}
+\thispagestyle{empty}
+
+\definecolor{carnellian}{RGB}{190,20,20}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\newcounter{subq}[problem]
+\newenvironment{subproblem}
+{\refstepcounter{subq} \begin{itemize} \item[(\alph{subq})]}
+{\end{itemize} \medskip}
+\DeclareMathOperator{\Ima}{Im}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Span}{Span}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Ann}{Ann}
+\DeclareMathOperator{\Mat}{Mat}
+\DeclareMathOperator{\GL}{GL}
+%\DeclareMathOperator{\deg}{deg}
+
+
+
+\usepackage{environ}
+\NewEnviron{solution}[1][\vfill]{
+    \textcolor{blue}{\BODY}
+}
+
+\newcommand{\hwnum}{7}
+\newcommand{\duedate}{3/25/2025}
+\renewcommand{\title}{Groups, Structures of Abelian Groups, Automorphisms}
+
+\begin{document}
+
+\hspace{-10px}
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r}
+    \textbf{Honors Algebra} & \textbf{Spring 2025} \\
+    \textbf{HW \hwnum : \title} &  \textbf{\duedate} \\
+\end{tabular*}
+
+\vspace{1cm}
+
+\textit{Abstract Algebra: An Integrated Approach by J.H. Silverman.}\\
+Page 393-396: 12.10, 12.11, 12.12, 12.14, 12.15, 12.20, 12.26
+
+
+\vspace{1cm}
+
+%-----------TEMPLATE------------%
+% \begin{problem}
+%     \begin{enumerate}[label=(\alph*)]
+%         \item 
+%         \begin{solution}
+
+%         \end{solution}
+
+%         \item 
+%         \begin{solution}
+
+%         \end{solution}
+%     \end{enumerate}
+% \end{problem}
+
+\begin{problem}[12.10]
+    For each $pi \in \mathcal{S}_n$, we define a linear transformation $\rho(\pi): \mathbb{R}^n \longrightarrow \mathbb{R}^n$ by
+    \[
+        \rho(\pi)(e_i) = e_{\pi(i)}
+    \]
+    By abuse of notation, we write $\rho(\pi)$ for the $n$-by-$n$ matrix of $\rho(\pi)$ relative to the basis $\{e_1, \ldots, e_n\}$.
+    The matrix $\rho(\pi)$, whose entries are all equal to $0$ or $1$, is called the permutation matrix associated to $\pi$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove that the matrix $\rho(\pi)$ can also be described by the following formula:
+        \[ 
+            (i, j)\text{-entry of } \rho(\pi) = 
+            \begin{cases} 
+                1 & \text{if } \pi(j) = i,   \\
+                0 & \text{if } \pi(j) \neq i
+            \end{cases}
+        \]
+        \begin{solution}
+
+        \end{solution}
+
+        \item Write down the six 3-by-3 matrices corresponding to the six elements of $\mathcal{S}_3$.
+        \begin{solution}
+
+        \end{solution}
+
+        \item Prove that every row of $\rho(\pi)$ has exactly one entry equal to 1 and similarly that every column of $\rho(\pi)$
+              has exactly one entry equal to 1.
+        \begin{solution}
+
+        \end{solution}
+
+        \item Prove that the map
+        \[
+            \rho : \mathcal{S}_n \longrightarrow \GL_n{\mathbb{Z}}
+        \]
+        is an injective group homomorphism; i.e., prove that $\rho$ is injective and satisfies
+        \[
+            \rho(\pi_1 \pi_2) = \rho(\pi_i)\rho(\pi_2) \hspace{4px} \text{for all } \pi_1, \pi_2 \in \mathcal{S}_n
+        \]
+        \begin{solution}
+
+        \end{solution}
+
+        \item Let $\pi \in \mathcal{S}_n$. Prove that
+              \[
+                \text{sign}(\pi) = \det{\rho(\pi)}
+              \]
+        \begin{solution}
+
+        \end{solution}
+
+        \item Prove that the eigenvalues of $\rho(\pi)$ are roots of unity.
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[12.11]
+    Let $G$ be a group, let $H \subset G$ be a subgroup of $G$, and let $G/H$ be the collection of cosets of $H$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove that there is a well-defined group homomorphism
+        \[
+            \pi_H : G \longrightarrow \mathcal{S}_{G/H}, \hspace{5px} \pi_H(g)(a H) = gaH
+        \]
+        (\textit{Hint.} Generalize the proof of Cayley's Theorem, which was the case $H = \{e\}$.)
+        \begin{solution}
+
+        \end{solution}
+
+        \item Prove that the kernel of $\pi_H$ is contained in $H$.
+        \begin{solution}
+
+        \end{solution}
+
+        \item Let $K$ be a normal subgroup of $G$, and suppose that $K$ is contained in $H$. 
+              Prove that $K \subseteq \ker(\pi_H)$. Thus we may describe $\ker(\pi_H)$ as the
+              largest normal subgroup of $G$ that is contained in $H$.
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[12.12]
+    Let $G$ be a group of order $n$, and let $H \not\subseteq G$ be a subgroup of order $m$, and suppose
+    that $n$ does nto divide $(n/m)!$. Prove that $H$ contains a non-trivial normal subgroup of $G$. 
+    (\textit{Hint.} Use Exercise 12.11.)
+    \begin{solution}
+
+    \end{solution}
+\end{problem}
+
+\begin{problem}[12.14]
+    Let $G$ be a group. We say that a normal subgroup $N \not\subseteq G$ is a maximal normal subgroup of $G$
+    if it has the following property:
+    \[
+        N \subseteq N' \subseteq G \hspace{5px} \text{and} \hspace{5px} N' \text{ normal in } G \hspace{5px} \implies \hspace{5px} N' = N \hspace{5px} \text{or} \hspace{5px} N' = G
+    \]
+    Prove that
+    \[
+        N \text{ is a maximal normal subgroup} \hspace{5px} \iff \hspace{5px} G/N \text{is a simple group}
+    \]
+    \begin{solution}
+
+    \end{solution}
+\end{problem}
+
+\begin{problem}[12.15]
+    For this exercise, you may use the first part of Sylow's Theorem that says that $p$-Sylow subgroups exist
+    but do not use the second and third parts.
+    \begin{enumerate}[label=(\alph*)]
+        \item Let $p$ and $q$ be distinct primes, and let $G$ be a group of order $pq$. Prove that $G$ is not
+              a simple group.
+        \begin{solution}
+
+        \end{solution}
+
+        \item Prove that a group of order 36 is not a simple group.
+        \begin{solution}
+
+        \end{solution}
+
+        \item Let $p$ and $q$ be distinct primes, let $i, j \geq 1$, and suppose that $p^i < q$.
+              Prove that a group of order $p^i < q^j$ is not a simple group. 
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+    (\textit{Hint.} Use Exercise 12.12. We mention that we proved (a) using all three 
+    parts of Sylow's Theorem in Example 6.37.)
+\end{problem}
+
+\begin{problem}[12.20] \phantom{.}
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove that $\Aut(\mathbb{Z})$ is a cyclic group of order 2.
+        \begin{solution}
+
+        \end{solution}
+
+        \item More generally, prove that $\Aut(\mathbb{Z^n}) \cong \GL_n(\mathbb{Z})$.
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[12.26]
+    Let $G$ be the set of affine linear maps on $\mathbb{R}$, which by definition is the group
+    \[
+        G = \{ \text{maps } \phi : \mathbb{R} \longrightarrow \mathbb{R} \text{ of the form } \phi(x) = ax + b \text{ for some } a \in \mathbb{R}^* \text{ and } b \in \mathbb{R} \}
+    \]
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove that $G$ is group, where the group law is composition of maps.
+        \begin{solution}
+
+        \end{solution}
+
+        \item Prove that $G$ is isomorphic to the semidirect product $\mathbb{R} \rtimes \mathbb{R}^*$.
+              Be sure to describe the homomorphism from $\mathbb{R}^*$ to $\Aut(\mathbb{R})$ used to define
+              the semidirect product.
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+
+\end{document}

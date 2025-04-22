@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1745191266.31602 "c:/Users/roman/OneDrive/Desktop/Math Classes/Honors Introduction to Algebra/Homework 6/main.tex" "main.pdf" "main" 1745191267.82574 0
-  "c:/Users/roman/OneDrive/Desktop/Math Classes/Honors Introduction to Algebra/Homework 6/main.tex" 1745191265 10456 c0f62c50f55827c864040a94b53a2f21 ""
+["pdflatex"] 1745349408.87894 "c:/Users/roman/OneDrive/Desktop/Math Classes/Honors Introduction to Algebra/Homework 10/main.tex" "main.pdf" "main" 1745349411.41255 0
+  "c:/Users/roman/OneDrive/Desktop/Math Classes/Honors Introduction to Algebra/Homework 10/main.tex" 1745349407 15436 666b0cce861bbd7535a15c9ae882be47 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/libertine/lbtn_kijugd.enc" 1725156421 2822 11e839d2bbb939844844619b2cff7df6 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/libertine/lbtn_lyu3x3.enc" 1725156421 2835 bfce207f80837ef8737b6a788d8bc760 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/libertine/lbtn_oexx6f.enc" 1725156421 2807 3bc923a7d38598e901b235df221224cb ""
@@ -38,6 +38,7 @@
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1725152395 32587 65067f817f408bc71a7312f3d9828a9b ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1725152395 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1725152395 34694 870c211f62cb72718a00e353f14f254d ""
+  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb" 1725152395 35309 940e81a5b9e04201a07e8b33a3ae6e64 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/libertine/LinLibertineT.pfb" 1725156422 614791 d8dc0bdea92a3db7682402cda70ec199 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/libertine/LinLibertineTB.pfb" 1725156422 538965 c5f7f11a7c6a7978c8500457bfcd2138 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/libertine/LinLibertineTI.pfb" 1725156422 490980 a252c644e887b4e2fc664c31f1402303 ""
@@ -209,8 +210,8 @@
   "c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1725163782 5543950 2aa73a438b7054b2327b796fbe5f4275 ""
   "c:/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1725163920 8239325 c4acdb2bbb9aaa858c49bcf540a50c87 ""
   "c:/texlive/2024/texmf.cnf" 1725163763 713 e69b156964470283e0530f5060668171 ""
-  "main.aux" 1745191267 32 ab05033ccbb38b00a31b200ccedf8001 "pdflatex"
-  "main.tex" 1745191265 10456 c0f62c50f55827c864040a94b53a2f21 ""
+  "main.aux" 1745349411 32 2d1df76398b3c48c6419a45a7331db2d "pdflatex"
+  "main.tex" 1745349407 15436 666b0cce861bbd7535a15c9ae882be47 ""
   (generated)
   "main.aux"
   "main.log"

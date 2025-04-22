@@ -46,8 +46,8 @@
 }
 
 \newcommand{\hwnum}{6}
-\newcommand{\duedate}{3/20/2025}
-\renewcommand{\title}{Groups, Modules, and Vector Spaces}
+\newcommand{\duedate}{3/18/2025}
+\renewcommand{\title}{Fields}
 
 \begin{document}
 
@@ -60,11 +60,10 @@
 \vspace{1cm}
 
 \textit{Abstract Algebra: An Integrated Approach by J.H. Silverman.}\\
-Page 320-325: 10.13, 10.16, 10.22, 10.23, 10.27\\
-Page 357–370: 11.24, 11.32, 11.37\\
-Page 393–396: 12.16\\
-Do problem 11.32 for modules over non-commutative rings, i.e., show that 
-if M is left R module then the annihiliator Ann(M) is two sided ideal in R.
+Page 180-186: 7.14, 7.22, 7.29\\
+Page 214-220: 8.3, 8.8, 8.21, 8.23\\
+Page 320-325: 10.6, 10.12\\
+Page 357-370: 11.2, 11.7, 11.8
 
 
 \vspace{1cm}
@@ -84,251 +83,268 @@ if M is left R module then the annihiliator Ann(M) is two sided ideal in R.
 %     \end{enumerate}
 % \end{problem}
 
-\begin{problem}[10.13]
-    For each of the following linear operators, find eigenvectors and eigenvalues as we did in Example 10.27. 
+\begin{problem}[7.14]
+    Let $R$ be a commutative ring.
     \begin{enumerate}[label=(\alph*)]
-        \item $L(e_1) = -e_1 + 4e_2$ and $L(e_2) = 4e_1 - e_2$
+        \item Suppose that $a, b \in R$ have the property that $aR + bR = R$. 
+              Prove that for all $m, n \geq 1$ we have 
+              \[
+                a^m R + b^n R = R
+              \]
         \begin{solution}
 
         \end{solution}
 
-        \item $L(e_1) = e_2$ and $L(e_2) = -e_1$. (You may take $F = \mathbb{C}$ for this part.)
-        \begin{solution}
-
-        \end{solution}
-
-        \item $L(e_1) = e_1 - e_3$, $L(e_2) = 4e_3$, and $L(e_3) = 2e_1 + e_2 + 2e_3$
-        \begin{solution}
-
-        \end{solution}
-    \end{enumerate}
-\end{problem}
-
-\begin{problem}[10.16]
-    Let $V$ be a finite-dimensional vector space. Let $L1, L2 \in \End_F{(V)}$ be linear operators on $V$ such that the following three statements are true: 
-    \begin{enumerate}[label=(\arabic*)]
-        \item There is a basis for $V$ consisting of eigenvectors of $L_1$
-        \begin{solution}
-
-        \end{solution}
-
-        \item There is a basis for $V$ consisting of eigenvectors of $L_2$
-        \begin{solution}
-
-        \end{solution}
-
-        \item $L_1L_2 = L_2L_1$
-        \begin{solution}
-
-        \end{solution}
-    \end{enumerate}
-    Prove that there is a basis for $V$ consisting of vectors that are simultaneously eigenvectors of $L1$ and eigenvectors of $L2$. 
-    This result is often stated as follows: “commuting diagonalizable matrices are simultaneously diagonalizable.” 
-    (Hint. If you’re not sure how to get started, first try the case that $L1$ has $\dim(V)$ distinct eigenvalues.)
-\end{problem}
-
-\begin{problem}[10.22]
-    Let $L \in \End_F{(V)}$ be an invertible linear operator.
-    \begin{enumerate}[label=(\alph*)]
-        \item Prove that
-        \[
-            P_{L^{-1}}(T) = \det(L)^{-1} \cdot (-T)^{\dim{V}} \cdot P_L(T^{-1})
-        \]
-        \begin{solution}
-
-        \end{solution}
-
-        \item Let $n = \dim{V}$, and let the eigenvalues of $L$ be $\lambda_1, \ldots \lambda_n$ (repeated with appropriate multiplicity).
-        Prove that the eigenvalues of $L^{-1}$ are $\lambda_1^{-1}, \ldots , \lambda_n^{-1}$.
-        \begin{solution}
-
-        \end{solution}
-
-        \item If $L^d = I$, prove that the eigenvalues of $L$ are $d$th-roots of unity.
+        \item More generally, let $a_1, \ldots, a_t \in R$, and let $e_1, \ldots, e_t \geq 1$
+              be positive integers. Prove that
+              \[
+                a_1 R + a_2 R + \cdots + a_t R = R \hspace{5px} \iff \hspace{5px} a_1^{e_1}R + a_2^{e_2}R + \cdots + a_t^{e_t}R = R
+              \]
         \begin{solution}
 
         \end{solution}
     \end{enumerate}
 \end{problem}
 
-\begin{problem}[10.23]
-    Let $V$ be an $n$-dimensional $F$ vector space, let $L \in \End_F(V)$, and let
+\begin{problem}[7.22]
+    Let $R$ be a ring, let $P \subset R$ be a prime ideal, let $S = R \ P$ be the complement of $P$, let $R_S$
+    be the localization ring as described in Exercise 7.21, and let
     \[
-        P_L(T) = T^n - c_1(L)T^{n-1} + c_2(L)T^{n-2} - \cdots + (-1)^{c}c_n(L)
+        Q = \{ (a, b) \in R_S : a \in P \}
     \]
-    The \textit{trace of} $L$ is defined to be the quantity
-    \[
-        \tr(L) = c_1(L)
-    \]
-    \begin{enumerate}[label=(\alph*)]
-        \item Let $J, L \in \End_F(V)$. Prove that
-        \[
-            \tr(JL) = \tr(LJ)
-        \]
-        In particular, if $J$ is invertible, prove that
-        \[
-            \tr(J^{-1}LJ) = \tr(L)
-        \]
-        \begin{solution}
+    Prove that $Q$ is the unique maximal ideal of $R_S$. (A ring with a unique maximal ideal is called a local
+    ring; see Exercise 3.53).
 
-        \end{solution}
-
-        \item Prove that
-        \[
-            \tr(aL_1 + bL_2) = a\tr(L_1) + b\tr(L_2);
-        \]
-        i.e., prove that the map
-        \[
-            \tr : \End_F(V) \longrightarrow F
-        \]
-        is an $F$-linear transformation.
-        \begin{solution}
-
-        \end{solution}
-
-        \item Suppose that $F$ is algebraically closed and that $\lambda_1, \ldots, \lambda_n$ are the eigenvalues of $L$, 
-        repeated with appropriate multiplicities so that $P_L(T) = \prod(T - \lambda_i)$. Prove that
-        \[
-            \tr(L) = \lambda_1 + \cdots + \lambda_n
-        \]
-        \begin{solution}
-
-        \end{solution}
-
-        \item Let $\mathcal{B}$ be a basis for $V$, and let
-        \begin{equation}
-            \mathcal{M}_{\mathcal{L}, \mathcal{B}, \mathcal{B}} = 
-            \begin{bmatrix}
-                a_{11} & \cdots & a_{1n}\\ 
-                \cdots & \ddots & \vdots\\   
-                a_{n1}& \cdots & a_{nn}
-            \end{bmatrix}
-            \in \Mat_{n \times n}(F)
-        \end{equation}
-        be the matrix associated to $\mathcal{L}$ for the basis $\mathcal{B}$. Prove that
-        \[
-            \tr(L) = a_{11} + a_{22} + \cdots + a_{nn}
-        \]
-        is the sum of the diagonal elements of the martix $L$.
-        \begin{solution}
-
-        \end{solution}
-    \end{enumerate}
-\end{problem}
-
-\begin{problem}[10.27]
-    We defined the product of an infinite list of vector spaces $V1, V2, V3, \ldots$, but suppose that we want to 
-    take the product of an uncountable number of vector spaces. In general, we take an arbitrary index set $I$, 
-    and we suppose that for each $i in I$ we are given an $F$-vector space $V_i$. We can no longer talk about ordered 
-    lists of infinite-tuples, since the index set $I$ is arbitrary, so we define the direct product of the $V_i$ over 
-    all $i \in I$ to be a vector space of functions,
-
-    \[
-        \prod_{i \in I}V_i = \biggl\{ \text{functions }v : I \longrightarrow \bigcup_{i \in I} V_i \hspace{10px}\text{satisfying } v(i) \in V_i \hspace{10px}\text{for all } i \in I \biggr\}
-    \]
-    Addition and scalar multiplication in $\prod_{i \in I}V_i$ are defined by
-    \[
-        (v + w)(i) = v(i) + w(i) \hspace{10px} \text{and} \hspace{10px} (cv)(i) = cv(i)
-    \]
-    \begin{enumerate}[label=(\alph*)]
-        \item Prove that $\prod_{i \in I} v_i$ is an $F$-vector space.
-        \begin{solution}
-
-        \end{solution}
-
-        \item If $I = \mathbb{N}$, explain why the definition of $\prod_{i \in \mathbb{N}} V_i$ in this exercise is the same as the one given
-        in Definition 10.48
-        \begin{solution}
-
-        \end{solution}
-
-        \item Explain how you would define the direct sum of the $V_i$ for an arbitrary index set $I$.
-        \begin{solution}
-
-        \end{solution}
-    \end{enumerate}
-\end{problem}
-
-\begin{problem}[11.24]
-    An \textit{Artinian ring} is a ring in which every descending list of ideals
-    \[
-        I_1 \supseteq I_2 \supseteq I_3 \supseteq \cdots
-    \]
-    eventually stabilizes; i.e., there is a $k \geq 1$ so that $I_k = I_{k + i}$ for all $i \geq 0$. Although this resembles
-    the definition of Noetherian ring, the Artinian condition is actually fare more restrictive.
-
-    \begin{enumerate}[label=(\alph*)]
-        \item Let $R$ be an Artinian ring, and let $I$ be an ideal in $R$. Prove that $R/I$ is an Artinian ring.
-        \begin{solution}
-
-        \end{solution}
-
-        \item Let $R$ be an Artinian ring that is an integral domain. Prove that $R$ is a field. (\textit{Hint.} Let $a \in R$
-        and consider the ideals $aR \supseteq a^2R \supseteq a^3R \supseteq \cdots$)
-        \begin{solution}
-
-        \end{solution}
-
-        \item Let $R$ be an Artinian ring. Prove that every prime ideal in $R$ is a maximal ideal. (\textit{Hint.} Use (a)
-        and (b)).
-        \begin{solution}
-
-        \end{solution}
-
-        \item Let $R$ be an Artinian ring. Prove that $R$ has only finitely many maximal ideals.
-        \begin{solution}
-
-        \end{solution}
-    \end{enumerate}
-\end{problem}
-
-\begin{problem}[11.32] Do problem 11.32 for modules over non-commutative rings, i.e., show that 
-    if M is left R module then the annihiliator Ann(M) is two sided ideal in R. Let $M$ be an 
-    $R$-module. Prove that the annihilator
-    \[
-        \Ann(M) = \{ a \in R : am = 0 \hspace{10px} \text{for all} \hspace{10px} m \in M \}
-    \]
-    is an ideal of $R$.
     \begin{solution}
 
     \end{solution}
 \end{problem}
 
-\begin{problem}[11.37]
-    Let $R$ be a commutative ring.
+\begin{problem}[7.29]
+    A polynomial $f(X_1, \ldots, X_n) \in F[X_1, \ldots, X_n]$ is said to be homogeneous of degree k if
+    \[
+        f(aX_1, \ldots, aX_n) = a^kf(X_1, \ldots, X_n) \hspace{5px} \text{for all } a \in F
+    \]
     \begin{enumerate}[label=(\alph*)]
-        \item Suppose that $a, b \in R$ have the property that $aR + bR = R$. Prove that for all $m, n \geq 1$
-        we have 
-        \[
-            a^mR + b^nR = R
-        \]
+        \item Prove that $f$ is a homogeneous polynomial of degree $k$ if and only if $f$ is a sum of the form
+              \[
+                f(X_1, \ldots, X_n) = \sum_{\substack{i_1, i_2, \ldots, i_n \geq 0\\ i_1 + i_2 + \cdots + i_n = k}} c_{i_1, i_2, \ldots, i_n} X_1^{i_1} X_2^{i_2} \cdots X_n^{i_n}
+              \]
         \begin{solution}
 
         \end{solution}
 
-        \item More generally, let $a_1, \ldots, a_t \in R$, and let $e_1, \ldots, e_t \geq 1$ be positive integers.
-        Prove that 
-        \[
-            a_1R + a_2R + \cdots + a_tR = R \hspace{10px} \iff \hspace{10px} a_1^{e_1}R + a_2^{e_2}R + \cdots + a_t^{e_t}R = R.
-        \]
+        \item Prove that the elementary symmetric polynomials $s_k (X_1, \ldots, X_n)$ described in Definition 7.40
+              is a homogeneous polynomial of degree $k$.
+        \begin{solution}
+
+        \end{solution}
+
+        \item Let $f(X_1, \ldots, X_n) \in F(X_1, \ldots, X_n)$ be homogeneous of degree $k$. Prove that
+              \[
+                X_1 \frac{\partial{f}}{X_1} + X_2 \frac{\partial{f}}{X_2} + \cdots + X_n \frac{\partial{f}}{X_n} = kf
+              \]
+              (\textit{Hint.} If you view
+              \[
+                f(TX_1, \ldots, TX_n) = T^k f(X_1, \ldots, X_n)
+              \]
+              as being a relation in the polynomial ring $F[T, X_1, \ldots, X_n]$, then you can differentiate it with
+              respect to $T$. Then set $T = 1$.)
         \begin{solution}
 
         \end{solution}
     \end{enumerate}
 \end{problem}
 
-\begin{problem}[12.16]
-    This exercise give examples showing that the list of composition quotients of a finite group $G$
-    are not enough to determine $G$.
+\begin{problem}[8.3]
+    This exercise sketches a proof of the following result, which says that if a number is the root of 
+    a polynomial in $Q[x]$, then it cannot be too closely approximated by rational numbers.
+
+    \textbf{Theorem 8.46} Let $f(x) \in Q[x]$ be a polynomial ofdegree $d \geq 1$. There is a positive 
+    constant $C_f > 0$ such that if $\alpha \in mathbb{C} \ \mathbb{Q}$ is a non-rational root of $f(x)$, then
+    \[
+        \Bigg| \frac{p}{q} - \alpha \Bigg| \geq \frac{C_f}{q^d} \hspace{5px} \text{for all } \frac{p}{q} \in \mathbb{Q}
+    \]
     \begin{enumerate}[label=(\alph*)]
-        \item Prove that composition series for the cyclic group $\mathcal{C}_4$ and the product group $\mathcal{C}_2 \times \mathcal{C}_2$
-        have the same length and the same composition quotients.
+        \item Prove that every $p/q \in mathbb{Q}$ satisfies either
+        \[
+            f\bigg( \frac{p}{q} \bigg) = 0 \hspace{5px} \text{or} \hspace{5px} \Bigg| f\bigg( \frac{p}{q} \bigg) \Bigg| \geq \frac{1}{q^d}
+        \]
         \begin{solution}
 
         \end{solution}
 
-        \item Prove that composition series for the cyclic group $\mathcal{C}_6$ and the symmetric group $\mathcal{S}_3$ have the
-        same length and the same composition quotients.
+        \item Let $g(x) \in \mathbb{C}[x]$ be a polynomial of degree $e$, and let $\alpha \in \mathbb{C}$. Prove that there
+              is a constant $A_{g, \alpha}$ so that
+              \[
+                |g(\beta)| \leq A_{g, \alpha} \max\{1, |\beta - \alpha|^e\} \hspace{5px} \beta \in \mathbb{C}
+              \]
+            (\textit{Hint.} Expand $g(x)$ as a sum of powers of $x - \alpha$)
+        \begin{solution}
+
+        \end{solution}
+
+        \item Use (a) and (b) to prove Theorem 8.46. (\textit{Hint.} Since we are given that $f(\alpha) = 0$),
+              we can factor $f(x)$ as $f(x) = (x - \alpha)g(x)$ for some $g(x) \in \mathbb{C}[x]$.)
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[8.8]
+    Let $F$ be a finite field of order $q$, and assume that $q$ is odd.
+    \begin{enumerate}[label=(\alph*)]
+        \item Let $a, b \in F*$. If $a^2 = b^2$, prove that either $a = b$ or $a = -b$.
+        \begin{solution}
+
+        \end{solution}
+
+        \item Show by way of an example that (a) is not true for the rings $\mathbb{Z}/8\mathbb{Z}$
+              and $\mathbb{Z}/15\mathbb{Z}$.
+        \begin{solution}
+
+        \end{solution}
+
+        \item Let 
+        \[
+            \mathcal{R} = \{ a^2 : a \in F* \} \hspace{5px} \text{and} \hspace{5px} \mathcal{N} = \{ b \in F* : b \not\in \mathcal{R} \}
+        \]
+        be, respectively, the set of squares and non-squares in $F*$. Prove that $\mathcal{R}$ and $\mathcal{N}$ each contain
+        exactly $(q - 1)/2$ distinct elements.
+        \begin{solution}
+
+        \end{solution}
+
+        \item Let $f(x)$ be the polynomial
+              \[
+                f(x) = x^{\frac{q-1}{2}} - 1
+              \]
+              Prove that $\mathcal{R}$ is exactly the set of roots of $f(x)$ in $F$. (\textit{Hint.} Use Lagrange
+              to prove that the elements of $\mathcal{R}$ are roots. Then use (c) and Theorem 8.8(c).)
+        \begin{solution}
+
+        \end{solution}
+
+        \item Let $c \in F*$. Prove that
+              \[ 
+                c^{\frac{q-1}{2}} \equiv 
+                \begin{cases} 
+                    1 & \text{if } c \in \mathcal{Q}\\
+                    -1 & \text{if } c \in \mathcal{N}
+                \end{cases}
+              \]
+              (\textit{Hint.} Lagrange says that every element of $F*$ is a root of $x^{q-1} - 1$.
+              Factor this polynomial as $f(x)g(x)$ and use (d).)
+        \begin{solution}
+
+        \end{solution}
+
+        \item Let $a_1, a_2 \in \mathcal{R}$ and $b_1, b_2 \in \mathcal{N}$. Prove that
+              \[
+                a_1a_2 \in \mathcal{R} \hspace{5px} \text{and} \hspace{5px} b_1b_2 \in \mathcal{R}
+              \]
+              The first of these facts is hardly surprising, since indeed, the product of two squares is
+              a square in any commutative ring. But the second fact is surprising, since in most rings, 
+              most products of non-square won't be squares. 
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[8.21]
+    \begin{enumerate}[label=(\alph*)]
+        \item 
+        \begin{solution}
+
+        \end{solution}
+
+        \item 
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[8.23]
+    \begin{enumerate}[label=(\alph*)]
+        \item 
+        \begin{solution}
+
+        \end{solution}
+
+        \item 
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[10.6]
+    \begin{enumerate}[label=(\alph*)]
+        \item 
+        \begin{solution}
+
+        \end{solution}
+
+        \item 
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[10.12]
+    \begin{enumerate}[label=(\alph*)]
+        \item 
+        \begin{solution}
+
+        \end{solution}
+
+        \item 
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[11.2]
+    \begin{enumerate}[label=(\alph*)]
+        \item 
+        \begin{solution}
+
+        \end{solution}
+
+        \item 
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[11.7]
+    \begin{enumerate}[label=(\alph*)]
+        \item 
+        \begin{solution}
+
+        \end{solution}
+
+        \item 
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[11.8]
+    \begin{enumerate}[label=(\alph*)]
+        \item 
+        \begin{solution}
+
+        \end{solution}
+
+        \item 
         \begin{solution}
 
         \end{solution}
