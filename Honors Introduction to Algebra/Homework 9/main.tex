@@ -1,0 +1,263 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{libertine}
+\usepackage{parskip}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata,shapes.geometric}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\pagestyle{plain}
+\thispagestyle{empty}
+
+\definecolor{carnellian}{RGB}{190,20,20}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\newcounter{subq}[problem]
+\newenvironment{subproblem}
+{\refstepcounter{subq} \begin{itemize} \item[(\alph{subq})]}
+{\end{itemize} \medskip}
+\DeclareMathOperator{\Ima}{Im}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Span}{Span}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Ann}{Ann}
+\DeclareMathOperator{\Mat}{Mat}
+\DeclareMathOperator{\modd}{mod}
+%\DeclareMathOperator{\deg}{deg}
+
+
+
+\usepackage{environ}
+\NewEnviron{solution}[1][\vfill]{
+    \textcolor{blue}{\BODY}
+}
+
+\newcommand{\hwnum}{9}
+\newcommand{\duedate}{4/15/2025}
+\renewcommand{\title}{Galois Theory, Automorphisms of Fields, Splitting Fields}
+
+\begin{document}
+
+\hspace{-10px}
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r}
+    \textbf{Honors Algebra} & \textbf{Spring 2025} \\
+    \textbf{HW \hwnum : \title} &  \textbf{\duedate} \\
+\end{tabular*}
+
+\vspace{1cm}
+
+\textit{Abstract Algebra: An Integrated Approach by J.H. Silverman.}\\
+Page 285-294: 9.3, 9.4, 9.5, 9.9, 9.13, 9.14, 9.15, 9.16, 9.20
+
+
+\vspace{1cm}
+
+%-----------TEMPLATE------------%
+% \begin{problem}
+%     \begin{enumerate}[label=(\alph*)]
+%         \item 
+%         \begin{solution}
+
+%         \end{solution}
+
+%         \item 
+%         \begin{solution}
+
+%         \end{solution}
+%     \end{enumerate}
+% \end{problem}
+
+\begin{problem}[9.3]
+    Let $L/F$ be an extension of fields, and let $\alpha_1, \ldots, \alpha_r \in L$ be algebraic over $F$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove that 
+              \[
+                    F[\alpha_1 \ldots, \alpha_r] = F(\alpha, \ldots, \alpha_r)
+              \]
+        \begin{solution}
+
+        \end{solution}
+
+        \item Prove that 
+              \[ 
+                  [F(\alpha_1 \ldots, \alpha_r) : F] \leq \prod_{i=1}^{r}[F(\alpha_i) : F] 
+              \]
+        \begin{solution}
+
+        \end{solution}
+
+        \item Suppsoe that the degrees $[F(\alpha_i) : F]$ are pairwise relatively prime. Prove that the inequality in (b) is an equality
+        \begin{solution}
+
+        \end{solution}
+
+        \item Suppose that
+        \[
+            F(\alpha_i) \cap F(\alpha_j) = F \quad \text{for all } i\neq j
+        \]
+        Does this imply that the inequality in (b) is an equality? Either prove that (b) is an equality or give a counterexample. 
+        
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[9.4]
+    Let $L/K/F$ be a tower of fields. Prove that
+    \[
+        (L \text{ is algebraic over } K) \text{ and } (K \text{ is algebraic over } F) \implies (L \text{ is algebraic over } F)
+    \]
+    \begin{solution}
+
+    \end{solution}
+\end{problem}
+
+\begin{problem}[9.5]
+    Compute the minimal polynomials of the indicated numbers over the indicated fields; cf. Example 9.9.
+
+    \begin{center}
+        \begin{tabular}{ |c|c|c|c| } 
+         \hline
+             & $\alpha$        & $F$                    & $\Phi_{F, \alpha}(x)$ \\ \hline
+         (a) & $\sqrt{3}$      & $\mathbb{Q}$           & {answer goes here}    \\ \hline
+         (b) & $\sqrt{3}$      & $\mathbb{Q}(\sqrt{2})$ & {answer goes here}    \\ \hline
+         (c) & $\sqrt{3}$      & $\mathbb{Q}(\sqrt(3))$ & {answer goes here}    \\ \hline
+         (d) & $i$             & $\mathbb{R}$           & {answer goes here}    \\ \hline
+         (e) & $i$             & $\mathbb{C}$           & {answer goes here}    \\ \hline
+         (f) & $i + \sqrt{3}$  & $\mathbb{Q}$           & {answer goes here}    \\ \hline
+         (g) & $i + \sqrt{3}$  & $\mathbb{Q}(i)$        & {answer goes here}    \\ \hline
+         (h) & $i + \sqrt{3}$  & $\mathbb{R}$           & {answer goes here}    \\ 
+         \hline
+        \end{tabular}
+    \end{center}
+    
+\end{problem}
+
+\begin{problem}[9.9]
+    Let $F$ be a field, let $K/F$ be an extension field, and assume that $K$ is algebraically closed. Let
+    \[
+        L = \{ \alpha \in K : \alpha \text{ is algebraic over } F \}
+    \]
+    Prove that $L$ is an algebraically closed field. (Note that we do not assume that $K/F$ is an algebraic extension.)
+    
+    \begin{solution}
+
+    \end{solution}
+\end{problem}
+
+\begin{problem}[9.13]
+    Let $K/F$ be a finite extension of fields, and let
+    \[
+        \phi : K \longrightarrow K
+    \]
+    be a field homomorphism that fixes the elements of $F$; i.e., $\phi(c) = c$ for every $c \in F$. Prove that $\phi$ is an isomorphism. (Hint. You'll need to use the fact that $K/F$ is finite, since Exercise 9.14 shows that the assertion may be false for infinite extensions.)
+    
+    \begin{solution}
+
+    \end{solution}
+\end{problem}
+
+\begin{problem}[9.14]
+    Let $F$ be a field, and let $F(T)$ be the field of rational function as described in Example 7.31 and Definition 7.32. Define maps 
+    \[
+        \sigma, \tau : F(T) \longrightarrow F(T) \quad \text{by} \quad \sigma(p(T)) = p(T^{-1}) \quad \text{and} \quad \tau(p(T)) = p(T^2)
+    \]
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove that $\sigma$ and $\tau$ are field homomorphisms $F(T) \longrightarrow F(T)$ that fix $F$. Prove that $\sigma$ is a field automophism of $F(T)$, but that $\tau$ is not.
+        
+        \begin{solution}
+
+        \end{solution}
+
+        \item Prove that $\sigma^2 = e$ but that no iterate of $\tau$ is the identity element. 
+        
+        \begin{solution}
+
+        \end{solution}
+
+        \item Find an element $u \in F(T)$ so that
+        \[
+            \{ p(T) \in F(T) : \sigma(p(T)) = p(T) \} = F(u)
+        \]
+        \begin{solution}
+
+        \end{solution}
+
+        \item What are the element of $F(T)$ that are fixed by $\tau$?
+        
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[9.15]
+    Show that Lemma 9.23 is false for
+    \[
+        F_1 = F_2 = \mathbb{Q}, \quad f_1(x) = f_2(x) = x^4 - 5x^2 + 6, \quad \alpha_1 = \sqrt{2}, \quad \alpha_2 = \sqrt{3}
+    \]
+    Why does this not provide a counterexample to Lemma 9.23?
+
+    \begin{solution}
+
+    \end{solution}
+\end{problem}
+
+\begin{problem}[9.16]
+    Let $F$ be a field of characteristic 0, let $f(x) \in F[x]$, and let $K/F$ be a splitting field for $f(x)$ over $F$.
+    This exercise asks you to prove Proposition 9.34, which states the $K$ is the splitting field of a seperable polynomial in $F[x]$.
+    \begin{enumerate}[label=(\alph*)]
+        \item We know from Corollary 7.20 that we can factor $f(x)$ as a product of irreducible polynomials, say
+              \[
+                    f(x) = cg_1(x)^{e_1}g_2(x)^{e_2} \cdots g_r(x)^{e_r}
+              \]
+              where $g_1(x), \ldots, g_r(x) \in F[x]$ are distinct monic irreducible polynomials. Prove that
+              \[
+                g_i(x) \text{ and } g_j(x) \text{ have a common root } \iff i = j
+              \]
+        \begin{solution}
+
+        \end{solution}
+
+        \item Let $g(x) = g_1(x)g_2(x) \cdots g_r(x)$. Prove that $g(x)$ is a seperable polynomial.
+        
+        \begin{solution}
+
+        \end{solution}
+
+        \item Prove that $K$ is the splitting field of $g(x)$ over $F$. 
+        
+        \begin{solution}
+
+        \end{solution}
+    \end{enumerate}
+\end{problem}
+
+\begin{problem}[9.20]
+    Let $F$ be a separable field, and let $K/F$ and $L/F$ be field extensions. 
+    Suppose that $K/F$ is a finite extension and that $L$ is algebraically closed. 
+    Prove that there are exactly $[K : F]$ embeddings $\sigma : K \hookrightarrow L$ that are the identity 
+    map on $F$.
+
+    \begin{solution}
+
+    \end{solution}
+\end{problem}
+
+
+\end{document}

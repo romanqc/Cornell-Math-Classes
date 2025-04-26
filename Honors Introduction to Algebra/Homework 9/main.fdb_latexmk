@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1745645876.34871 "c:/Users/roman/OneDrive/Desktop/Math Classes/Honors Introduction to Algebra/Homework 6/main.tex" "main.pdf" "main" 1745645877.75764 0
-  "c:/Users/roman/OneDrive/Desktop/Math Classes/Honors Introduction to Algebra/Homework 6/main.tex" 1745645875 14550 6efd73bb27f52a4871c89323d8f96d02 ""
+["pdflatex"] 1745648905.48358 "c:/Users/roman/OneDrive/Desktop/Math Classes/Honors Introduction to Algebra/Homework 9/main.tex" "main.pdf" "main" 1745648906.82398 0
+  "c:/Users/roman/OneDrive/Desktop/Math Classes/Honors Introduction to Algebra/Homework 9/main.tex" 1745648904 8367 b37e27b02cf5b2653b7d2cc750ee5d35 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/libertine/lbtn_kijugd.enc" 1725156421 2822 11e839d2bbb939844844619b2cff7df6 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/libertine/lbtn_lyu3x3.enc" 1725156421 2835 bfce207f80837ef8737b6a788d8bc760 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/libertine/lbtn_oexx6f.enc" 1725156421 2807 3bc923a7d38598e901b235df221224cb ""
@@ -35,7 +35,6 @@
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1725152395 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1725152395 32726 39f0f9e62e84beb801509898a605dbd5 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1725152395 32569 5e5ddc8df908dea60932f3c484a54c0d ""
-  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1725152395 32587 65067f817f408bc71a7312f3d9828a9b ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1725152395 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1725152395 34694 870c211f62cb72718a00e353f14f254d ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/libertine/LinLibertineT.pfb" 1725156422 614791 d8dc0bdea92a3db7682402cda70ec199 ""
@@ -209,8 +208,8 @@
   "c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1725163782 5543950 2aa73a438b7054b2327b796fbe5f4275 ""
   "c:/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1725163920 8239325 c4acdb2bbb9aaa858c49bcf540a50c87 ""
   "c:/texlive/2024/texmf.cnf" 1725163763 713 e69b156964470283e0530f5060668171 ""
-  "main.aux" 1745645877 32 2d1df76398b3c48c6419a45a7331db2d "pdflatex"
-  "main.tex" 1745645875 14550 6efd73bb27f52a4871c89323d8f96d02 ""
+  "main.aux" 1745648906 32 ab05033ccbb38b00a31b200ccedf8001 "pdflatex"
+  "main.tex" 1745648904 8367 b37e27b02cf5b2653b7d2cc750ee5d35 ""
   (generated)
   "main.aux"
   "main.log"
